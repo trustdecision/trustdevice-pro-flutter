@@ -1,36 +1,30 @@
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
 class TrustdeviceProPlugin {
-  /**
-   * Obtain the sdk version number
-   */
+  ///Obtain the sdk version number
   Future<String> getSDKVersion() {
     return TrustdeviceProPluginPlatform.instance.getSDKVersion();
   }
 
-  /**
-   *Initialize the configuration and return to blackbox
-   */
+  ///Initialize the configuration and return to blackbox
   Future<String> initWithOptions(Map<String, dynamic> configMap) {
     return TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
   }
 
-  /**
-   *Get blackbox
-   */
+  ///Get blackbox
   Future<String> getBlackbox() {
     return TrustdeviceProPluginPlatform.instance.getBlackbox();
   }
 }
 
 class TDRisk {
-  //Mandatory Shared Configuration
+  ///Mandatory Shared Configuration
   static const KEY_PARTNER = "partner";
   static const KEY_APPKEY = "appKey";
   static const KEY_APPNAME = "appName";
   static const KEY_COUNTRY = "country";
 
-  //Optional co ownership configuration (behavior validation configuration)
+  ///Optional co ownership configuration (behavior validation configuration)
   static const KEY_PB_LANGUAGE = "language";
   static const KEY_PB_TAPTOCLOSE = "tapToClose";
   static const KEY_PB_NEEDSEQID = "needSeqid";
@@ -40,7 +34,7 @@ class TDRisk {
   static const KEY_PB_SKIPCAPTCHA = "skipCaptcha";
   static const KEY_PB_MFAID = "mfaId";
 
-  //Android device fingerprint configuration
+  ///Android device fingerprint configuration
   static const KEY_FP_ANDROID_TIMELIMIT = "httpTimeout";
   static const KEY_FP_ANDROID_COLLECTLEVEL = "collectLevel";
   static const KEY_FP_ANDROID_BLACKBOX_MAXSIZE = "blackBoxMaxSize";
@@ -51,9 +45,10 @@ class TDRisk {
   static const KEY_FP_ANDROID_DISABLE__GPS = "disableGPS";
   static const KEY_FP_ANDROID_DISABLE__SENSOR = "disableSensor";
   static const KEY_FP_ANDROID_DISABLE__READPHONE = "disableReadPhone";
-  static const KEY_FP_ANDROID_DISABLE__PACKAGELIST = "disableInstallPackageList";
+  static const KEY_FP_ANDROID_DISABLE__PACKAGELIST =
+      "disableInstallPackageList";
 
-  //IOS device fingerprint configuration
+  ///IOS device fingerprint configuration
   static const KEY_FP_IOS_TIMELIMIT = "timeLimit";
   static const KEY_FP_IOS_COLLECTLEVEL = "collectLevel";
   static const KEY_FP_IOS_ALLOWED = "allowed";
