@@ -25,7 +25,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^0.1.1
+  trustdevice_pro_plugin: ^1.0.0
 ```
 
 2.Android permission application

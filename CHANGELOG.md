@@ -2,6 +2,6 @@
 
 * Initial implementation
 
-## 0.1.1
+## 1.0.0
 
 * document modification
