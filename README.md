@@ -1,5 +1,3 @@
-# Flutter trustdevice_pro_plugin Integration Documentation
-
 # Integrated Requirement
 
 ## Compliance Explanation
