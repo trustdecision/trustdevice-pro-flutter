@@ -20,19 +20,21 @@ Ensure that the trustdevice_pro_plugin is initialized after the user agrees to t
 
 1.Add `trustdevice_pro_plugin` to the pubspec.yaml in your Flutter app
 
-```
+```dart
 dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^0.1.0
+  trustdevice_pro_plugin: ^0.1.1
 ```
 
 2.Android permission application
 
 Dynamic application permissions: Android 6.0 or above requires dynamic application permissions. Dynamic application permissions code must be placed before the initial plugin. The code example is as follows:
 
-```
+```dart
+//The following permissions are not required to be applied for,and can be
+//selectively applied for according to business conditions
  Future<void> _requestPermission() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
@@ -104,7 +106,6 @@ Sample Code
 Android obfuscated packaging If developers need to use proguard for obfuscated packaging, please add the following code to the proguard configuration file:
 
 ```java
-#TONGDUN
 -keep class cn.tongdun.**{*;}
 ```
 
