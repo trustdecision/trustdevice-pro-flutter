@@ -154,14 +154,14 @@ class _MyAppState extends State<MyHomePage> {
    *Initialize the configuration and return to blackbox
    */
   Future<String> _initWithOptions() async {
-    Map<String, dynamic> configMap = {
-      TDRisk.KEY_APPKEY: "appKey",
-      TDRisk.KEY_APPNAME: "TrustDecision",
-      TDRisk.KEY_PARTNER: "TrustDecision",
-      TDRisk.KEY_COUNTRY: "cn",
-      TDRisk.KEY_FP_IOS_ALLOWED: "allowed"
+    var options = {
+      "partner": "请输入您的合作方编码",
+      "appKey": "请输入您的appKey",
+      "appName": "请输入您的appName",
+      "country": "请输入您所在的国家地区",
     };
-    var blackbox = await _trustdeviceProPlugin.initWithOptions(configMap);
+    //initialize the configuration and return the blackbox
+    var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
     return Future.value(blackbox);
   }
 
