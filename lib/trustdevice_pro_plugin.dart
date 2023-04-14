@@ -23,36 +23,19 @@ class TDRisk {
   static const KEY_APPKEY = "appKey";
   static const KEY_APPNAME = "appName";
   static const KEY_COUNTRY = "country";
-
-  ///Optional co ownership configuration (behavior validation configuration)
-  static const KEY_PB_LANGUAGE = "language";
-  static const KEY_PB_TAPTOCLOSE = "tapToClose";
-  static const KEY_PB_NEEDSEQID = "needSeqid";
-  static const KEY_PB_HIDELOADHUB = "hideLoadHud";
-  static const KEY_PB_HIDEWEBCLOSEBUTTON = "hideWebCloseButton";
-  static const KEY_PB_OPENLOG = "openLog";
-  static const KEY_PB_SKIPCAPTCHA = "skipCaptcha";
-  static const KEY_PB_MFAID = "mfaId";
+  static const KEY_DEBUG = "debug";
+  static const KEY_TIME_LIMIT = "timeLimit";
+  static const KEY_LOCATION = "location";
+  static const KEY_COLLECT_LEVEL = "collectLevel";
 
   ///Android device fingerprint configuration
-  static const KEY_FP_ANDROID_TIMELIMIT = "httpTimeout";
-  static const KEY_FP_ANDROID_COLLECTLEVEL = "collectLevel";
-  static const KEY_FP_ANDROID_BLACKBOX_MAXSIZE = "blackBoxMaxSize";
-  static const KEY_FP_ANDROID_CUSTOM_PROCESSNAME = "customProcessName";
-  static const KEY_FP_ANDROID_FORCE_TLSVERSION = "forceTLSVersion";
-  static const KEY_FP_ANDROID_DISABLE_DEBUGGER = "disableDebugger";
-  static const KEY_FP_ANDROID_DISABLE__RUNNINGTASKS = "disableRunningTasks";
-  static const KEY_FP_ANDROID_DISABLE__GPS = "disableGPS";
-  static const KEY_FP_ANDROID_DISABLE__SENSOR = "disableSensor";
-  static const KEY_FP_ANDROID_DISABLE__READPHONE = "disableReadPhone";
-  static const KEY_FP_ANDROID_DISABLE__PACKAGELIST =
-      "disableInstallPackageList";
+  static const KEY_FP_ANDROID_RUNNING_TASKS = "runningTasks";
+  static const KEY_FP_ANDROID_SENSOR = "sensor";
+  static const KEY_FP_ANDROID_READ_PHONE = "readPhone";
+  static const KEY_FP_ANDROID_INSTALLPACKAGE_LIST= "installPackageList";
 
   ///IOS device fingerprint configuration
-  static const KEY_FP_IOS_TIMELIMIT = "timeLimit";
-  static const KEY_FP_IOS_COLLECTLEVEL = "collectLevel";
-  static const KEY_FP_IOS_ALLOWED = "allowed";
-  static const KEY_FP_IOS_NOLOCATION = "noLocation";
-  static const KEY_FP_IOS_NOIDFA = "noIDFA";
-  static const KEY_FP_IOS_NODEVICENAME = "noDeviceName";
+  static const KEY_FP_IOS_IDFA = "IDFA";
+  static const KEY_FP_IOS_DEVICENAME = "deviceName";
+
 }
