@@ -19,8 +19,38 @@
         [options setObject:^(NSString *blackBox) {
             result(blackBox);
         } forKey:@"callback"];
+        
+        // 参数处理
+        id allowedObj = options[@"debug"];
+        if([allowedObj isKindOfClass:[NSNumber class]]){
+            if([allowedObj boolValue] == YES){
+                options[@"allowed"] = @"allowed";
+            }
+        }
+           
+        id locationObj = options[@"location"];
+        if([locationObj isKindOfClass:[NSNumber class]]){
+            if([locationObj boolValue] == NO){
+                options[@"noLocation"] = @"noLocation";
+            }
+        }
+        
+        id IDFAObj = options[@"IDFA"];
+        if([IDFAObj isKindOfClass:[NSNumber class]]){
+            if([IDFAObj boolValue] == NO){
+                options[@"noIDFA"] = @"noIDFA";
+            }
+        }
+        
+        id deviceNameObj = options[@"deviceName"];
+        if([deviceNameObj isKindOfClass:[NSNumber class]]){
+            if([deviceNameObj boolValue] == NO){
+                options[@"noDeviceName"] = @"noDeviceName";
+            }
+        }
+        
         /// 这个无法用textView设置，只能默认设置
-        manager->initWithOptions(options);
+        manager->initWithOptions([options copy]);
     }else if ([@"getBlackbox" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* blackBox = manager->getBlackBox();
