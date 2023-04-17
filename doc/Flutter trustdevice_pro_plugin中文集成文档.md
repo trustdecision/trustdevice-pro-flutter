@@ -32,6 +32,28 @@ dependencies:
 
 2.Android权限申请
 
+在应⽤module下的 AndroidManifest.xml ⽂件中声明以下权限
+
+```xml
+<manifest>
+   <!--必选权限-->
+   <!--网络通信-->
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <!--获取网络状态-->
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   <!--获取WIFI状态-->
+   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+   <!--以下权限是可选权限，不声明此部分权限将放弃部分设备信息的采集，对数据分析及设备指纹的精准度有一定影响-->
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+   <!-- Android11及以上获取安装包列表需要该权限，采集安装包列表涉及到⻛险合规，是否需要该权限业务⽅⾃⾏选
+择 -->
+   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+</manifest>
+```
+
 动态申请权限：针对 Android 6.0 及以上版本需要动态申请权限，动态申请权限代码必须放在初始化插件之前，代码示例如下：
 
 ```
