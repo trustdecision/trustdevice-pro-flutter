@@ -10,7 +10,9 @@ Please note that when integrating SDK products provided by the TrustDecision in 
 
 1.2 To provide business security and risk control services to your company, the TrustDecision SDK will collect, process, and use the identification information（IMEI/IDFA）, AndroidID, IMSI, MEID, MAC address, SIM card serial number, device type, device model, system type, geographical location, login IP address, application list, running process, sensor information(light sensor, gravity sensor, magnetic field sensor, acceleration sensor, gyroscope sensor) and other device information of the user's device. To ensure compliance with your use of related services, the aforementioned privacy policy should cover the authorization of TrustDecision SDK to provide services and collect, process, and use relevant information. The following terms are for your reference. The specific expression can be determined by your company according to the overall framework and content of your privacy agreement:
 
+```
 TrustDecision SDK: For business security and risk control, our company uses the TrustDecision SDK. The SDK needs to obtain the information of your devices, such as （IMEI/IDFA）, AndroidID, IMSI, MAC address, SIM card serial number, device type, device model, system type, geographic location, login IP address, application list, running process, sensor information(light sensor, gravity sensor, magnetic field sensor, acceleration sensor, gyroscope sensor) and other related device information, for fraud risk identification.
+```
 
 **Privacy Protocol:** https://www.trustdecision.com/legal/privacy-policy
 
@@ -53,7 +55,9 @@ select -->
 
 Dynamic application permissions: Android 6.0 or above requires dynamic application permissions. Dynamic application permissions code must be placed before the initial plugin. The code example is as follows:
 
-```
+```dart
+//The following permissions are not required to be applied for, 
+//and can be selectively applied for according to business conditions
  Future<void> _requestPermission() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
@@ -131,7 +135,7 @@ class _MyAppState extends State<MyApp> {
   <tr>
     <td>country</td>
     <td> Country code</td>
-    <td>Country/region parameters, such as cn sg us fra,Fill in the corresponding parameters according to country and region of business.<br><b>Options:</b><br>cn: means China;<br>sg: means Singapore;<br>us: means North America;<br>fra: means Europe</td>
+    <td> cn: means China;<br>sg: means Singapore;<br>us: means North America;<br>fra: means Europe</td>
     <td>All</td>
     <td>
     options["country"] = "[Your country code]"
@@ -172,7 +176,6 @@ Sample Code
 Android obfuscated packaging If developers need to use proguard for obfuscated packaging, please add the following code to the proguard configuration file:
 
 ```java
-#TONGDUN
 -keep class cn.tongdun.**{*;}
 ```
 
@@ -287,8 +290,8 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
   </tr>
   <tr>
     <td>readPhone</td>
-    <td>Whether collect READ_PHONE related information</td>
-    <td>default is true,SDK will collect READ_PHONE information if app gained READ_PHONE_STATE permission<br><b>Options:</b><br>true: collect READ_PHONE related information;<br>false: not collect READ_PHONE related information</td>
+    <td>Whether collect READ_PHONE_STATE related information</td>
+    <td>default is true,SDK will collect READ_PHONE_STATE information if app gained READ_PHONE_STATE permission<br><b>Options:</b><br>true: collect READ_PHONE_STATE related information;<br>false: not collect READ_PHONE_STATE related information</td>
     <td>Android</td>
     <td>
     options["readPhone"] = true

@@ -10,7 +10,9 @@
 
 1.2 为向贵司提供业务安全和风控服务，同盾SDK将采集、处理、使用用户的手机终端唯一标志信息（IMEI/IDFA）、Android ID、IMSI、MEID、MAC 地址、SIM 卡序列号、设备序列号、设备类型、设备型号、系统类型、地理位置、登录 IP 地址等设备信息。为确保贵司使用相关服务的合规性，前述隐私政策应涵盖对同盾SDK提供服务并采集、处理、使用相关信息的授权，以下条款内容供贵司参考，具体表述可由贵司根据贵司隐私协议的整体框架和内容自行确定：
 
+```
 同盾SDK：为了业务安全和风控，我司使用了同盾 SDK，该 SDK 需要获取您的手机终端唯一标志信息（IMEI/IDFA）、Android ID、IMSI、MEID、MAC 地址、SIM卡序列号、设备序列号、设备类型、设备型号、系统类型、地理位置、登录 IP 地址、应用程序列表、运行中进程信息、传感器（光传感器、重力传感器、磁场传感器、加速度传感器、陀螺仪传感器）相关设备信息，用于设备欺诈风险识别。
+```
 
 同盾隐私协议：https://www.tongdun.cn/other/privacy/id=1
 
@@ -134,13 +136,14 @@ class _MyAppState extends State<MyApp> {
   <tr>
     <td>country</td>
     <td>国家地区</td>
-    <td>国家地区参数，如cn  sg  us fra,根据国家地区填写对应参数。<br>cn代表中国，<br>sg代表新加坡，<br>us代表北美，<br>fra代表欧洲</td>
+    <td>cn代表中国，<br>sg代表新加坡，<br>us代表北美，<br>fra代表欧洲</td>
     <td>All</td>
     <td>
    options["country"] = "请输入您所在的国家地区"
     </td>
   </tr>
 </table>
+
 
 我们也提供了可选参数配置，详情可以见附表（初始化配置可选参数列表）
 
@@ -267,7 +270,7 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
   </tr>
   <tr>
     <td>readPhone</td>
-    <td>是否采集READ_PHONE相关信息</td>
+    <td>是否采集READ_PHONE_STATE相关信息</td>
     <td>默认true，采集需要READ_PHONE_STATE权限。<br><b>选项:</b><br>true:采集READ_PHONE相关信息；<br>false:不采集READ_PHONE相关信息</td>
     <td>Android</td>
     <td>
