@@ -1,7 +1,11 @@
-## 0.1.0
+## 1.1.0
 
-* Initial implementation
+* Optimize and modify configuration
 
 ## 1.0.0
 
 * document modification
+## 0.1.0
+
+* Initial implementation
+
