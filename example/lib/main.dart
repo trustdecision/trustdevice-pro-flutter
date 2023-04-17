@@ -155,10 +155,10 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<String> _initWithOptions() async {
     var options = {
-      "partner": "请输入您的合作方编码",
-      "appKey": "请输入您的appKey",
-      "appName": "请输入您的appName",
-      "country": "请输入您所在的国家地区",
+      "partner": "[Your partner]",
+      "appKey": "[Your appKey]",
+      "appName": "[Your appName]",
+      "country": "[Your country code]",
     };
     //initialize the configuration and return the blackbox
     var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
