@@ -16,9 +16,6 @@
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSDictionary* configOptions = call.arguments;
         NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithDictionary:configOptions];
-        [options setObject:^(NSString *blackBox) {
-            result(blackBox);
-        } forKey:@"callback"];
         
         // 参数处理
         id allowedObj = options[@"debug"];
@@ -27,7 +24,7 @@
                 options[@"allowed"] = @"allowed";
             }
         }
-           
+        
         id locationObj = options[@"location"];
         if([locationObj isKindOfClass:[NSNumber class]]){
             if([locationObj boolValue] == NO){
@@ -55,7 +52,13 @@
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* blackBox = manager->getBlackBox();
         result(blackBox);
-    }else if ([@"getSDKVersion" isEqualToString:call.method]) {
+    }else if ([@"getBlackboxAsync" isEqualToString:call.method]) {
+        TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+        manager->getBlackBoxAsync(^(NSString* blackBox){
+            result(blackBox);
+        });
+    }
+    else if ([@"getSDKVersion" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* version = manager->getSDKVersion();
         result(version);

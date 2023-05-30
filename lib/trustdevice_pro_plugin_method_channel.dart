@@ -24,4 +24,10 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     String result = await methodChannel.invokeMethod("getBlackbox");
     return result;
   }
+
+
+  Future<String> getBlackboxAsync() async {
+    String result = await methodChannel.invokeMethod("getBlackboxAsync");
+    return result;
+  }
 }

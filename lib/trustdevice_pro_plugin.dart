@@ -15,6 +15,12 @@ class TrustdeviceProPlugin {
   Future<String> getBlackbox() {
     return TrustdeviceProPluginPlatform.instance.getBlackbox();
   }
+
+    ///Get blackbox Async
+  Future<String> getBlackboxAsync() {
+    return TrustdeviceProPluginPlatform.instance.getBlackboxAsync();
+  }
+
 }
 
 class TDRisk {
