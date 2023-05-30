@@ -72,6 +72,7 @@ dependencies:
 
 ```
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
+import 'package:flutter/foundation.dart';
 // ...
 
 // Initialization
@@ -85,6 +86,7 @@ class _MyAppState extends State<MyApp> {
       "appKey": "请输入您的appKey",
       "appName": "请输入您的appName",
       "country": "请输入您所在的国家地区",
+      "debug":kDebugMode, // 上线时删除本行代码，防止应用被调试
     };
     //初始化配置并返回blackbox
     var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
@@ -147,18 +149,38 @@ class _MyAppState extends State<MyApp> {
 
 我们也提供了可选参数配置，详情可以见附表（初始化配置可选参数列表）
 
-4.获取blackbox代码示例如下
+## 获取blackBox
 
-**注意事项**
 
-+ 请在 `initWithOptions`后 `getBlackBox`，否则会引起SDK异常
-+ 建议开发者不要在App内对 `getBlackBox`返回的结果进行缓存，获取blackbox请依赖此函数
+### 注意事项
++ 请确保在调用过一次 `SDK初始化（initWithOptions）方法，`调用 blackBox（getBlackBox方法 或 getBlackBoxAsync方法）`，否则会引起SDK异常
 
+### 同步方法 getBlackBox
+
+
+#### 使用场景说明
+**优点：**会立即返回blackBox，不受网络状态的影响；<br/>**缺点：**在集成设备指纹SDK后，在之前没有获取到非降级blackBox的情况下，会返回降级blackBox，会增大后续查询接口上传的数据量，数据量大小为5000字节左右；<br/>**适用场景：**需要立即获取blackBox的场景；<br/>
+
+#### 示例代码
 ```dart
- Future<String> _getPlatformBlackBox() async {
+  Future<String> _getBlackBox() async {
     var blackbox = await _trustdeviceProPlugin.getBlackbox();
     return Future.value(blackbox);
   }
+```
+
+### 异步方法 getBlackBoxAsync
+
+#### 使用场景说明
+**优点：**网络正常情况下返回非降级blackBox，会降低后续查询接口上传的数据量，数据量大小为26字节左右；<br/>**缺点：**不是立即返回，根据网络情况进行等待，一般耗时300ms左右返回；<br/>**适用场景：**需要获取最新且为非降级blackBox的场景；<br/>
+
+#### 示例代码
+```dart
+  Future<String> _getBlackBoxAsync() async {
+    var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
+    return Future.value(blackbox);
+  }
+
 ```
 
 ## 获取SDK版本号

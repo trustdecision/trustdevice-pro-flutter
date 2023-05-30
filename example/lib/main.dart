@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -105,19 +105,41 @@ class _MyAppState extends State<MyHomePage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    var future = _getPlatformBlackBox();
+                    var future = _getBlackBox();
                     future.then((blackbox) => {
                           setState(() {
                             if (blackbox != null) {
                               _mBlackbox = blackbox;
                               print(
-                                  "${_TAG} getPlatformBlackBox blackbox: ${_mBlackbox}");
+                                  "${_TAG} getBlackBox blackbox: ${_mBlackbox}");
                             }
                           })
                         });
                   },
                   child: Text(
                     "Get blackbox",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(),
+                  onPressed: () {
+                    var future = _getBlackBoxAsync();
+                    future.then((blackbox) => {
+                          setState(() {
+                            if (blackbox != null) {
+                              _mBlackbox = blackbox;
+                              print(
+                                  "${_TAG} getBlackBox blackbox: ${_mBlackbox}");
+                            }
+                          })
+                        });
+                  },
+                  child: Text(
+                    "Get blackbox Async",
                     style: TextStyle(color: Colors.white),
                   )),
             ),
@@ -155,10 +177,11 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<String> _initWithOptions() async {
     var options = {
-      "partner": "[Your partner]",
-      "appKey": "[Your appKey]",
-      "appName": "[Your appName]",
-      "country": "[Your country code]",
+      "partner": "tongdun",  // 需要替换成你自己的
+      "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
+      "appName": "App", // 需要替换成你自己的
+      "country": "cn", // 需要替换成你自己的
+      "debug":kDebugMode, // 上线时删除本行代码，防止应用被调试
     };
     //initialize the configuration and return the blackbox
     var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
@@ -168,8 +191,17 @@ class _MyAppState extends State<MyHomePage> {
   /**
    * Get blackox
    */
-  Future<String> _getPlatformBlackBox() async {
+  Future<String> _getBlackBox() async {
     var blackbox = await _trustdeviceProPlugin.getBlackbox();
     return Future.value(blackbox);
   }
+
+    /**
+   * Get blackox Async
+   */
+  Future<String> _getBlackBoxAsync() async {
+    var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
+    return Future.value(blackbox);
+  }
+
 }
