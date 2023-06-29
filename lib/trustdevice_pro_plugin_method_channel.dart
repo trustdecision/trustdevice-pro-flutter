@@ -14,17 +14,14 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     return result;
   }
 
-  Future<String> initWithOptions(Map<String, dynamic> configMap) async {
-    String result =
-        await methodChannel.invokeMethod("initWithOptions", configMap);
-    return result;
+  Future<void> initWithOptions(Map<String, dynamic> configMap) async {
+    methodChannel.invokeMethod("initWithOptions", configMap);
   }
 
   Future<String> getBlackbox() async {
     String result = await methodChannel.invokeMethod("getBlackbox");
     return result;
   }
-
 
   Future<String> getBlackboxAsync() async {
     String result = await methodChannel.invokeMethod("getBlackboxAsync");

@@ -48,12 +48,6 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
                     HashMap<String, Object> configMap = call.arguments();
                     // SDK初始化配置
                     TDRisk.Builder builder = TDFultterRiskUtils.mapToBuilder(configMap);
-                    builder.callback(new TDRiskCallback() {
-                        @Override
-                        public void onEvent(String blackbox) {
-                            result.success(blackbox);
-                        }
-                    });
                     TDRisk.initWithOptions(mApplicationContext, builder);
                 }
             });
@@ -64,6 +58,18 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
                 public void run() {
                     String blackbox = TDRisk.getBlackBox();
                     result.success(blackbox);
+                }
+            });
+        } else if (call.method.equals("getBlackboxAsync")) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    TDRisk.getBlackBox(new TDRiskCallback() {
+                        @Override
+                        public void onEvent(String blackbox) {
+                            result.success(blackbox);
+                        }
+                    });
                 }
             });
         } else if (call.method.equals("getSDKVersion")) {

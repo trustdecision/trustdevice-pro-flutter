@@ -16,7 +16,7 @@ class MockTrustdeviceProPluginPlatform
   }
 
   @override
-  Future<String> initWithOptions(Map<String, dynamic> configMap) {
+  Future<void> initWithOptions(Map<String, dynamic> configMap) {
     // TODO: implement initWithOptions
     throw UnimplementedError();
   }

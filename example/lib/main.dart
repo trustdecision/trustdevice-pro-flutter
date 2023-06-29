@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
-import 'package:trustdevice_pro_plugin_example/td_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -81,18 +80,7 @@ class _MyAppState extends State<MyHomePage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    ProgressDialog.showProgress(context);
-                    _initWithOptions()
-                        .then((blackbox) => {
-                              setState(() {
-                                if (blackbox != null) {
-                                  _mBlackbox = blackbox;
-                                  print(
-                                      "${_TAG} initWithOptions blackbox: ${_mBlackbox}");
-                                }
-                              })
-                            })
-                        .whenComplete(() => ProgressDialog.dismiss(context));
+                    _initWithOptions();
                   },
                   child: Text(
                     "initialization",
@@ -175,17 +163,16 @@ class _MyAppState extends State<MyHomePage> {
   /**
    *Initialize the configuration and return to blackbox
    */
-  Future<String> _initWithOptions() async {
+  Future<void> _initWithOptions() async {
     var options = {
-      "partner": "tongdun",  // 需要替换成你自己的
+      "partner": "tongdun", // 需要替换成你自己的
       "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
       "appName": "App", // 需要替换成你自己的
       "country": "cn", // 需要替换成你自己的
-      "debug":kDebugMode, // 上线时删除本行代码，防止应用被调试
+      "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
     };
-    //initialize the configuration and return the blackbox
-    var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
-    return Future.value(blackbox);
+    //initialize the configuration
+    _trustdeviceProPlugin.initWithOptions(options);
   }
 
   /**
@@ -196,12 +183,11 @@ class _MyAppState extends State<MyHomePage> {
     return Future.value(blackbox);
   }
 
-    /**
+  /**
    * Get blackox Async
    */
   Future<String> _getBlackBoxAsync() async {
     var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
     return Future.value(blackbox);
   }
-
 }

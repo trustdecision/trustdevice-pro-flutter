@@ -7,7 +7,7 @@ class TrustdeviceProPlugin {
   }
 
   ///Initialize the configuration and return to blackbox
-  Future<String> initWithOptions(Map<String, dynamic> configMap) {
+  Future<void> initWithOptions(Map<String, dynamic> configMap) {
     return TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
   }
 

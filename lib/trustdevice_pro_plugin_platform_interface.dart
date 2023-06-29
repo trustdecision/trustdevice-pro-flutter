@@ -24,7 +24,7 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String> initWithOptions(Map<String, dynamic> configMap) {
+  Future<void> initWithOptions(Map<String, dynamic> configMap) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
