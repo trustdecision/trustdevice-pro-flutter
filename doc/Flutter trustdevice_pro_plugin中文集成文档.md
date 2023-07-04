@@ -22,7 +22,7 @@
 
 ## 快速开始
 
-1.将trustdevice_pro_plugin添加到Flutter应用程序中的pubspec.yaml
+### 1.将trustdevice_pro_plugin添加到Flutter应用程序中的pubspec.yaml
 
 ```
 dependencies:
@@ -32,7 +32,7 @@ dependencies:
   trustdevice_pro_plugin: ^1.1.0
 ```
 
-2.Android权限申请
+### 2.Android权限申请
 
 在应⽤module下的 AndroidManifest.xml ⽂件中声明以下权限
 
@@ -68,7 +68,7 @@ dependencies:
   }
 ```
 
-3.初始化配置
+### `<a id="appendix">`3.初始化配置`</a>`
 
 ```
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -157,7 +157,7 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 
 **Q1**：引入终端SDK后，工程无法再进行 Xcode 调试，如何解决？
 
-**A1**：请参考 [SDK初始化](#SDK初始化) 在终端SDK初始化时，加入如下参数
+**A1**：请参考 `<a href="#appendix">`3.初始化配置 `</a>` 在终端SDK初始化时，加入如下参数
 
 ```vue
 options["debug"] = true
