@@ -20,9 +20,11 @@
 
 确保在用户同意隐私协议后，再进行插件配置初始化，避免出现用户未同意隐私协议就进行插件初始化采集，引发合规风险。
 
-## 快速开始
+# 集成步骤
 
-### 1.将trustdevice_pro_plugin添加到Flutter应用程序中的pubspec.yaml
+## 集成SDK
+
+ 将trustdevice_pro_plugin添加到Flutter应用程序中的pubspec.yaml
 
 ```
 dependencies:
@@ -32,7 +34,7 @@ dependencies:
   trustdevice_pro_plugin: ^1.1.0
 ```
 
-### 2.Android权限申请
+## Android权限申请
 
 在应⽤module下的 AndroidManifest.xml ⽂件中声明以下权限
 
@@ -68,7 +70,9 @@ dependencies:
   }
 ```
 
-### `<a id="appendix">`3.初始化配置`</a>`
+## SDK初始化
+
+**示例代码**
 
 ```
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -102,22 +106,6 @@ class _MyAppState extends State<MyApp> {
 | appName  | 应用名称   | 同盾平台注册的应用名称，请联系同盾运营获取                                                                                                                       | All  | options["appName"] = "请输入您的appName"      |
 | country  | 国家地区   | cn代表中国，sg代表新加坡，us代表北美，fra代表欧洲                                                                                                                | All  | options["country"] = "请输入您所在的国家地区" |
 
-我们也提供了可选参数配置，详情可以见附表（初始化配置可选参数列表）
-
-4.获取blackbox代码示例如下
-
-**注意事项**
-
-* 请在 `initWithOptions`后 `getBlackBox`，否则会引起SDK异常
-* 建议开发者不要在App内对 `getBlackBox`返回的结果进行缓存，获取blackbox请依赖此函数
-
-```
-Future<String> _getPlatformBlackBox() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackbox();
-    return Future.value(blackbox);
-  }
-```
-
 ## 获取SDK版本号
 
 **示例代码**
@@ -138,7 +126,7 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 -keep class cn.tongdun.**{*;}
 ```
 
-## 初始化配置可选参数列表
+## initWithOptions选传参数
 
 | 配置 key           | 定义                                  | 说明                                                                                                                                                                                                                                                  | 平台    | 示例代码                             |
 | ------------------ | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------ |
@@ -153,12 +141,30 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 | readPhone          | 是否采集READ_PHONE_STATE相关信息      | 默认true，采集需要READ_PHONE_STATE权限。**选项:** true，采集READ_PHONE_STATE相关信息；false，不采集READ_PHONE_STATE相关信息；                                                                                                                   | Android | options["readPhone"] = true          |
 | installPackageList | 是否采集安装包列表                    | 默认true，采集安装包列表, 可以调用此方法进行关闭**选项：**true，采集安装包列表；false，不采集安装包列表；                                                                                                                                             | Android | options["installPackageList"] = true |
 
+
+## 获取blackbox
+
+**注意事项**
+
++ 请在 `initWithOptions`后 `getBlackBox`，否则会引起SDK异常
++ 建议开发者不要在App内对 `getBlackBox`返回的结果进行缓存，获取blackbox请依赖此函数
+
+**示例代码**
+
+```
+Future<String> _getPlatformBlackBox() async {
+    var blackbox = await _trustdeviceProPlugin.getBlackbox();
+    return Future.value(blackbox);
+  }
+```
+
+
 # FAQ
 
 **Q1**：引入终端SDK后，工程无法再进行 Xcode 调试，如何解决？
 
-**A1**：请参考 `<a href="#appendix">`3.初始化配置 `</a>` 在终端SDK初始化时，加入如下参数
+**A1**：请参考 [SDK初始化](#SDK初始化) 在终端SDK初始化时，加入如下参数
 
-```vue
+```
 options["debug"] = true
 ```

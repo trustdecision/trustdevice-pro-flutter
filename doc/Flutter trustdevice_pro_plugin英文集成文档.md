@@ -10,17 +10,23 @@ Please note that when integrating SDK products provided by the TrustDecision in 
 
 1.2 To provide business security and risk control services to your company, the TrustDecision SDK will collect, process, and use the identification information（IMEI/IDFA）, AndroidID, IMSI, MEID, MAC address, SIM card serial number, device type, device model, system type, geographical location, login IP address, application list, running process, sensor information(light sensor, gravity sensor, magnetic field sensor, acceleration sensor, gyroscope sensor) and other device information of the user's device. To ensure compliance with your use of related services, the aforementioned privacy policy should cover the authorization of TrustDecision SDK to provide services and collect, process, and use relevant information. The following terms are for your reference. The specific expression can be determined by your company according to the overall framework and content of your privacy agreement:
 
-```
-TrustDecision SDK: For business security and risk control, our company uses the TrustDecision SDK. The SDK needs to obtain the information of your devices, such as （IMEI/IDFA）, AndroidID, IMSI, MAC address, SIM card serial number, device type, device model, system type, geographic location, login IP address, application list, running process, sensor information(light sensor, gravity sensor, magnetic field sensor, acceleration sensor, gyroscope sensor) and other related device information, for fraud risk identification.
-```
+<table border="1">
+    <tr>
+        <td style="background-color:#FAFAFA"><font size="2">TrustDecision SDK: For business security and risk control, our company uses the TrustDecision SDK. The SDK needs to obtain the information of your devices, such as （IMEI/IDFA）, AndroidID, IMSI, MAC address, SIM card serial number, device type, device model, system type, geographic location, login IP address, application list, running process, sensor information(light sensor, gravity sensor, magnetic field sensor, acceleration sensor, gyroscope sensor) and other related device information, for fraud risk identification.</font></td>
+    </tr>
+</table>
 
-**Privacy Protocol:** https://www.trustdecision.com/legal/privacy-policy
+**Privacy Protocol:**  [https://www.trustdecision.com/legal/privacy-policy](https://www.trustdecision.com/legal/privacy-policy)
 
 **Precautions**
 
-Ensure that the trustdevice_pro_plugin is initialized after the user agrees to the privacy agreement, so as to avoid the occurrence of trustdevice_pro_plugin initialization and collection without the user's consent to the privacy agreement, which may cause compliance risks.
+When the installation starts for the first time, the SDK initialization is performed after the user agrees with the privacy agreement.
+Avoid SDK initialization collection without the user agreeing to the privacy agreement, causing compliance risk accidents.
 
-## Quick start
+
+# Integrate Steps
+
+## Integrated SDK
 
 1.Add `trustdevice_pro_plugin` to the pubspec.yaml in your Flutter app
 
@@ -32,7 +38,7 @@ dependencies:
   trustdevice_pro_plugin: ^1.1.0
 ```
 
-2.Android permission application
+## Android permission application
 
 Declare the following permissions in the AndroidManifest.xml file under the application module
 
@@ -66,7 +72,9 @@ Dynamic application permissions: Android 6.0 or above requires dynamic applicati
   }
 ```
 
-3.Initial configuration
+## Initialization
+
+**Sample Code**
 
 ```dart
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -143,21 +151,6 @@ class _MyAppState extends State<MyApp> {
   </tr>
 </table>
 
-We also provide optional parameter configuration, see the attached table for details (list of optional parameters for initial configuration)
-
-4.Get the blackbox code example as follows
-
-**Attention**
-
-- Please `getBlackBox` after `initWithOptions`, otherwise SDK exceptions will be caused.
-- We suggest that developers do not cache the results returned by `getBlackBox` in the app. Please rely on this function to get blackbox.
-
-```dart
- Future<String> _getPlatformBlackBox() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackbox();
-    return Future.value(blackbox);
-  }
-```
 
 ## Get SDK Version
 
@@ -179,7 +172,7 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
 -keep class cn.tongdun.**{*;}
 ```
 
-## Initial configuration optional parameter list
+## initWithOptions Optional Parameter
 
 <table>
   <tr>
@@ -190,12 +183,12 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
     <th>Sample code</th>
   </tr>
   <tr>
-    <td>allowed</td>
+    <td>debug</td>
     <td>Whether allow debug</td>
     <td>default is false,After the SDK is integrated, the app has the anti-debugging function by default. <br><b>Develop: </b>Please set value to true.<br><b>Release: </b>Please not set this key or set value to false <br><b>Options:</b><br>true: allow debug;<br>false: not allow debug</td>
     <td>All</td>
     <td>
-    options["allowed"] = true
+    options["debug"] = true
    </td>
   </tr>
   <tr>
@@ -306,5 +299,29 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
     options["installPackageList"] = true
   </td>
   </tr>
+</table>
 
+## Get Blackbox
+
+**Attention**
+
+- Please `getBlackBox` after `initWithOptions`, otherwise SDK exceptions will be caused.
+- We suggest that developers do not cache the results returned by `getBlackBox` in the app. Please rely on this function to get blackbox.
+
+```dart
+ Future<String> _getPlatformBlackBox() async {
+    var blackbox = await _trustdeviceProPlugin.getBlackbox();
+    return Future.value(blackbox);
+  }
+```
+
+# FAQ
+
+**Q1**：After Integrating the TrustDecision SDK, the project cannot be debugged in Xcode. How to solve it?
+
+**A1**：Please refer to [Initialization](#Initialization) When the TrustDecision SDK is initialized, add the following parameters
+
+```
+options["debug"] = true
+```
 
