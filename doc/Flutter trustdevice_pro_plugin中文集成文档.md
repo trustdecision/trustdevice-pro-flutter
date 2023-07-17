@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.1.0
+  trustdevice_pro_plugin: ^1.2.0
 ```
 
 ## Android权限申请
@@ -84,14 +84,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() async {
     super.initState();
-    var options = {
+    _initWithOptions();
+  }
+  //initialize the configuration
+  Future<void> _initWithOptions() async {
+     var options = {
       "partner": "请输入您的合作方编码",
       "appKey": "请输入您的appKey",
       "appName": "请输入您的appName",
       "country": "请输入您所在的国家地区",
     };
-    //初始化配置并返回blackbox
-    var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
+    _trustdeviceProPlugin.initWithOptions(options);
   }
   // ...
 }

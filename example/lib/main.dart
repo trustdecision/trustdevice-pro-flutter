@@ -42,7 +42,10 @@ class _MyAppState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _requestPermission();
+    // _requestPermission().then((value) => {
+    //
+    // })
+    _initWithOptions();
   }
 
   @override
@@ -161,7 +164,7 @@ class _MyAppState extends State<MyHomePage> {
   }
 
   /**
-   *Initialize the configuration and return to blackbox
+   *Initialize the configuration
    */
   Future<void> _initWithOptions() async {
     var options = {

@@ -35,7 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.1.0
+  trustdevice_pro_plugin: ^1.2.0
 ```
 
 ## Android permission application
@@ -86,14 +86,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() async {
     super.initState();
+    _initWithOptions();
+  }
+  //initialize the configuration
+  Future<void> _initWithOptions() async {
     var options = {
             "partner": "[Your partner]",
             "appKey": "[Your appKey]",
             "appName": "[Your appName]",
             "country": "[Your country code]",
         };
-    //initialize the configuration and return the blackbox
-    var blackbox = await _trustdeviceProPlugin.initWithOptions(options);
+     _trustdeviceProPlugin.initWithOptions(options);
   }
   // ...
 }
