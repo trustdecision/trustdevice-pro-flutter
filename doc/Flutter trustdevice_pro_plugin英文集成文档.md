@@ -84,7 +84,7 @@ import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 class _MyAppState extends State<MyApp> {
   final _trustdeviceProPlugin = TrustdeviceProPlugin();
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     _initWithOptions();
   }
