@@ -1,5 +1,7 @@
 package com.trustdecision.trustdevice_pro_plugin;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 
 import cn.tongdun.mobrisk.TDRisk;
@@ -42,7 +44,10 @@ public class TDFultterRiskUtils {
             builder.appName((String) configMap.get(KEY_APPNAME));
         }
         if (configMap.containsKey(KEY_COUNTRY)) {
-            builder.country((String) configMap.get(KEY_COUNTRY));
+            String country = (String) configMap.get(KEY_COUNTRY);
+            if (!TextUtils.isEmpty(country)) {
+                builder.country(country.toUpperCase());
+            }
         }
         if (configMap.containsKey(KEY_DEBUG)) {
             Object debug = configMap.get(KEY_DEBUG);
