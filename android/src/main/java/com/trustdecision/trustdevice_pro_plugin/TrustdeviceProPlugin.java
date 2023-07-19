@@ -1,6 +1,8 @@
 package com.trustdecision.trustdevice_pro_plugin;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 
@@ -10,7 +12,10 @@ import java.util.HashMap;
 
 import cn.tongdun.mobrisk.TDRisk;
 import cn.tongdun.mobrisk.TDRiskCallback;
+import cn.tongdun.mobrisk.TDRiskCaptchaCallback;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -19,7 +24,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 /**
  * TrustdeviceProPlugin
  */
-public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
+public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -28,6 +33,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private Context mApplicationContext;
+    private Activity mActivity;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -75,6 +81,35 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
         } else if (call.method.equals("getSDKVersion")) {
             String sdkVersion = TDRisk.getSDKVersion();
             result.success(sdkVersion);
+        } else if (call.method.equals("showCaptcha")) {
+            if (mActivity != null) {
+                TDRisk.showCaptcha(mActivity, new TDRiskCaptchaCallback() {
+                    @Override
+                    public void onReady() {
+                        HashMap<String, Object> argMap = new HashMap<>();
+                        argMap.put("function", "onReady");
+                        channel.invokeMethod("showCaptcha", argMap);
+                    }
+
+                    @Override
+                    public void onSuccess(String token) {
+                        HashMap<String, Object> argMap = new HashMap<>();
+                        argMap.put("function", "onSuccess");
+                        argMap.put("token", token);
+                        channel.invokeMethod("showCaptcha", argMap);
+                    }
+
+                    @Override
+                    public void onFailed(int errorCode, String errorMsg) {
+                        HashMap<String, Object> argMap = new HashMap<>();
+                        argMap.put("function", "onFailed");
+                        argMap.put("errorCode", errorCode);
+                        argMap.put("errorMsg", errorMsg);
+                        channel.invokeMethod("showCaptcha", argMap);
+                    }
+                });
+            }
+
         } else {
             result.notImplemented();
         }
@@ -84,6 +119,28 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler {
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
         if (mHandlerThread != null)
-            mHandlerThread.quitSafely();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                mHandlerThread.quitSafely();
+            }
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        mActivity = binding.getActivity();
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        mActivity = null;
     }
 }

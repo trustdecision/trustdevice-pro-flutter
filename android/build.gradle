@@ -35,4 +35,6 @@ android {
 }
 dependencies {
     implementation 'com.trustdecision.android:mobrisk:4.2.5.1'
+    // captcha
+    implementation 'com.trustdecision.android:captcha:2.2.0'
 }

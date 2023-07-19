@@ -135,6 +135,25 @@ class _MyAppState extends State<MyHomePage> {
                   )),
             ),
             Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(),
+                  onPressed: () {
+                    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
+                      print("${_TAG} 验证码弹窗成功，等待验证!");
+                    }, onSuccess: (String token) {
+                      print("${_TAG} 验证成功!，validateToken:" + token);
+                    }, onFailed: (int errorCode, String errorMsg) {
+                      print("${_TAG} 验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                    }));
+                  },
+                  child: Text(
+                    "showCaptcha",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
               child: Text("blackbox : ${_mBlackbox}"),
@@ -192,5 +211,12 @@ class _MyAppState extends State<MyHomePage> {
   Future<String> _getBlackBoxAsync() async {
     var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
     return Future.value(blackbox);
+  }
+
+  /**
+   * showCaptcha
+   */
+  Future<void> _showCaptcha(TDRiskCaptchaCallback callback) async {
+    await _trustdeviceProPlugin.showCaptcha(callback);
   }
 }

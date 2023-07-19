@@ -1,4 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 import 'trustdevice_pro_plugin_method_channel.dart';
 
@@ -35,7 +36,9 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
   Future<String> getBlackboxAsync() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
-
+  Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
   Future<String> getSDKVersion() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
