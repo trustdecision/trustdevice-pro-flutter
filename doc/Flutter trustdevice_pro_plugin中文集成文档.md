@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.2.0
+  trustdevice_pro_plugin: ^1.2.1
 ```
 
 ## Android权限申请
@@ -129,6 +129,7 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 -keep class cn.tongdun.**{*;}
 ```
 
+# 设备指纹功能模块
 ## initWithOptions选传参数
 
 | 配置 key           | 定义                                  | 说明                                                                                                                                                                                                                                                  | 平台    | 示例代码                             |
@@ -145,21 +146,188 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 | installPackageList | 是否采集安装包列表                    | 默认true，采集安装包列表, 可以调用此方法进行关闭**选项：**true，采集安装包列表；false，不采集安装包列表；                                                                                                                                             | Android | options["installPackageList"] = true |
 
 
-## 获取blackbox
+### 同步方法 getBlackBox
 
-**注意事项**
-
-+ 请在 `initWithOptions`后 `getBlackBox`，否则会引起SDK异常
-+ 建议开发者不要在App内对 `getBlackBox`返回的结果进行缓存，获取blackbox请依赖此函数
+#### 使用场景说明
+**优点：** 会立即返回blackBox，不受网络状态的影响；<br/>**缺点：** 在集成设备指纹SDK后，在之前没有获取到非降级blackBox的情况下，会返回降级blackBox，会增大后续查询接口上传的数据量，数据量大小为5000字节左右；<br/>**适用场景：** 需要立即获取blackBox的场景；<br/>
 
 **示例代码**
 
-```
-Future<String> _getPlatformBlackBox() async {
+```dart
+  Future<String> _getBlackBox() async {
     var blackbox = await _trustdeviceProPlugin.getBlackbox();
     return Future.value(blackbox);
   }
 ```
+
+### 异步方法 getBlackBoxAsync
+
+
+#### 使用场景说明
+**优点：** 网络正常情况下返回非降级blackBox，会降低后续查询接口上传的数据量，数据量大小为26字节左右；<br/>**缺点：** 不是立即返回，根据网络情况进行等待，一般耗时300ms左右返回；<br/>**适用场景：** 需要获取最新且为非降级blackBox的场景；<br/>
+
+**示例代码**
+
+```dart
+  Future<String> _getBlackBoxAsync() async {
+    var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
+    return Future.value(blackbox);
+  }
+```
+
+
+
+# 验证码功能模块
+
+## initWithOptions选传参数
+
+<table>
+  <tr>
+    <th>配置 key</th>
+    <th>定义</th>
+    <th>说明</th>
+    <th>场景</th>
+    <th>示例代码</th>
+  </tr>
+  <tr>
+    <td>language</td>
+    <td>语言类型</td>
+    <td><b>可选项：</b> <br>1-简体中文、2-繁体中文、3-英 文、4-日文、5-韩文、6-⻢来语、7-泰语、8-印尼语、9-俄 语  <br><b>默认：</b> <br>1-简体中文 </td>
+    <td>客户根据需要设置语言类型。<br>国内支持1-5<br>海外支持1-9</td>
+    <td>
+       options[language"] = "1"
+    </td>
+  </tr>
+  <tr>
+    <td>tapToClose</td>
+    <td>点击空白处是否关闭验证码</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b> false  </td>
+    <td>开启后，点击界面空白处，会关闭验证码弹窗，关闭弹窗更加便捷</td>
+    <td>
+     options[tapToClose"] = true
+    </td>
+  </tr>
+  <tr>
+    <td>needSeqid</td>
+    <td>失败回调信息中是否携带seqid</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b>true  </td>
+    <td>开启后，失败信息中会携带seqid序列号，将seqid提供给同盾，方便排查失败原因</td>
+    <td>
+      options[needSeqid"] = true
+     </td>
+  </tr>
+  <tr>
+    <td>hideLoadHud</td>
+    <td>是否跳过加载动画</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b>false  </td>
+    <td>开启后，弹出验证码弹窗时不会再显示加载动画，缩短验证时间</td>
+    <td>
+      options[hideLoadHud"] = true
+     </td>
+  </tr>
+  <tr>
+    <td>hideWebCloseButton</td>
+    <td>是否隐藏webview的关闭按钮</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b>false  </td>
+    <td>需要强制完成验证码验证的场景</td>
+    <td>
+      options[hideWebCloseButton"] = true
+     </td>
+  </tr>
+  <tr>
+    <td>openLog</td>
+    <td>是否打开log</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b>false  </td>
+    <td>开启后，调试时控制台会输出更多的log信息，方便排查问题</td>
+    <td>
+      options[openLog"] = true
+     </td>
+  </tr>
+  <tr>
+    <td>skipCaptcha</td>
+    <td>是否跳过同盾验证码验证</td>
+    <td><b>可选项：</b> true、false  <br><b>默认：</b>false  </td>
+    <td>开启将不会进行验证码的验证，同时返回4000错误码，用于动态设置是否使用同盾验证码SDK验证的场景</td>
+    <td>
+      options[skipCaptcha"] = true
+     </td>
+  </tr>
+  <tr>
+    <td>mfaId</td>
+    <td>MFA产品</td>
+    <td><b>可选项：</b> string  <br><b>默认：</b>nil  </td>
+    <td>如果您接入了MFA产品（未对接MFA，可忽略该说明），请将MFA流程中获取的 `mfaid`传递给验证码配置参数</td>
+    <td>
+     options[mfaId"] = "mfaId string"
+     </td>
+  </tr>
+</table>
+
+## 弹出验证码弹窗
+
+
+**示例代码**
+
+```dart
+
+ElevatedButton(
+                  style: ElevatedButton.styleFrom(),
+                  onPressed: () {
+                    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
+                      print("${_TAG} 验证码弹窗成功，等待验证!");
+                    }, onSuccess: (String token) {
+                      print("${_TAG} 验证成功!，validateToken:" + token);
+                    }, onFailed: (int errorCode, String errorMsg) {
+                      print("${_TAG} 验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                    }));
+                  },
+                  child: Text(
+                    "showCaptcha",
+                    style: TextStyle(color: Colors.white),
+                  )),
+
+```
+
+## 错误码
+
+验证码功能模块的错误码会通过 showCaptcha 函数输出
+
+| 错误码  | 错误信息         | 处理方式                     |
+| ---- | ------------ | ------------------------ |
+| 1001 | 关闭了验证码窗口     | 弹出验证码后，用户手动取消了验证码，不需要处理  |
+| 2001 | 请求参数异常，请检查参数 | 请检查appName和partnerCode参数 |
+| 2100 | 请求参数异常，请检查参数 | 请检查传递参数                  |
+| 2101 | 请求参数异常，请检查参数 | 请求过程出错，请联系运营             |
+| 2102 | 请求参数异常，请检查参数 | 参数缺失，请检查参数               |
+| 2111 | 验证⻚面网络错误     | 稍后再试，或者请联系运营             |
+| 2112 | 验证⻚面操作太频繁    | 稍后再试                     |
+| 2113 | 未知错误         | 未知错误，请联系运营               |
+| 2114 | 关闭了验证码窗口     | 点击了验证码关闭按钮，不需要处理         |
+| 2115 | 验证⻚面网络错误     | 网络资源加载失败                 |
+| 2116 | 验证⻚面网络错误     | 网络资源加载失败                 |
+| 2202 | 验证成功         | 验证结果成功，不需要处理             |
+| 2301 | 未购买此服务       | 请联系运营                    |
+| 2302 | 流量已被禁用       | 请联系运营                    |
+| 2303 | 流量不足         | 请联系运营                    |
+| 2304 | 服务已过期        | 请联系运营                    |
+| 2305 | 日流量已封顶       | 请联系运营                    |
+| 2600 | 系统繁忙，请稍后再试   | 系统繁忙，请稍后再试               |
+| 2601 | 验证失败，稍后重试    | 验证失败，请稍后重试               |
+| 2602 | 验证失败，稍后重试    | 验证失败，请稍后重试               |
+| 2603 | 验证失败，稍后重试    | 验证失败，请稍后重试               |
+| 2604 | 验证失败，稍后重试    | 刷新频繁，请稍后重试               |
+| 2605 | 验证失败，稍后重试    | 获取验证码信息失败                |
+| 2702 | 验证失败，稍后重试    | 解析错误，请稍后重试               |
+| 3001 | SSL证书校验失败    | 请关闭网络代理工具                |
+| 3002 | 验证页面加载出错     | 刷新网络后重试                  |
+| 3003 | 验证⻚面加载超时     | 检查网络后重试                  |
+| 4000 | 验证逻辑跳过       | 开发者手动处理验证跳过逻辑            |
+| 9000 | 设备指纹没有挂载     | 集成验证码需要先集成设备指纹           |
+| 9001 | 没有网络         | 请检查网络连接                  |
+| 9002 | 请求超时         | 检查网络，稍后重试                |
+| 9003 | 返回结果异常       | 服务端错误，返回结果异常，联系技术支持      |
+| 9004 | 全局加载超时       | 检查网络，稍后重试                |
+
 
 
 # FAQ
