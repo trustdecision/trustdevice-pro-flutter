@@ -1,13 +1,47 @@
 #import "TrustdeviceProPlugin.h"
 #import <TDMobRisk/TDMobRisk.h>
+
+@interface TrustdeviceProPlugin()
+
+@end
+
+static FlutterMethodChannel* _channel = nil;
+
 @implementation TrustdeviceProPlugin
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"trustdevice_pro_plugin"
-            binaryMessenger:[registrar messenger]];
-  TrustdeviceProPlugin* instance = [[TrustdeviceProPlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
+    FlutterMethodChannel* channel = [FlutterMethodChannel
+                                     methodChannelWithName:@"trustdevice_pro_plugin"
+                                     binaryMessenger:[registrar messenger]];
+    TrustdeviceProPlugin* instance = [[TrustdeviceProPlugin alloc] init];
+    [registrar addMethodCallDelegate:instance channel:channel];
+    _channel = channel;
 }
+
+- (UIWindow *)getKeyWindow
+{
+    if (@available(iOS 13.0, *))
+        {
+        for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) {
+            if (windowScene.activationState == UISceneActivationStateForegroundActive)
+                {
+                for (UIWindow *window in windowScene.windows)
+                    {
+                    if (window.isKeyWindow)
+                        {
+                        return window;
+                        }
+                    }
+                }
+        }
+        }
+    else
+        {
+        return [UIApplication sharedApplication].keyWindow;
+        }
+    return nil;
+}
+
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
@@ -62,6 +96,29 @@
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* version = manager->getSDKVersion();
         result(version);
+    }else if ([@"showCaptcha" isEqualToString:call.method]) {
+        TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+        UIWindow *keyWindow = [self getKeyWindow];
+        manager->showCaptcha(keyWindow,^(TDShowCaptchaResultStruct resultStruct) {
+            NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+            switch (resultStruct.resultType) {
+                case TDShowCaptchaResultTypeSuccess:
+                    resultDictionary[@"function"] = @"onSuccess";
+                    resultDictionary[@"token"] = @(resultStruct.validateToken);
+                    break;
+                case TDShowCaptchaResultTypeFailed:
+                    resultDictionary[@"function"] = @"onFailed";
+                    resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
+                    resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                    break;
+                case TDShowCaptchaResultTypeReady:
+                    resultDictionary[@"function"] = @"onReady";
+                    break;
+                default:
+                    break;
+            }
+            [_channel invokeMethod:@"showCaptcha" arguments:resultDictionary];
+        });
     } else {
         result(FlutterMethodNotImplemented);
     }
