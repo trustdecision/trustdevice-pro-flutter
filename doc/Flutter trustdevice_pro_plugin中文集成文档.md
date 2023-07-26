@@ -143,9 +143,9 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 | runningTasks       | 是否允许获取正在运行的任务            | 默认true。**选项:** true，允许获取正在运行的任务；false，不允许获取正在运行的任务；                                                                                                                                                             | Android | options["runningTasks"] = true       |
 | sensor             | 是否采集传感器信息                    | 默认true，如果需要不采集传感器相关信息，可通过该方法取消采集相关信息**选项:** true，采集传感器信息；false，不采集传感器信息；                                                                                                                   | Android | options["sensor"] = true             |
 | readPhone          | 是否采集READ_PHONE_STATE相关信息      | 默认true，采集需要READ_PHONE_STATE权限。**选项:** true，采集READ_PHONE_STATE相关信息；false，不采集READ_PHONE_STATE相关信息；                                                                                                                   | Android | options["readPhone"] = true          |
-| installPackageList | 是否采集安装包列表                    | 默认true，采集安装包列表, 可以调用此方法进行关闭**选项：**true，采集安装包列表；false，不采集安装包列表；                                                                                                                                             | Android | options["installPackageList"] = true |
+| installPackageList | 是否采集安装包列表                    | 默认true，采集安装包列表, 可以调用此方法进行关闭**选项：** true，采集安装包列表；false，不采集安装包列表；                                                                                                                                             | Android | options["installPackageList"] = true |
 
-
+## 获取blackbox
 ### 同步方法 getBlackBox
 
 #### 使用场景说明
@@ -269,23 +269,13 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 **示例代码**
 
 ```dart
-
-ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
-                      print("${_TAG} 验证码弹窗成功，等待验证!");
-                    }, onSuccess: (String token) {
-                      print("${_TAG} 验证成功!，validateToken:" + token);
-                    }, onFailed: (int errorCode, String errorMsg) {
-                      print("${_TAG} 验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
-                    }));
-                  },
-                  child: Text(
-                    "showCaptcha",
-                    style: TextStyle(color: Colors.white),
-                  )),
-
+    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
+        print("验证码弹窗成功，等待验证!");
+    }, onSuccess: (String token) {
+        print("验证成功!，validateToken:" + token);
+    }, onFailed: (int errorCode, String errorMsg) {
+        print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+    }));
 ```
 
 ## 错误码

@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyHomePage> {
-  final _TAG = "MyAppState";
   final _trustdeviceProPlugin = TrustdeviceProPlugin();
   var _mBlackbox = "";
 
@@ -69,7 +68,6 @@ class _MyAppState extends State<MyHomePage> {
                           Fluttertoast.showToast(
                               msg: "The sdk version is ${sdkVersion}",
                               textColor: Colors.white)
-                          // print("${_TAG} getSDKVersion: ${sdkVersion}");
                         });
                   },
                   child: Text(
@@ -102,7 +100,7 @@ class _MyAppState extends State<MyHomePage> {
                             if (blackbox != null) {
                               _mBlackbox = blackbox;
                               print(
-                                  "${_TAG} getBlackBox blackbox: ${_mBlackbox}");
+                                  "getBlackBox blackbox: ${_mBlackbox}");
                             }
                           })
                         });
@@ -124,7 +122,7 @@ class _MyAppState extends State<MyHomePage> {
                             if (blackbox != null) {
                               _mBlackbox = blackbox;
                               print(
-                                  "${_TAG} getBlackBox blackbox: ${_mBlackbox}");
+                                  "getBlackBox blackbox: ${_mBlackbox}");
                             }
                           })
                         });
@@ -141,11 +139,11 @@ class _MyAppState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
                     _showCaptcha(TDRiskCaptchaCallback(onReady: () {
-                      print("${_TAG} 验证码弹窗成功，等待验证!");
+                      print("验证码弹窗成功，等待验证!");
                     }, onSuccess: (String token) {
-                      print("${_TAG} 验证成功!，validateToken:" + token);
+                      print("验证成功!，validateToken:" + token);
                     }, onFailed: (int errorCode, String errorMsg) {
-                      print("${_TAG} 验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                      print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
                     }));
                   },
                   child: Text(
