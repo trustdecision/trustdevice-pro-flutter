@@ -420,7 +420,7 @@ The error code of the captcha function module will be output through showCaptcha
 
 **Q1**：After Integrating the TrustDecision SDK, the project cannot be debugged in Xcode. How to solve it?
 
-**A1**：Please refer to [Initialization](#Initialization) When the TrustDecision SDK is initialized, add the following parameters
+**A1**：Please refer to [Initialization](#initialization) When the TrustDecision SDK is initialized, add the following parameters
 
 ```
 options["debug"] = true
