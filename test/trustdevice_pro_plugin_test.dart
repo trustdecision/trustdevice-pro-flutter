@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin_method_channel.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin_platform_interface.dart';
 
@@ -24,6 +25,18 @@ class MockTrustdeviceProPluginPlatform
   @override
   Future<String> getSDKVersion() {
     // TODO: implement getSDKVersion
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getBlackboxAsync() {
+    // TODO: implement getBlackboxAsync
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
+    // TODO: implement showCaptcha
     throw UnimplementedError();
   }
 }
