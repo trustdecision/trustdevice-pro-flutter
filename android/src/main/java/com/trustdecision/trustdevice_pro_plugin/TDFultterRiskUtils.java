@@ -120,7 +120,9 @@ public class TDFultterRiskUtils {
         if (configMap.containsKey(KEY_CAPTCHA_LANGUAGE)) {
             Object languageObj = configMap.get(KEY_CAPTCHA_LANGUAGE);
             if (languageObj != null) {
-                builder.language((Integer) languageObj);
+                String languageStr = (String) languageObj;
+                if (!TextUtils.isEmpty(languageStr))
+                    builder.language(Integer.parseInt(languageStr));
             }
         }
         if (configMap.containsKey(KEY_CAPTCHA_TAPTOCLOSE)) {
