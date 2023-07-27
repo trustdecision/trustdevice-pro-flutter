@@ -175,6 +175,8 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
 -keep class cn.tongdun.**{*;}
 ```
 
+# Fingerprint
+
 ## initWithOptions Optional Parameter
 
 <table>
@@ -304,15 +306,21 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
   </tr>
 </table>
 
+
 ## Get Blackbox
+
+**Attention**
+
+- Please `getBlackBox` after `initWithOptions`,  otherwise SDK exceptions will be caused.
+- We suggest that developers do not cache the results returned by `getBlackBox` in the app. Please rely on this function to get blackbox.
 
 ### Synchronous method getBlackBox
 
 #### Usage Scenario Description
 
-**Advantages:** It will return blackBox immediately, not affected by the network status;<br/>**Disadvantages**: After integrating the device fingerprint SDK, if no non-downgraded blackBox has been obtained before, it will return downgraded blackBox will increase the amount of data uploaded by the subsequent query interface, and the data size is about 5000 bytes;<br/>**Applicable scenarios**: Scenarios that need to obtain blackBox immediately;<br/>
+**Advantages:** The blackBox will be returned immediately, not affected by the network status;<br/> **Disadvantages:** After the device fingerprint SDK is integrated, if the non-degraded blackBox has not been obtained before, it will return to the degraded blackBox will increase the amount of data uploaded by the subsequent query interface, and the data size is about 5000 bytes;<br/>**Applicable scenarios:** Scenes where blackBox needs to be obtained immediately;<br/>
 
-**Example Code**
+**Sample Code**
 
 ```dart
  Future<String> _getPlatformBlackBox() async {
@@ -326,9 +334,9 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
 
 #### Usage Scenario Description
 
-**Advantages: **Under normal circumstances, the network returns a non-degraded blackBox, which will reduce the amount of data uploaded by the subsequent query interface, and the data size is about 26 bytes;<br/>**Disadvantages:** Does not return immediately, according to the network It usually takes about 300ms to return;<br/>**Applicable scenario:** Need to get the latest and non-degraded blackBox scenario;<br/>
+**Advantages:** Under normal circumstances, the network returns a non-degraded blackBox, which will reduce the amount of data uploaded by the subsequent query interface, and the data size is about 26 bytes;<br/>**Disadvantages:** Not returned immediately, according to the network It usually takes about 300ms to return;<br/> **Applicable scenario:** Need to get the latest and non-degraded blackBox scenario;<br/>
 
-**Example Code**
+**Sample Code**
 
 ```dart
  Future<String> _getBlackBoxAsync() async {
