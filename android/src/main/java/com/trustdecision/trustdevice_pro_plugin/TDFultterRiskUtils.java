@@ -23,6 +23,16 @@ public class TDFultterRiskUtils {
     static final String KEY_FP_ANDROID_READ_PHONE = "readPhone";
     static final String KEY_FP_ANDROID_INSTALLPACKAGE_LIST = "installPackageList";
 
+    ///Android device Captcha configuration
+    static final String KEY_CAPTCHA_LANGUAGE = "language";
+    static final String KEY_CAPTCHA_TAPTOCLOSE = "tapToClose";
+    static final String KEY_CAPTCHA_NEEDSEQID = "needSeqid";
+    static final String KEY_CAPTCHA_HIDE_LOADHUD = "hideLoadHud";
+    static final String KEY_CAPTCHA_HIDE_WEBCLOSEBUTTON = "hideWebCloseButton";
+    static final String KEY_CAPTCHA_OPENLOG = "openLog";
+    static final String KEY_CAPTCHA_SKIP_CAPTCHA = "skipCaptcha";
+    static final String KEY_CAPTCHA_MFAID = "mfaId";
+
     /**
      * 转换configMap成builder
      *
@@ -104,6 +114,55 @@ public class TDFultterRiskUtils {
             if (installPackageList != null) {
                 if (!(boolean) installPackageList)
                     builder.disableInstallPackageList();
+            }
+        }
+        ///Android device Captcha configuration
+        if (configMap.containsKey(KEY_CAPTCHA_LANGUAGE)) {
+            Object languageObj = configMap.get(KEY_CAPTCHA_LANGUAGE);
+            if (languageObj != null) {
+                builder.language((Integer) languageObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_TAPTOCLOSE)) {
+            Object tapToCloseObj = configMap.get(KEY_CAPTCHA_TAPTOCLOSE);
+            if (tapToCloseObj != null) {
+                builder.tapToClose((Boolean) tapToCloseObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_NEEDSEQID)) {
+            Object needSeqidObj = configMap.get(KEY_CAPTCHA_NEEDSEQID);
+            if (needSeqidObj != null) {
+                builder.needSeqId((Boolean) needSeqidObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_HIDE_LOADHUD)) {
+            Object hideLoadHudObj = configMap.get(KEY_CAPTCHA_HIDE_LOADHUD);
+            if (hideLoadHudObj != null) {
+                builder.hideLoadHud((Boolean) hideLoadHudObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_HIDE_WEBCLOSEBUTTON)) {
+            Object hideWebCloseButtonObj = configMap.get(KEY_CAPTCHA_HIDE_WEBCLOSEBUTTON);
+            if (hideWebCloseButtonObj != null) {
+                builder.hideWebCloseButton((Boolean) hideWebCloseButtonObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_OPENLOG)) {
+            Object openLogObj = configMap.get(KEY_CAPTCHA_OPENLOG);
+            if (openLogObj != null) {
+                builder.openLog((Boolean) openLogObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_SKIP_CAPTCHA)) {
+            Object skipCaptchaObj = configMap.get(KEY_CAPTCHA_SKIP_CAPTCHA);
+            if (skipCaptchaObj != null) {
+                builder.skipCaptcha((Boolean) skipCaptchaObj);
+            }
+        }
+        if (configMap.containsKey(KEY_CAPTCHA_MFAID)) {
+            Object mfaIdObj = configMap.get(KEY_CAPTCHA_MFAID);
+            if (mfaIdObj != null) {
+                builder.mfaId((String) mfaIdObj);
             }
         }
         return builder;
