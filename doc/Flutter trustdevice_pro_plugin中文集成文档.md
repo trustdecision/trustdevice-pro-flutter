@@ -269,7 +269,7 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 **示例代码**
 
 ```dart
-    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
+    _trustdeviceProPlugin.showCaptcha(TDRiskCaptchaCallback(onReady: () {
         print("验证码弹窗成功，等待验证!");
     }, onSuccess: (String token) {
         print("验证成功!，validateToken:" + token);
