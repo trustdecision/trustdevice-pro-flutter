@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
@@ -31,6 +32,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     private Handler mHandler;
+    private Handler mMainHandler;
     private HandlerThread mHandlerThread;
     private Context mApplicationContext;
     private Activity mActivity;
@@ -43,6 +45,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
         mHandlerThread = new HandlerThread("TDFlutterPlugin_android");
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
+        mMainHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -63,7 +66,12 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                 @Override
                 public void run() {
                     String blackbox = TDRisk.getBlackBox();
-                    result.success(blackbox);
+                    mMainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(blackbox);
+                        }
+                    });
                 }
             });
         } else if (call.method.equals("getBlackboxAsync")) {
@@ -73,7 +81,12 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                     TDRisk.getBlackBox(new TDRiskCallback() {
                         @Override
                         public void onEvent(String blackbox) {
-                            result.success(blackbox);
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    result.success(blackbox);
+                                }
+                            });
                         }
                     });
                 }
