@@ -89,7 +89,9 @@ static FlutterMethodChannel* _channel = nil;
     }else if ([@"getBlackboxAsync" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         manager->getBlackBoxAsync(^(NSString* blackBox){
-            result(blackBox);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                result(blackBox);
+            });
         });
     }
     else if ([@"getSDKVersion" isEqualToString:call.method]) {
