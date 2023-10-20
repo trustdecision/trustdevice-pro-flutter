@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Compatible with Flutterjni callbacks must have a main thread
+* fix bug
 ## 1.2.0
 
 * Change initialization method, add new getBlackBoxAsync method
