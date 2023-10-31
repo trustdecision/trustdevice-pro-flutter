@@ -119,7 +119,7 @@ class TDRiskConfiguration {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'parter': partner,
+      'partner': partner,
       'appKey': appKey,
       'appName': appName,
       'country': country.code,
