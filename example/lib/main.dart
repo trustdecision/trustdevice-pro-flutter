@@ -1,9 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 void main() {
@@ -19,16 +19,15 @@ class MyApp extends StatelessWidget {
       title: 'trustdevice_pro_plugin',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'trustdevice_pro_plugin'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyAppState();
@@ -41,148 +40,81 @@ class _MyAppState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // _requestPermission().then((value) => {
-    //
-    // })
     _initWithOptions();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('TrustDevice Demo'),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: ListView(
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                    _getSDKVersion().then((sdkVersion) => {
-                          Fluttertoast.showToast(
-                              msg: "The sdk version is ${sdkVersion}",
-                              textColor: Colors.white)
-                        });
-                  },
-                  child: Text(
-                    "Get sdk version",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    _initWithOptions();
-                  },
-                  child: Text(
-                    "initialization",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    var future = _getBlackBox();
-                    future.then((blackbox) => {
-                          setState(() {
-                            if (blackbox != null) {
-                              _mBlackbox = blackbox;
-                              print(
-                                  "getBlackBox blackbox: ${_mBlackbox}");
-                            }
-                          })
-                        });
-                  },
-                  child: Text(
-                    "Get blackbox",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    var future = _getBlackBoxAsync();
-                    future.then((blackbox) => {
-                          setState(() {
-                            if (blackbox != null) {
-                              _mBlackbox = blackbox;
-                              print(
-                                  "getBlackBox blackbox: ${_mBlackbox}");
-                            }
-                          })
-                        });
-                  },
-                  child: Text(
-                    "Get blackbox Async",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
-                      print("验证码弹窗成功，等待验证!");
-                    }, onSuccess: (String token) {
-                      print("验证成功!，validateToken:" + token);
-                    }, onFailed: (int errorCode, String errorMsg) {
-                      print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
-                    }));
-                  },
-                  child: Text(
-                    "showCaptcha",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
-              child: Text("blackbox : ${_mBlackbox}"),
-            )
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              final version = await _getSDKVersion();
+              _showMessage(version);
+            },
+            child: const Text("Get sdk version"),
+          ),
+          ElevatedButton(
+            onPressed: _initWithOptions,
+            child: const Text("initialization"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final blackbox = await _getBlackBox();
+              setState(() {
+                _mBlackbox = blackbox;
+                print("getBlackBox blackbox: $_mBlackbox");
+              });
+            },
+            child: const Text("Get blackbox"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final blackbox = await _getBlackBoxAsync();
+              setState(() {
+                _mBlackbox = blackbox;
+                print("getBlackBox blackbox: $_mBlackbox");
+              });
+            },
+            child: const Text("Get blackbox Async"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _showCaptcha(TDRiskCaptchaCallback(onReady: () {
+                print("验证码弹窗成功，等待验证!");
+              }, onSuccess: (String token) {
+                print("验证成功!，validateToken:$token");
+              }, onFailed: (int errorCode, String errorMsg) {
+                print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+              }));
+            },
+            child: const Text("showCaptcha"),
+          ),
+          Text("blackbox : $_mBlackbox"),
+        ],
       ),
     );
   }
 
-  /**
-   * request requestPermission
-   */
-  Future<void> _requestPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-      Permission.phone,
-    ].request();
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      action: SnackBarAction(label: 'OK', onPressed: () {}),
+    ));
   }
 
-  /**
-   * Obtain the sdk version number
-   */
+  /// Obtain the sdk version number
   Future<String> _getSDKVersion() async {
     var sdkVersion = await _trustdeviceProPlugin.getSDKVersion();
     return Future.value(sdkVersion);
   }
 
-  /**
-   *Initialize the configuration
-   */
+  /// Initialize the configuration
   Future<void> _initWithOptions() async {
     var options = {
       "partner": "tongdun", // 需要替换成你自己的
@@ -195,25 +127,19 @@ class _MyAppState extends State<MyHomePage> {
     _trustdeviceProPlugin.initWithOptions(options);
   }
 
-  /**
-   * Get blackox
-   */
+  /// Get blackox
   Future<String> _getBlackBox() async {
     var blackbox = await _trustdeviceProPlugin.getBlackbox();
     return Future.value(blackbox);
   }
 
-  /**
-   * Get blackox Async
-   */
+  /// Get blackox Async
   Future<String> _getBlackBoxAsync() async {
     var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
     return Future.value(blackbox);
   }
 
-  /**
-   * showCaptcha
-   */
+  /// showCaptcha
   Future<void> _showCaptcha(TDRiskCaptchaCallback callback) async {
     await _trustdeviceProPlugin.showCaptcha(callback);
   }
