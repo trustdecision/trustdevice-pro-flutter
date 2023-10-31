@@ -90,13 +90,13 @@ class _MyAppState extends State<MyApp> {
   }
   //initialize the configuration
   Future<void> _initWithOptions() async {
-    var options = {
-            "partner": "[Your partner]",
-            "appKey": "[Your appKey]",
-            "appName": "[Your appName]",
-            "country": "[Your country code]",
-        };
-     _trustdeviceProPlugin.initWithOptions(options);
+    var options = TDRiskConfiguration(
+      partner: "[Your partner]",
+      appKey: "[Your appKey]",
+      appName: "[Your appName]",
+      country: "[Your country code]",
+    );
+    _trustdeviceProPlugin.initWithOptions(options);
   }
   // ...
 }
@@ -414,7 +414,11 @@ The error code of the captcha function module will be output through showCaptcha
 
 **A1**：Please refer to [Initialization](#Initialization) When the TrustDecision SDK is initialized, add the following parameters
 
-```
-options["debug"] = true
+```dart
+var options = TDRiskConfiguration(
+  ...
+  debug: true,
+  ...
+);
 ```
 

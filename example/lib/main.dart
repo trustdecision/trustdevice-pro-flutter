@@ -184,15 +184,15 @@ class _MyAppState extends State<MyHomePage> {
    *Initialize the configuration
    */
   Future<void> _initWithOptions() async {
-    var options = {
-      "partner": "tongdun", // 需要替换成你自己的
-      "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
-      "appName": "App", // 需要替换成你自己的
-      "country": "cn", // 需要替换成你自己的
-      "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
-    };
+    var options = TDRiskConfiguration(
+      partner: "tongdun", // 需要替换成你自己的
+      appKey: "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
+      appName: "app", // 需要替换成你自己的
+      country: TDRiskCountry.china, // 需要替换成你自己的
+      debug: kDebugMode, // 上线时删除本行代码，防止应用被调试
+    );
     //initialize the configuration
-    _trustdeviceProPlugin.initWithOptions(options);
+    _trustdeviceProPlugin.initWithConfigurations(options);
   }
 
   /**
