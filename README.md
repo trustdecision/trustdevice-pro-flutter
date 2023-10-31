@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
       appName: "[Your appName]",
       country: "[Your country code]",
     );
-    _trustdeviceProPlugin.initWithOptions(options);
+    _trustdeviceProPlugin.initWithConfigurations(options);
   }
   // ...
 }
@@ -175,7 +175,7 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
 -keep class cn.tongdun.**{*;}
 ```
 
-## initWithOptions Optional Parameter
+## initWithConfigurations Optional Parameter
 
 <table>
   <tr>
