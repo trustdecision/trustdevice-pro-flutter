@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.2.1
+  trustdevice_pro_plugin: ^1.2.2
 ```
 
 ## Android权限申请
@@ -49,6 +49,7 @@ dependencies:
    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
    <!--以下权限是可选权限，不声明此部分权限将放弃部分设备信息的采集，对数据分析及设备指纹的精准度有一定影响-->
+   <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
    <uses-permission android:name="android.permission.READ_PHONE_STATE" />

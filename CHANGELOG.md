@@ -1,3 +1,7 @@
+## 1.2.2
+
+* Update the Mobisk version to 4.3.1.3
+* Add googleAid parameters
 ## 1.2.1
 
 * Compatible with Flutterjni callbacks must have a main thread

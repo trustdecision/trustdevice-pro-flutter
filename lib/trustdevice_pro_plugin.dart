@@ -43,6 +43,7 @@ class TDRisk {
   static const KEY_FP_ANDROID_SENSOR = "sensor";
   static const KEY_FP_ANDROID_READ_PHONE = "readPhone";
   static const KEY_FP_ANDROID_INSTALLPACKAGE_LIST = "installPackageList";
+  static const KEY_FP_ANDROID_GOOGLE_AID = "googleAid";
 
   ///IOS device fingerprint configuration
   static const KEY_FP_IOS_IDFA = "IDFA";

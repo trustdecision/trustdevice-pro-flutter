@@ -35,7 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.2.1
+  trustdevice_pro_plugin: ^1.2.2
 ```
 
 ## Android permission application
@@ -50,6 +50,7 @@ Declare the following permissions in the AndroidManifest.xml file under the appl
    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
    <!--The following permissions are optional. If this part of the authority is not declared, the acquisition of some device information will be abandoned, which will have a certain effect on data analysis and the accuracy of the fingerprint of the device fingerprint-->
+   <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
    <uses-permission android:name="android.permission.READ_PHONE_STATE" />

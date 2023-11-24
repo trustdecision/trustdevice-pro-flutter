@@ -23,6 +23,8 @@ public class TDFultterRiskUtils {
     static final String KEY_FP_ANDROID_READ_PHONE = "readPhone";
     static final String KEY_FP_ANDROID_INSTALLPACKAGE_LIST = "installPackageList";
 
+    static final String KEY_FP_ANDROID_GOOGLE_AID = "googleAid";
+
     ///Android device Captcha configuration
     static final String KEY_CAPTCHA_LANGUAGE = "language";
     static final String KEY_CAPTCHA_TAPTOCLOSE = "tapToClose";
@@ -165,6 +167,13 @@ public class TDFultterRiskUtils {
             Object mfaIdObj = configMap.get(KEY_CAPTCHA_MFAID);
             if (mfaIdObj != null) {
                 builder.mfaId((String) mfaIdObj);
+            }
+        }
+        if (configMap.containsKey(KEY_FP_ANDROID_GOOGLE_AID)) {
+            Object enableGoogleAid = configMap.get(KEY_FP_ANDROID_GOOGLE_AID);
+            if (enableGoogleAid != null) {
+                if (!(boolean) enableGoogleAid)
+                    builder.disableGoogleAid();
             }
         }
         return builder;
