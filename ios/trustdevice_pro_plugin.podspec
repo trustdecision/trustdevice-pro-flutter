@@ -18,8 +18,8 @@ A new Flutter project.
   #s.vendored_frameworks = 'Frameworks/TDMobRisk.framework', 'Frameworks/TDCorePlugin.framework'
 
   s.dependency 'Flutter'
-  s.dependency 'TrustDecisionPro', '4.2.4.4'
-  s.dependency 'TrustDecisionCaptcha', '2.1.8.3'
+  s.dependency 'TrustDecisionPro', '4.2.6.1'
+  s.dependency 'TrustDecisionCaptcha', '2.1.8.4'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
