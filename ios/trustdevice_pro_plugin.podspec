@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'trustdevice_pro_plugin'
-  s.version          = '0.0.1'
+  s.version          = '1.2.3'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.
@@ -16,6 +16,7 @@ A new Flutter project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   #s.vendored_frameworks = 'Frameworks/TDMobRisk.framework', 'Frameworks/TDCorePlugin.framework'
+  s.static_framework = true
 
   s.dependency 'Flutter'
   s.dependency 'TrustDecisionPro', '4.2.6.1'
