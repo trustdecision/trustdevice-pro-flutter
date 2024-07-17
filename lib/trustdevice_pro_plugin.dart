@@ -1,5 +1,14 @@
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
+
+enum TDLivenessShowStyle {
+
+    TDLivenessShowStylePush,
+
+    TDLivenessShowStylePresent,
+}
+
+
 class TrustdeviceProPlugin {
   ///Obtain the sdk version number
   Future<String> getSDKVersion() {
@@ -62,10 +71,18 @@ class TDRiskCaptchaCallback {
     required this.onSuccess,
     required this.onFailed,
   });
+}
 
-// void onReady();
-//
-// void onSuccess(String token);
-//
-// void onFailed(int errorCode, String errorMsg);
+
+
+class TDLivenessCallback {
+  final void Function() onReady;
+  final void Function(String token) onSuccess;
+  final void Function(int errorCode, String errorMsg) onFailed;
+
+  const TDLivenessCallback({
+    required this.onReady,
+    required this.onSuccess,
+    required this.onFailed,
+  });
 }

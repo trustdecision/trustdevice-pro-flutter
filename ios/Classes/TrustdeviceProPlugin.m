@@ -21,27 +21,33 @@ static FlutterMethodChannel* _channel = nil;
 - (UIWindow *)getKeyWindow
 {
     if (@available(iOS 13.0, *))
-        {
+    {
         for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) {
             if (windowScene.activationState == UISceneActivationStateForegroundActive)
-                {
+            {
                 for (UIWindow *window in windowScene.windows)
-                    {
+                {
                     if (window.isKeyWindow)
-                        {
+                    {
                         return window;
-                        }
                     }
                 }
+            }
         }
-        }
+    }
     else
-        {
+    {
         return [UIApplication sharedApplication].keyWindow;
-        }
+    }
     return nil;
 }
 
+- (UIViewController *)getRootViewController
+{
+    UIWindow *keyWindow = [self getKeyWindow];
+    UIViewController*rootViewController = keyWindow.rootViewController;
+    return rootViewController;
+}
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
@@ -120,6 +126,38 @@ static FlutterMethodChannel* _channel = nil;
                     break;
             }
             [_channel invokeMethod:@"showCaptcha" arguments:resultDictionary];
+        });
+    }else if ([@"getRootViewController" isEqualToString:call.method]) {
+        UIViewController*rootViewController = [self getRootViewController];
+        result(rootViewController);
+    }else if ([@"showLiveness" isEqualToString:call.method]) {
+        TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+        
+        NSDictionary* configOptions = call.arguments;
+        NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithDictionary:configOptions];
+        
+        UIViewController*targetVC = options[@"targetVC"];
+        
+        UIViewController*license = options[@"license"];
+        
+        manager->showLivenessWithShowStyle(targetVC,license,TDLivenessShowStylePush,^(TDLivenessResultStruct resultStruct) {
+            if(resultStruct.resultType == TDLivenessResultTypeSuccess){
+                NSString*bestImageString = [NSString stringWithUTF8String:resultStruct.bestImageString];
+                // 如果存在最佳照片
+                if(bestImageString.length > 0){
+                    NSData* data = [[NSData alloc]initWithBase64EncodedString:bestImageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                    UIImage * image = [UIImage imageWithData:data];
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                }
+                
+                NSString*successMsg = [NSString stringWithUTF8String:resultStruct.errorMsg];
+                NSLog(@"successMsg-::%@,seqId:%s,score:%f",successMsg,resultStruct.seqId,resultStruct.score);
+            }else{
+                NSString*errorMsg = [NSString stringWithUTF8String:resultStruct.errorMsg];
+                NSLog(@"人脸检测失败，错误码:%ld,错误信息:%@",resultStruct.errorCode,errorMsg);
+            }
+            char const* livenessId_c = resultStruct.livenessId;
+            NSLog(@"livenessId_c---::%s",livenessId_c);
         });
     } else {
         result(FlutterMethodNotImplemented);

@@ -152,6 +152,23 @@ class _MyAppState extends State<MyHomePage> {
                   )),
             ),
             Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(),
+                  onPressed: () {
+                    _showLiveness(TDLivenessCallback(onSuccess: (String token) {
+                      print("验证成功!，validateToken:" + token);
+                    }, onFailed: (int errorCode, String errorMsg) {
+                      print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                    }));
+                  },
+                  child: Text(
+                    "showLiveness",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
               child: Text("blackbox : ${_mBlackbox}"),
@@ -217,4 +234,17 @@ class _MyAppState extends State<MyHomePage> {
   Future<void> _showCaptcha(TDRiskCaptchaCallback callback) async {
     await _trustdeviceProPlugin.showCaptcha(callback);
   }
+
+  /**
+   * showCaptcha
+   */
+  Future<void> _showLiveness(TDLivenessCallback callback) async {
+
+    UIViewController rootVC = getRootViewController();
+
+    String license = "xxxx";
+
+    await _trustdeviceProPlugin.showLivenessWithShowStyle(rootVC,license,callback);
+  }
+
 }

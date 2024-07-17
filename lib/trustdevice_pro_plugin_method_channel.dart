@@ -11,6 +11,9 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
   final methodChannel = const MethodChannel('trustdevice_pro_plugin');
   TDRiskCaptchaCallback? captchaCallback = null;
 
+  TDLivenessCallback? livenessCallback = null;
+
+
   MethodChannelTrustdeviceProPlugin() {
     methodChannel.setMethodCallHandler(_methodCallHandler);
   }
@@ -39,6 +42,21 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     await methodChannel.invokeMethod("showCaptcha");
   }
 
+
+  Future<UIViewController> getRootViewController() async {
+    String result = await methodChannel.invokeMethod("getBlackbox");
+    return result;
+  }
+
+  Future<void> showLivenessWithShowStyle(UIViewController targetVC,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
+    livenessCallback = callback;
+    await methodChannel.invokeMethod("showLiveness",{
+      'targetVC': targetVC,
+      'showStyle': showStyle,
+    });
+  }
+
+
   Future<void> _methodCallHandler(MethodCall call) async {
     //print("call.method :${call.method} call.arguments:${call.arguments}");
     switch (call.method) {
@@ -55,6 +73,19 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
             break;
           case 'onFailed':
             captchaCallback?.onFailed(arg["errorCode"], arg["errorMsg"]);
+            break;
+        }
+        break;
+      case 'showLiveness':
+        final dynamic arg = call.arguments;
+        var function = arg["function"];
+        if (function == null || livenessCallback == null) return;
+        switch (function) {
+          case 'onSuccess':
+            livenessCallback?.onSuccess(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["score"],arg["bestImageString"],arg["livenessId"]);
+            break;
+          case 'onFailed':
+            livenessCallback?.onFailed(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["livenessId"]);
             break;
         }
         break;

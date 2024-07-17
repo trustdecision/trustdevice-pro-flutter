@@ -19,8 +19,8 @@ A new Flutter project.
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency 'TrustDecisionPro', '4.2.6.1'
-  s.dependency 'TrustDecisionCaptcha', '2.1.8.4'
+  s.dependency 'TrustDecisionPro', '4.2.7.3'
+  s.dependency 'TrustDecisionLiveness', '2.3.2'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
