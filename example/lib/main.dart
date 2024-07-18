@@ -138,25 +138,6 @@ class _MyAppState extends State<MyHomePage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    _showCaptcha(TDRiskCaptchaCallback(onReady: () {
-                      print("验证码弹窗成功，等待验证!");
-                    }, onSuccess: (String token) {
-                      print("验证成功!，validateToken:" + token);
-                    }, onFailed: (int errorCode, String errorMsg) {
-                      print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
-                    }));
-                  },
-                  child: Text(
-                    "showCaptcha",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
                     _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
                       print("Liveness验证成功!seqId: $seqId");
                     }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
@@ -227,14 +208,7 @@ class _MyAppState extends State<MyHomePage> {
     var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
     return Future.value(blackbox);
   }
-
-  /**
-   * showCaptcha
-   */
-  Future<void> _showCaptcha(TDRiskCaptchaCallback callback) async {
-    await _trustdeviceProPlugin.showCaptcha(callback);
-  }
-
+  
   /**
    * showCaptcha
    */

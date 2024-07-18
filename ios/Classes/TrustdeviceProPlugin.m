@@ -140,7 +140,7 @@ static FlutterMethodChannel* _channel = nil;
         
         NSString*license = options[@"license"];
         
-        TDLivenessShowStyle showStyle = TDLivenessShowStylePresent;  //[options[@"showStyle"] intValue];
+        TDLivenessShowStyle showStyle = [options[@"showStyle"] intValue];
         
         manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
             NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
