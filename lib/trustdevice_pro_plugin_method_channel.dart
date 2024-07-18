@@ -77,22 +77,15 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
         }
         break;
       case 'showLivenessWithShowStyle':
-        print("showLivenessWithShowStyle---1");
         final dynamic arg = call.arguments;
         var function = arg["function"];
-        print("showLivenessWithShowStyle---1--" + function );
 
         if (function == null || livenessCallback == null) return;
-        print("showLivenessWithShowStyle---2--" + function );
-
         switch (function) {
           case 'onSuccess':
-            print("xxx--2");
             livenessCallback?.onSuccess(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["score"],arg["bestImageString"],arg["livenessId"]);
-            print("xxx--3");
             break;
           case 'onFailed':
-           // print("showLivenessWithShowStyle---5--" + arg["seqId"]+ arg["errorCode"]+arg["errorMsg"]+arg["livenessId"]);
             livenessCallback?.onFailed(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["livenessId"]);
             break;
         }

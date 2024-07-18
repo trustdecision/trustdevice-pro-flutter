@@ -144,7 +144,7 @@ static FlutterMethodChannel* _channel = nil;
         
         manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
             NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
-
+            
             if(resultStruct.resultType == TDLivenessResultTypeSuccess){
                 resultDictionary[@"function"] = @"onSuccess";
                 resultDictionary[@"seqId"] = @(resultStruct.seqId);
@@ -162,8 +162,6 @@ static FlutterMethodChannel* _channel = nil;
                 resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
                 
             }
-            
-            NSLog(@"resultDictionary---::%@",resultDictionary);
             [_channel invokeMethod:@"showLivenessWithShowStyle" arguments:resultDictionary];
         });
     } else {

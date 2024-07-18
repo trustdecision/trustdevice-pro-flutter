@@ -157,9 +157,8 @@ class _MyAppState extends State<MyHomePage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,int score,String bestImageString,String livenessId) {
-                    //  print("Liveness验证成功!seqId: $seqId");
-                      print("xxx--1");
+                    _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
+                      print("Liveness验证成功!seqId: $seqId");
                     }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
                       print("Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
                     }));
