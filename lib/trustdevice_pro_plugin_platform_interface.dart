@@ -36,9 +36,19 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
   Future<String> getBlackboxAsync() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
+
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
+
+   Future<dynamic> getRootViewController() {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
+
+  Future<void> showLivenessWithShowStyle(final targetVC,String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
+
   Future<String> getSDKVersion() {
     throw UnimplementedError('getResult() has not been implemented.');
   }

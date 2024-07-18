@@ -43,15 +43,16 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
   }
 
 
-  Future<UIViewController> getRootViewController() async {
-    String result = await methodChannel.invokeMethod("getBlackbox");
+  Future<dynamic> getRootViewController() async {
+    final result = await methodChannel.invokeMethod("getRootViewController");
     return result;
   }
 
-  Future<void> showLivenessWithShowStyle(UIViewController targetVC,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
+  Future<void> showLivenessWithShowStyle(final targetVC,String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
     livenessCallback = callback;
-    await methodChannel.invokeMethod("showLiveness",{
+    await methodChannel.invokeMethod("showLivenessWithShowStyle",{
       'targetVC': targetVC,
+      'license' : license,
       'showStyle': showStyle,
     });
   }

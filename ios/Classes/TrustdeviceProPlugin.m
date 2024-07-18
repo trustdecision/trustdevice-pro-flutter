@@ -138,9 +138,11 @@ static FlutterMethodChannel* _channel = nil;
         
         UIViewController*targetVC = options[@"targetVC"];
         
-        UIViewController*license = options[@"license"];
+        NSString*license = options[@"license"];
         
-        manager->showLivenessWithShowStyle(targetVC,license,TDLivenessShowStylePush,^(TDLivenessResultStruct resultStruct) {
+        TDLivenessShowStyle showStyle = [options[@"showStyle"] intValue];
+        
+        manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
             if(resultStruct.resultType == TDLivenessResultTypeSuccess){
                 NSString*bestImageString = [NSString stringWithUTF8String:resultStruct.bestImageString];
                 // 如果存在最佳照片

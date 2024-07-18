@@ -157,9 +157,9 @@ class _MyAppState extends State<MyHomePage> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    _showLiveness(TDLivenessCallback(onSuccess: (String token) {
-                      print("验证成功!，validateToken:" + token);
-                    }, onFailed: (int errorCode, String errorMsg) {
+                    _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,int score,String bestImageString,String livenessId) {
+                      print("验证成功!seqId:" + seqId);
+                    }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
                       print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
                     }));
                   },
@@ -240,11 +240,11 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _showLiveness(TDLivenessCallback callback) async {
 
-    UIViewController rootVC = getRootViewController();
+    final rootVC = await _trustdeviceProPlugin.getRootViewController();
 
     String license = "xxxx";
 
-    await _trustdeviceProPlugin.showLivenessWithShowStyle(rootVC,license,callback);
+    await _trustdeviceProPlugin.showLivenessWithShowStyle(rootVC,license,TDLivenessShowStyle.Present,callback);
   }
 
 }

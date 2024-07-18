@@ -3,9 +3,9 @@ import 'trustdevice_pro_plugin_platform_interface.dart';
 
 enum TDLivenessShowStyle {
 
-    TDLivenessShowStylePush,
+    Push,
 
-    TDLivenessShowStylePresent,
+    Present,
 }
 
 
@@ -34,6 +34,17 @@ class TrustdeviceProPlugin {
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
     return TrustdeviceProPluginPlatform.instance.showCaptcha(callback);
   }
+
+  ///getRootViewController
+  Future<dynamic> getRootViewController() {
+    return TrustdeviceProPluginPlatform.instance.getRootViewController();
+  }
+
+  ///showLivenessWithShowStyle
+  Future<void> showLivenessWithShowStyle(final targetVC,String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
+    return TrustdeviceProPluginPlatform.instance.showLivenessWithShowStyle(targetVC,license,showStyle,callback);
+  }
+
 }
 
 class TDRisk {
@@ -76,12 +87,10 @@ class TDRiskCaptchaCallback {
 
 
 class TDLivenessCallback {
-  final void Function() onReady;
-  final void Function(String token) onSuccess;
-  final void Function(int errorCode, String errorMsg) onFailed;
+  final void Function(String seqId,int errorCode,String errorMsg,int score,String bestImageString,String livenessId) onSuccess;
+  final void Function(String seqId,int errorCode,String errorMsg,String livenessId) onFailed;
 
   const TDLivenessCallback({
-    required this.onReady,
     required this.onSuccess,
     required this.onFailed,
   });
