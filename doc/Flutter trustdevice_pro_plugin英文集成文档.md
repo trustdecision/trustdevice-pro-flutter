@@ -415,6 +415,137 @@ The error code of the captcha function module will be output through showCaptcha
 | 9003       | Return result is abnormal                                    | Server error, return result is abnormal, contact technical support |
 | 9004       | Global loading timed out                                     | Check network, try again later                               |
 
+
+
+# Liveness Module
+
+## Initial configuration optional parameter list
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Definition</th>
+    <th>Description</th>
+    <th>Scene</th>
+    <th>Sample code</th>
+  </tr>
+  <tr>
+    <td>language</td>
+    <td>language type</td>
+     <td> Liveness detection prompt language </td>
+  <td><br/><b>Default:</b> </b><b>en</b> English <b>Options:</b> <br/> <b>en</b> English <br/><b>zh-Hans</b> Simplified Chinese <br/><b>zh-Hant</b> Traditional Chinese <br/><b>es</b> Spanish <br/><b>id</b> Indonesian <br/><b>ar</b> Arabic <br/><b>fil</b> Filipino <br/> <b>ko</b> Korean <br/><b>pt</b> Portuguese <br/><b>ru</b> Russian <br/><b>th</b> Thai <br/><b>tr</b> Turkish <br/><b>vi</b> Vietnamese </td>
+     <td> You can set the language type according to your needs </td>
+     <td><b>Objective C</b><br>
+   [options setValue:@"en" forKey:@"language"];
+<br><b>Swift</b><br>
+   options.updateValue("en", forKey: "language")</td>
+   </tr>
+<tr>
+     <td>playAudio</td>
+     <td>Whether to play audio </td>
+     <td> The default is NO, no audio will be played </td>
+     <td> When turned on, the corresponding prompt audio will be played </td>
+<td><b>Objective C</b><br>
+   [options setValue:@NO forKey:@"playAudio"];
+<br><b>Swift</b><br>
+   options.updateValue(false, forKey: "playAudio")</td>
+   </tr>
+   <tr>
+     <td>livenessDetectionThreshold</td>
+     <td>Difficulty threshold for live detection</td>
+     <td> Difficulty threshold for live detection, divided into three levels: high, medium, and low
+  The default is medium</td>
+     <td> Adjust to corresponding difficulty as needed </td>
+<td><b>Objective C</b><br>
+   [options setValue:@"medium" forKey:@"livenessDetectionThreshold"];
+<br><b>Swift</b><br>
+   options.updateValue("medium", forKey: "livenessDetectionThreshold")</td>
+   </tr>
+  <tr>
+     <td>livenessHttpTimeOut</td>
+     <td>SDK network timeout configuration (unit: seconds)</td>
+     <td> Default is 15s </td>
+     <td> Customers can set the network timeout according to their needs </td>
+     <td><b>Objective C</b><br>
+   [options setValue:@8 forKey:@"livenessHttpTimeOut"];
+<br><b>Swift</b><br>
+   options.updateValue(8, forKey: "livenessHttpTimeOut")</td>
+   </tr>
+   <tr>
+     <td>showReadyPage</td>
+     <td>When starting the face, the detection preparation page will pop up</td>
+     <td> Whether to display the preparation page, the default is YES, which means it will be displayed </td>
+     <td> After closing, the preparation page will not be displayed, and the identification process will be shorter </td>
+<td><b>Objective C</b><br>
+   [options setValue:@YES forKey:@"showReadyPage"];
+<br><b>Swift</b><br>
+   options.updateValue(true, forKey: "showReadyPage")</td>
+   </tr>
+   <tr>
+     <td>faceMissingInterval </td>
+     <td> Timeout when no face is detected (unit: milliseconds) </td>
+     <td> No face timeout, unit ms, default is 1000ms </td>
+     <td> Set the timeout period when no face is detected as needed </td>
+     <td><b>Objective C</b><br>
+   [options setValue:@(1000) forKey:@"faceMissingInterval"];
+<br><b>Swift</b><br>
+   options.updateValue(1000, forKey: "faceMissingInterval")</td>
+   </tr>
+   <tr>
+     <td>prepareStageTimeout</td>
+     <td> The starting time when preparing to detect the action (unit: seconds) </td>
+     <td> Preparation phase timeout, in seconds, the default is 0S, that is, it will never time out </td>
+     <td> Set the preparation phase timeout as needed </td>
+     <td><b>Objective C</b><br>
+   [options setValue:@(0) forKey:@"prepareStageTimeout"];
+<br><b>Swift</b><br>
+   options.updateValue(0, forKey: "prepareStageTimeout")</td>
+   </tr>
+   <tr>
+     <td>actionStageTimeout</td>
+     <td> In the action phase, the maximum verification time (unit: seconds) </td>
+     <td> Action phase timeout, unit second, default is 8S </td>
+     <td> Set the action phase timeout as needed </td>
+     <td><b>Objective C</b><br>
+   [options setValue:@(8) forKey:@"actionStageTimeout"];
+<br><b>Swift</b><br>
+   options.updateValue(8, forKey: "actionStageTimeout")</td>
+   </tr>
+</table>
+
+## Popup Liveness Window
+
+**Example Code**
+
+
+```dart
+    String license = "please use your license!!!";
+
+    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,TDLivenessShowStyle.Present,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
+          print("Liveness success!seqId: $seqId");
+       }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
+          print("Liveness failed!, errorCode: $errorCode errorMsg: $errorMsg");
+      }));
+```
+
+## Error Code
+
+| Code  | Message                                                 |
+| ----- | ------------------------------------------------------- |
+| 200   | success (live person)                                   |
+| 20700 | No face detected                                        |
+| 20702 | Person change detected                                  |
+| 20703 | Detection  timeout                                      |
+| 20705 | Screen lock or background exit during detection         |
+| 20710 | No camera permission                                    |
+| 20711 | User actively cancels detection on the preparation page |
+| 20712 | User  actively cancels detection on the detection page  |
+| 20749 | Inconsistent action, tilt head down                     |
+| 60001 | Network issue, failed to retrieve session               |
+| 60002 | Network issue, failed to call anti-hack                 |
+| 11350 | Internal error      
+
+
 # FAQ
 
 **Q1**：After Integrating the TrustDecision SDK, the project cannot be debugged in Xcode. How to solve it?

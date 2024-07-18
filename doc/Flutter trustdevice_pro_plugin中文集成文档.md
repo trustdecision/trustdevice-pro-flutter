@@ -321,6 +321,140 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 
 
 
+
+# 活体功能模块
+
+## initWithOptions选传参数
+
+<table>
+  <tr>
+    <th>配置 key</th>
+    <th>定义</th>
+    <th>说明</th>
+    <th>场景</th>
+    <th>示例代码</th>
+  </tr>
+  <tr>
+    <td>language</td>
+    <td>语言类型</td>
+  <td><br/><b>Default:</b> </b><b>en</b> 英语 <b>Options:</b> <br/> <b>en</b> 英语<br/><b>zh-Hans</b> 简体中文<br/><b>zh-Hant</b> 繁體中文<br/><b>es</b> 西班牙语<br/><b>id</b> 印尼语<br/><b>ar</b> 阿拉伯语<br/><b>fil</b> 菲律宾语<br/> <b>ko</b> 韩语<br/><b>pt</b> 葡萄牙语<br/><b>ru</b> 俄语<br/><b>th</b> 泰语<br/><b>tr</b> 土耳其语<br/><b>vi</b> 越南语  </td>
+    <td>客户根据需要设置语言类型 </td>
+    <td><b>Objective C</b><br>
+  [options setValue:@"en" forKey:@"language"];
+<br><b>Swift</b><br>
+  options.updateValue("en", forKey: "language")</td>
+  </tr>
+  <tr>
+    <td>playAudio</td>
+    <td>是否播报语音</td>
+    <td> 默认为 NO，不播报语音    </td>
+    <td> 开启后，会播报对应提示语音 </td>
+<td><b>Objective C</b><br>
+  [options setValue:@NO forKey:@"playAudio"];
+<br><b>Swift</b><br>
+  options.updateValue(false, forKey: "playAudio")</td>
+  </tr>
+  <tr>
+    <td>livenessDetectionThreshold</td>
+    <td>活体检测难易度阈值</td>
+    <td> 活体检测难易度阈值，分为high、medium、low三个等级
+ 默认为medium，中等难度    </td>
+    <td> 根据需要，调整为对应难度 </td>
+<td><b>Objective C</b><br>
+  [options setValue:@"medium" forKey:@"livenessDetectionThreshold"];
+<br><b>Swift</b><br>
+  options.updateValue("medium", forKey: "livenessDetectionThreshold")</td>
+  </tr>
+  <tr>
+    <td>livenessHttpTimeOut</td>
+    <td>SDK网络超时时间配置（单位:秒）</td>
+    <td> 默认为15s  </td>
+    <td> 客户根据需要设置网络超时时间 </td>
+    <td><b>Objective C</b><br>
+  [options setValue:@8 forKey:@"livenessHttpTimeOut"];
+<br><b>Swift</b><br>
+  options.updateValue(8, forKey: "livenessHttpTimeOut")</td>
+  </tr>
+  <tr>
+    <td>showReadyPage</td>
+    <td>启动人脸时，会弹出检测准备页面</td>
+    <td> 是否显示准备页面, 默认为 YES， 即显示    </td>
+    <td> 关闭后，不显示准备页面，识别流程更短 </td>
+<td><b>Objective C</b><br>
+  [options setValue:@YES forKey:@"showReadyPage"];
+<br><b>Swift</b><br>
+  options.updateValue(true, forKey: "showReadyPage")</td>
+  </tr>
+  <tr>
+    <td>faceMissingInterval </td>
+    <td> 没有检测到人脸时的超时时间 （单位:毫秒）</td>
+    <td> 无人脸超时时间， 单位ms 默认为 1000ms   </td>
+    <td> 根据需要设置没有检测到人脸时的超时时间 </td>
+    <td><b>Objective C</b><br>
+  [options setValue:@(1000) forKey:@"faceMissingInterval"];
+<br><b>Swift</b><br>
+  options.updateValue(1000, forKey: "faceMissingInterval")</td>
+  </tr>
+  <tr>
+    <td>prepareStageTimeout</td>
+    <td> 准备检测动作时候的起始时间 （单位:秒）</td>
+    <td> 准备阶段超时时间， 单位秒 默认为 0S， 即永远不超时  </td>
+    <td> 根据需要设置 准备阶段超时时间 </td>
+    <td><b>Objective C</b><br>
+  [options setValue:@(0) forKey:@"prepareStageTimeout"];
+<br><b>Swift</b><br>
+  options.updateValue(0, forKey: "prepareStageTimeout")</td>
+  </tr>
+  <tr>
+    <td>actionStageTimeout</td>
+    <td> 动作阶段中, 最长验证时间 （单位:秒）</td>
+    <td> 动作阶段超时时间， 单位秒 默认为 8S </td>
+    <td> 根据需要设置 动作阶段超时时间 </td>
+    <td><b>Objective C</b><br>
+  [options setValue:@(8) forKey:@"actionStageTimeout"];
+<br><b>Swift</b><br>
+  options.updateValue(8, forKey: "actionStageTimeout")</td>
+  </tr>
+</table>
+
+
+## 弹出活体弹窗
+
+
+**示例代码**
+
+```dart
+    String license = "使用您的license!!!";
+
+    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,TDLivenessShowStyle.Present,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
+          print("Liveness验证成功!seqId: $seqId");
+       }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
+          print("Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+      }));
+```
+
+## 错误码
+
+
+| 代码  | 提示                                                         | 是否计费 |
+| ----- | ------------------------------------------------------------ | -------- |
+| 200   | success 成功（真人）                                         | 是       |
+| 20700 | No face detected 没有检测到人脸                              | 否       |
+| 20702 | Person change detected 检测到换人                            | 否       |
+| 20703 | Detection  timeout 检测超时                                  | 否       |
+| 20705 | Screen lock or background exit during detection 检测过程中锁屏或退出后台 | 否       |
+| 20710 | No camera permission 没有相机权限                            | 否       |
+| 20711 | User actively cancels detection on the preparation page 准备页面用户主动取消检测 | 否       |
+| 20712 | User  actively cancels detection on the detection page 检测页面用户主动取消检测 | 否       |
+| 20749 | Inconsistent action, tilt head down 动作不一致做出低头动作   | 否       |
+| 60001 | Network issue, failed to retrieve session 网络问题，无法获取session | 否       |
+| 60002 | Network issue, failed to call anti-hack 网络问题，无法调用anti-hack | 否       |
+| 11350 | Internal error 内部错误                       | 否    |
+
+
+
+
+
 # FAQ
 
 **Q1**：引入终端SDK后，工程无法再进行 Xcode 调试，如何解决？
