@@ -130,36 +130,41 @@ static FlutterMethodChannel* _channel = nil;
     }else if ([@"getRootViewController" isEqualToString:call.method]) {
         UIViewController*rootViewController = [self getRootViewController];
         result(rootViewController);
-    }else if ([@"showLiveness" isEqualToString:call.method]) {
+    }else if ([@"showLivenessWithShowStyle" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         
         NSDictionary* configOptions = call.arguments;
         NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithDictionary:configOptions];
         
-        UIViewController*targetVC = options[@"targetVC"];
+        UIViewController*targetVC = [self getRootViewController];
         
         NSString*license = options[@"license"];
         
-        TDLivenessShowStyle showStyle = [options[@"showStyle"] intValue];
+        TDLivenessShowStyle showStyle = TDLivenessShowStylePresent;  //[options[@"showStyle"] intValue];
         
         manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
+            NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+
             if(resultStruct.resultType == TDLivenessResultTypeSuccess){
-                NSString*bestImageString = [NSString stringWithUTF8String:resultStruct.bestImageString];
-                // 如果存在最佳照片
-                if(bestImageString.length > 0){
-                    NSData* data = [[NSData alloc]initWithBase64EncodedString:bestImageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                    UIImage * image = [UIImage imageWithData:data];
-                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-                }
+                resultDictionary[@"function"] = @"onSuccess";
+                resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
+                resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                resultDictionary[@"score"] = @(resultStruct.score);
+                resultDictionary[@"bestImageString"] = @(resultStruct.bestImageString);
+                resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
                 
-                NSString*successMsg = [NSString stringWithUTF8String:resultStruct.errorMsg];
-                NSLog(@"successMsg-::%@,seqId:%s,score:%f",successMsg,resultStruct.seqId,resultStruct.score);
             }else{
-                NSString*errorMsg = [NSString stringWithUTF8String:resultStruct.errorMsg];
-                NSLog(@"人脸检测失败，错误码:%ld,错误信息:%@",resultStruct.errorCode,errorMsg);
+                resultDictionary[@"function"] = @"onFailed";
+                resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
+                resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
+                
             }
-            char const* livenessId_c = resultStruct.livenessId;
-            NSLog(@"livenessId_c---::%s",livenessId_c);
+            
+            NSLog(@"resultDictionary---::%@",resultDictionary);
+            [_channel invokeMethod:@"showLivenessWithShowStyle" arguments:resultDictionary];
         });
     } else {
         result(FlutterMethodNotImplemented);

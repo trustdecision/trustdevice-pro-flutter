@@ -158,9 +158,10 @@ class _MyAppState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
                     _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,int score,String bestImageString,String livenessId) {
-                      print("验证成功!seqId:" + seqId);
+                    //  print("Liveness验证成功!seqId: $seqId");
+                      print("xxx--1");
                     }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
-                      print("验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                      print("Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
                     }));
                   },
                   child: Text(
@@ -205,7 +206,7 @@ class _MyAppState extends State<MyHomePage> {
       "partner": "tongdun", // 需要替换成你自己的
       "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
       "appName": "App", // 需要替换成你自己的
-      "country": "cn", // 需要替换成你自己的
+      "country": "sg", // 需要替换成你自己的
       "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
     };
     //initialize the configuration
@@ -240,11 +241,9 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _showLiveness(TDLivenessCallback callback) async {
 
-    final rootVC = await _trustdeviceProPlugin.getRootViewController();
+    String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzIxMzgyMjExfQ.h_qWwl4IC0aGCEGD00pZCMWoL_WJxd5qxpMmVP7O-74";
 
-    String license = "xxxx";
-
-    await _trustdeviceProPlugin.showLivenessWithShowStyle(rootVC,license,TDLivenessShowStyle.Present,callback);
+    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,TDLivenessShowStyle.Present,callback);
   }
 
 }

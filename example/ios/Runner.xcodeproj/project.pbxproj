@@ -396,7 +396,28 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.trustdecision.trustdeviceProPluginExample;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"TDLiveness\"",
+					"-l\"Toast\"",
+					"-l\"fluttertoast\"",
+					"-l\"permission_handler_apple\"",
+					"-l\"resolv.9\"",
+					"-l\"stdc++\"",
+					"-l\"trustdevice_pro_plugin\"",
+					"-framework",
+					"\"FMDeviceManagerFramework\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"TDCorePlugin\"",
+					"-framework",
+					"\"TDMobRisk\"",
+					"-force_load",
+					"$(PODS_ROOT)/TrustDecisionLiveness/libTDLiveness.a",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongdun.TDLivenessDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -520,7 +541,28 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.trustdecision.trustdeviceProPluginExample;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"TDLiveness\"",
+					"-l\"Toast\"",
+					"-l\"fluttertoast\"",
+					"-l\"permission_handler_apple\"",
+					"-l\"resolv.9\"",
+					"-l\"stdc++\"",
+					"-l\"trustdevice_pro_plugin\"",
+					"-framework",
+					"\"FMDeviceManagerFramework\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"TDCorePlugin\"",
+					"-framework",
+					"\"TDMobRisk\"",
+					"-force_load",
+					"$(PODS_ROOT)/TrustDecisionLiveness/libTDLiveness.a",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongdun.TDLivenessDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -539,7 +581,28 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.trustdecision.trustdeviceProPluginExample;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"TDLiveness\"",
+					"-l\"Toast\"",
+					"-l\"fluttertoast\"",
+					"-l\"permission_handler_apple\"",
+					"-l\"resolv.9\"",
+					"-l\"stdc++\"",
+					"-l\"trustdevice_pro_plugin\"",
+					"-framework",
+					"\"FMDeviceManagerFramework\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"TDCorePlugin\"",
+					"-framework",
+					"\"TDMobRisk\"",
+					"-force_load",
+					"$(PODS_ROOT)/TrustDecisionLiveness/libTDLiveness.a",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongdun.TDLivenessDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -35,14 +35,9 @@ class TrustdeviceProPlugin {
     return TrustdeviceProPluginPlatform.instance.showCaptcha(callback);
   }
 
-  ///getRootViewController
-  Future<dynamic> getRootViewController() {
-    return TrustdeviceProPluginPlatform.instance.getRootViewController();
-  }
-
   ///showLivenessWithShowStyle
-  Future<void> showLivenessWithShowStyle(final targetVC,String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
-    return TrustdeviceProPluginPlatform.instance.showLivenessWithShowStyle(targetVC,license,showStyle,callback);
+  Future<void> showLivenessWithShowStyle(String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
+    return TrustdeviceProPluginPlatform.instance.showLivenessWithShowStyle(license,showStyle,callback);
   }
 
 }

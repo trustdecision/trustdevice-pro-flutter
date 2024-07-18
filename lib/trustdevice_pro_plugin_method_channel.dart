@@ -48,12 +48,11 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     return result;
   }
 
-  Future<void> showLivenessWithShowStyle(final targetVC,String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
+  Future<void> showLivenessWithShowStyle(String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
     livenessCallback = callback;
     await methodChannel.invokeMethod("showLivenessWithShowStyle",{
-      'targetVC': targetVC,
       'license' : license,
-      'showStyle': showStyle,
+    //  'showStyle': showStyle,
     });
   }
 
@@ -77,15 +76,23 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
             break;
         }
         break;
-      case 'showLiveness':
+      case 'showLivenessWithShowStyle':
+        print("showLivenessWithShowStyle---1");
         final dynamic arg = call.arguments;
         var function = arg["function"];
+        print("showLivenessWithShowStyle---1--" + function );
+
         if (function == null || livenessCallback == null) return;
+        print("showLivenessWithShowStyle---2--" + function );
+
         switch (function) {
           case 'onSuccess':
+            print("xxx--2");
             livenessCallback?.onSuccess(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["score"],arg["bestImageString"],arg["livenessId"]);
+            print("xxx--3");
             break;
           case 'onFailed':
+           // print("showLivenessWithShowStyle---5--" + arg["seqId"]+ arg["errorCode"]+arg["errorMsg"]+arg["livenessId"]);
             livenessCallback?.onFailed(arg["seqId"],arg["errorCode"],arg["errorMsg"],arg["livenessId"]);
             break;
         }
