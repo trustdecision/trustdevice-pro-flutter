@@ -33,7 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.2.3
+  trustdevice_pro_plugin: ^1.2.4
 ```
 
 ## Android permission application
@@ -343,77 +343,6 @@ Android obfuscated packaging If developers need to use proguard for obfuscated p
     return Future.value(blackbox);
   }
 ```
-
-
-
-# Captcha Module
-
-## Initial configuration optional parameter list
-
-| Configuration Key  | Definition                                                 | Description                                                  | Scenario                                                     | Sample Code                         |
-| ------------------ | ---------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------- |
-| language           | language type                                              | **Options**: 1-Simplified Chinese, 2-Traditional Chinese, 3-English, 4-Japanese, 5-Korean, 6-Malay, 7-Thai, 8-Indonesian, 9-Russian **Default**: 1-Simplified Chinese | You can set the language type according to your needs, Chinese mainland support 1-5, overseas support 1-9 | options[language"] = "1"            |
-| tapToClose         | Click on the blank space to close the Captcha window       | **Optional**: true, false **Default**: false                 | After opening, click on the blank area of the interface to close the Captcha window, which is more convenient to close the pop-up window | options[tapToClose"] = true         |
-| needSeqid          | Whether to carry the seqid in the failure callback message | **Optional**: true, false **Default**: true                  | When enabled, the seqid serial number will be carried in the failure message, and the seqid will be provided to TrustDecision for easy troubleshooting Reason for failure | options[needSeqid"] = true          |
-| hideLoadHud        | Whether to skip the loading animation                      | **Options**: true, false **Default**: false                  | When enabled, the loading animation will not be displayed when the Captcha window pops up, shortening the verification time | options[hideLoadHud"] = true        |
-| hideWebCloseButton | Whether to hide the close button of the webview            | **Options**: true, false **Default**: false                  | Scenarios that need to be forced to complete the Captcha     | options[hideWebCloseButton"] = true |
-| openLog            | Whether to open the log                                    | **Options**: true, false **Default**: false                  | When enabled, the console will output more log information during debugging, which is convenient for troubleshooting | options[openLog"] = true            |
-| skipCaptcha        | Whether to skip the TrustDecision Captcha verification     | **Optional**: true, false **Default**: false                 | When enabled, the Captcha will not be verified, and a 4000 error code will be returned at the same time, which is used for dynamic settings Whether to use TrustDecision Captcha SDK verification | options[skipCaptcha"] = true        |
-| mfaId              | MFA ID                                                     | **Optional**: string **Default**:null                        | If you have connected to the MFA product (the description can be ignored if the MFA is not connected), please set the mfaId which is obtained from the MFA process to the configuration parameter. | options[mfaId"] = "mfaId string"    |
-
-## Popup Captcha Window
-
-**Example Code**
-
-```dart
-    _trustdeviceProPlugin.showCaptcha(TDRiskCaptchaCallback(onReady: () {
-        print("Captcha window popup is successful, waiting to be verified!");
-    }, onSuccess: (String token) {
-        print("Obtain TrustDecision Captcha successfully!，validateToken:" + token);
-    }, onFailed: (int errorCode, String errorMsg) {
-        print("TrustDecision Captcha failed!, errorCode: $errorCode errorMsg: $errorMsg");
-    }));
-```
-
-## Error Code
-
-The error code of the captcha function module will be output through showCaptcha method
-
-| Error Code | Error Message                                                | Processing Method                                            |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 1001       | The Captcha window is closed                                 | After the Captcha window popup, the user manually cancels the Captcha,no processing is required |
-| 2001       | The request parameter is abnormal, please check the parameter | Please check the appName and partnerCode parameters          |
-| 2100       | The request parameter is abnormal, please check the parameter | Please check the passed parameter                            |
-| 2101       | The request parameter is abnormal, please check the parameter | There is an error in the request process, please contact the operator |
-| 2102       | The request parameter is abnormal, please check the parameter | The parameter is missing, please check the parameter         |
-| 2111       | Authentication page network error                            | Try again later, or please contact the operator              |
-| 2112       | Verification page operation is too frequent                  | Try again later                                              |
-| 2113       | Unknown error                                                | Unknown error, please contact the operator                   |
-| 2114       | Closed the Captcha window                                    | Clicked the Captcha close button, no need to process         |
-| 2115       | Authentication page network error                            | Failed to load network resources                             |
-| 2116       | Authentication page network error                            | Failed to load network resources                             |
-| 2202       | Verification succeeded                                       | The verification result is successful and no processing is required |
-| 2301       | Did not purchase this service                                | Please contact the operator                                  |
-| 2302       | Traffic has been disabled                                    | Please contact the operator                                  |
-| 2303       | Insufficient traffic                                         | Please contact the operator                                  |
-| 2304       | Service has expired                                          | Please contact the operator                                  |
-| 2305       | Daily traffic has been capped                                | Please contact the operator                                  |
-| 2600       | The system is busy, please try again later                   | The system is busy, please try again later                   |
-| 2601       | Authentication failed, try again later                       | Authentication failed, please try again later                |
-| 2602       | Authentication failed, try again later                       | Authentication failed, please try again later                |
-| 2603       | Authentication failed, try again later                       | Authentication failed, please try again later                |
-| 2604       | Authentication failed, try again later                       | Refresh frequently, please try again later                   |
-| 2605       | Verification failed, try again later                         | Failed to obtain Captcha information                         |
-| 2702       | Authentication failed, try again later                       | Parsing error, please try again later                        |
-| 3001       | SSL certificate verification failed                          | Please close the network proxy tool                          |
-| 3002       | Error loading verification page                              | Refresh the network and try again                            |
-| 3003       | Authentication page load timed out                           | Check network and try again                                  |
-| 4000       | Validation logic skipping                                    | Developers manually handle validation skipping logic         |
-| 9000       | The device fingerprint is not mounted                        | To integrate the Captcha, you need to integrate the device fingerprint first |
-| 9001       | No network                                                   | Please check network connection                              |
-| 9002       | Request timed out                                            | Check network, try again later                               |
-| 9003       | Return result is abnormal                                    | Server error, return result is abnormal, contact technical support |
-| 9004       | Global loading timed out                                     | Check network, try again later                               |
 
 
 

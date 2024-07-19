@@ -1,3 +1,7 @@
+## 1.2.4
+
+* support TDLiveness
+
 ## 1.2.3
 
 * fix iOS cocoapods error
