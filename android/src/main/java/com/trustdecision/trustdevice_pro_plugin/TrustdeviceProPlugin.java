@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import android.util.Log;
 
 import cn.tongdun.mobrisk.TDRisk;
 import cn.tongdun.mobrisk.TDRiskCallback;
 import cn.tongdun.mobrisk.TDRiskCaptchaCallback;
+import cn.tongdun.mobrisk.TDRiskLivenessCallback;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -125,15 +127,17 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
             }
 
         }else if (call.method.equals("showLiveness")) {
+            Log.i("----dashu", "showLiveness");
             HashMap<String, Object> configMap = call.arguments();
-            TDRisk.showLiveness(configMap.get((String)"license"), new TDRiskLivenessCallback() {
+            TDRisk.showLiveness((String)configMap.get("license"), new TDRiskLivenessCallback() {
                 @Override
                 public void onSuccess(String token) {
+                    Log.i("----dashu", "showLiveness" + token);
                     HashMap<String, Object> argMap = new HashMap<>();
                     try {
                         argMap.put("function", "onSuccess");
                         argMap.put("token", token);
-                        JSONObject livenessresult = new JSONObject(response);
+                        JSONObject livenessresult = new JSONObject(token);
                     } catch (Throwable e) {
 
                     }
@@ -142,6 +146,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
 
                 @Override
                 public void onError(String errorCode, String errorMsg, String sequenceId) {
+                    Log.i("----dashu", "showLiveness" + errorCode +"_" + errorMsg +"_" + sequenceId);
                     HashMap<String, Object> argMap = new HashMap<>();
                     argMap.put("function", "onFailed");
                     argMap.put("errorCode", errorCode);
