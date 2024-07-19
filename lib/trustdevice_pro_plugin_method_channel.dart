@@ -48,13 +48,10 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     return result;
   }
 
-  Future<void> showLivenessWithShowStyle(String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) async {
+  Future<void> showLiveness(String license,TDLivenessCallback callback) async {
     livenessCallback = callback;
-    int showStyle_int = 0;
-    if(showStyle == TDLivenessShowStyle.Present) showStyle_int = 1;
-    await methodChannel.invokeMethod("showLivenessWithShowStyle",{
+    await methodChannel.invokeMethod("showLiveness",{
       'license' : license,
-      'showStyle': showStyle_int,
     });
   }
 
@@ -78,7 +75,7 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
             break;
         }
         break;
-      case 'showLivenessWithShowStyle':
+      case 'showLiveness':
         final dynamic arg = call.arguments;
         var function = arg["function"];
 

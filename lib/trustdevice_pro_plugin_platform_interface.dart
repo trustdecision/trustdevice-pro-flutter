@@ -45,7 +45,7 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
-  Future<void> showLivenessWithShowStyle(String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
+  Future<void> showLiveness(String license,TDLivenessCallback callback) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 

@@ -36,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyAppState extends State<MyHomePage> {
   final _trustdeviceProPlugin = TrustdeviceProPlugin();
-  var _mBlackbox = "";
+  var _mResultString = "";
 
   @override
   void initState() {
@@ -98,9 +98,9 @@ class _MyAppState extends State<MyHomePage> {
                     future.then((blackbox) => {
                           setState(() {
                             if (blackbox != null) {
-                              _mBlackbox = blackbox;
+                              _mResultString = blackbox;
                               print(
-                                  "getBlackBox blackbox: ${_mBlackbox}");
+                                  "getBlackBox blackbox: ${_mResultString}");
                             }
                           })
                         });
@@ -120,9 +120,9 @@ class _MyAppState extends State<MyHomePage> {
                     future.then((blackbox) => {
                           setState(() {
                             if (blackbox != null) {
-                              _mBlackbox = blackbox;
+                              _mResultString = blackbox;
                               print(
-                                  "getBlackBox blackbox: ${_mBlackbox}");
+                                  "getBlackBox blackbox: ${_mResultString}");
                             }
                           })
                         });
@@ -139,9 +139,15 @@ class _MyAppState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
                     _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
-                      print("Liveness验证成功!seqId: $seqId");
+                        setState(() {
+                             _mResultString = "Liveness验证成功!seqId: $seqId,livenessId:$livenessId,bestImageString:$bestImageString";
+                             print(_mResultString);
+                        });
                     }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
-                      print("Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
+                       setState(() {
+                             _mResultString = "Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg";
+                             print(_mResultString);
+                       });
                     }));
                   },
                   child: Text(
@@ -152,7 +158,7 @@ class _MyAppState extends State<MyHomePage> {
             Container(
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
-              child: Text("blackbox : ${_mBlackbox}"),
+              child: Text("result : ${_mResultString}"),
             )
           ],
         ),
@@ -210,13 +216,13 @@ class _MyAppState extends State<MyHomePage> {
   }
   
   /**
-   * showCaptcha
+   * showLiveness
    */
   Future<void> _showLiveness(TDLivenessCallback callback) async {
 
     String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzIxMzgyMjExfQ.h_qWwl4IC0aGCEGD00pZCMWoL_WJxd5qxpMmVP7O-74";
 
-    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,TDLivenessShowStyle.Present,callback);
+    await _trustdeviceProPlugin.showLiveness(license,callback);
   }
 
 }

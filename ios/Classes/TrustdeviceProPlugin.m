@@ -130,7 +130,7 @@ static FlutterMethodChannel* _channel = nil;
     }else if ([@"getRootViewController" isEqualToString:call.method]) {
         UIViewController*rootViewController = [self getRootViewController];
         result(rootViewController);
-    }else if ([@"showLivenessWithShowStyle" isEqualToString:call.method]) {
+    }else if ([@"showLiveness" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         
         NSDictionary* configOptions = call.arguments;
@@ -140,29 +140,56 @@ static FlutterMethodChannel* _channel = nil;
         
         NSString*license = options[@"license"];
         
-        TDLivenessShowStyle showStyle = [options[@"showStyle"] intValue];
+        TDLivenessShowStyle showStyle = TDLivenessShowStylePresent;
         
         manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
             NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
             
             if(resultStruct.resultType == TDLivenessResultTypeSuccess){
                 resultDictionary[@"function"] = @"onSuccess";
-                resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                if(resultStruct.seqId){
+                    resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                }else{
+                    resultDictionary[@"seqId"] = @"";
+                }
                 resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
-                resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                if(resultStruct.errorMsg){
+                    resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                }else{
+                    resultDictionary[@"errorMsg"] = @"";
+                }
                 resultDictionary[@"score"] = @(resultStruct.score);
-                resultDictionary[@"bestImageString"] = @(resultStruct.bestImageString);
-                resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
+                if(resultStruct.bestImageString){
+                    resultDictionary[@"bestImageString"] = @(resultStruct.bestImageString);
+                }else{
+                    resultDictionary[@"bestImageString"] = @"";
+                }
+                if(resultStruct.livenessId){
+                    resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
+                }else{
+                    resultDictionary[@"livenessId"] = @"";
+                }
                 
             }else{
                 resultDictionary[@"function"] = @"onFailed";
-                resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                if(resultStruct.seqId){
+                    resultDictionary[@"seqId"] = @(resultStruct.seqId);
+                }else{
+                    resultDictionary[@"seqId"] = @"";
+                }
                 resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
-                resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
-                resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
-                
+                if(resultStruct.errorMsg){
+                    resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
+                }else{
+                    resultDictionary[@"errorMsg"] = @"";
+                }
+                if(resultStruct.livenessId){
+                    resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
+                }else{
+                    resultDictionary[@"livenessId"] = @"";
+                }
             }
-            [_channel invokeMethod:@"showLivenessWithShowStyle" arguments:resultDictionary];
+            [_channel invokeMethod:@"showLiveness" arguments:resultDictionary];
         });
     } else {
         result(FlutterMethodNotImplemented);

@@ -35,9 +35,9 @@ class TrustdeviceProPlugin {
     return TrustdeviceProPluginPlatform.instance.showCaptcha(callback);
   }
 
-  ///showLivenessWithShowStyle
-  Future<void> showLivenessWithShowStyle(String license,TDLivenessShowStyle showStyle,TDLivenessCallback callback) {
-    return TrustdeviceProPluginPlatform.instance.showLivenessWithShowStyle(license,showStyle,callback);
+  ///showLiveness
+  Future<void> showLiveness(String license,TDLivenessCallback callback) {
+    return TrustdeviceProPluginPlatform.instance.showLiveness(license,callback);
   }
 
 }

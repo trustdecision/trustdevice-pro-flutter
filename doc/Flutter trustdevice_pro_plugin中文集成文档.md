@@ -194,20 +194,14 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
     <td>语言类型</td>
   <td><br/><b>Default:</b> </b><b>en</b> 英语 <b>Options:</b> <br/> <b>en</b> 英语<br/><b>zh-Hans</b> 简体中文<br/><b>zh-Hant</b> 繁體中文<br/><b>es</b> 西班牙语<br/><b>id</b> 印尼语<br/><b>ar</b> 阿拉伯语<br/><b>fil</b> 菲律宾语<br/> <b>ko</b> 韩语<br/><b>pt</b> 葡萄牙语<br/><b>ru</b> 俄语<br/><b>th</b> 泰语<br/><b>tr</b> 土耳其语<br/><b>vi</b> 越南语  </td>
     <td>客户根据需要设置语言类型 </td>
-    <td><b>Objective C</b><br>
-  [options setValue:@"en" forKey:@"language"];
-<br><b>Swift</b><br>
-  options.updateValue("en", forKey: "language")</td>
+    <td>options["language"] = "en" </td>
   </tr>
   <tr>
     <td>playAudio</td>
     <td>是否播报语音</td>
     <td> 默认为 NO，不播报语音    </td>
     <td> 开启后，会播报对应提示语音 </td>
-<td><b>Objective C</b><br>
-  [options setValue:@NO forKey:@"playAudio"];
-<br><b>Swift</b><br>
-  options.updateValue(false, forKey: "playAudio")</td>
+    <td>options["playAudio"] = false </td>
   </tr>
   <tr>
     <td>livenessDetectionThreshold</td>
@@ -215,60 +209,42 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
     <td> 活体检测难易度阈值，分为high、medium、low三个等级
  默认为medium，中等难度    </td>
     <td> 根据需要，调整为对应难度 </td>
-<td><b>Objective C</b><br>
-  [options setValue:@"medium" forKey:@"livenessDetectionThreshold"];
-<br><b>Swift</b><br>
-  options.updateValue("medium", forKey: "livenessDetectionThreshold")</td>
+    <td>options["livenessDetectionThreshold"] = "medium" </td>
   </tr>
   <tr>
     <td>livenessHttpTimeOut</td>
     <td>SDK网络超时时间配置（单位:秒）</td>
     <td> 默认为15s  </td>
     <td> 客户根据需要设置网络超时时间 </td>
-    <td><b>Objective C</b><br>
-  [options setValue:@8 forKey:@"livenessHttpTimeOut"];
-<br><b>Swift</b><br>
-  options.updateValue(8, forKey: "livenessHttpTimeOut")</td>
+    <td>options["livenessHttpTimeOut"] = 8 </td>
   </tr>
   <tr>
     <td>showReadyPage</td>
     <td>启动人脸时，会弹出检测准备页面</td>
     <td> 是否显示准备页面, 默认为 YES， 即显示    </td>
     <td> 关闭后，不显示准备页面，识别流程更短 </td>
-<td><b>Objective C</b><br>
-  [options setValue:@YES forKey:@"showReadyPage"];
-<br><b>Swift</b><br>
-  options.updateValue(true, forKey: "showReadyPage")</td>
+    <td>options["showReadyPage"] = true </td>
   </tr>
   <tr>
     <td>faceMissingInterval </td>
     <td> 没有检测到人脸时的超时时间 （单位:毫秒）</td>
     <td> 无人脸超时时间， 单位ms 默认为 1000ms   </td>
     <td> 根据需要设置没有检测到人脸时的超时时间 </td>
-    <td><b>Objective C</b><br>
-  [options setValue:@(1000) forKey:@"faceMissingInterval"];
-<br><b>Swift</b><br>
-  options.updateValue(1000, forKey: "faceMissingInterval")</td>
+    <td>options["faceMissingInterval"] = 1000 </td>
   </tr>
   <tr>
     <td>prepareStageTimeout</td>
     <td> 准备检测动作时候的起始时间 （单位:秒）</td>
     <td> 准备阶段超时时间， 单位秒 默认为 0S， 即永远不超时  </td>
     <td> 根据需要设置 准备阶段超时时间 </td>
-    <td><b>Objective C</b><br>
-  [options setValue:@(0) forKey:@"prepareStageTimeout"];
-<br><b>Swift</b><br>
-  options.updateValue(0, forKey: "prepareStageTimeout")</td>
+    <td>options["prepareStageTimeout"] = 0 </td>
   </tr>
   <tr>
     <td>actionStageTimeout</td>
     <td> 动作阶段中, 最长验证时间 （单位:秒）</td>
     <td> 动作阶段超时时间， 单位秒 默认为 8S </td>
     <td> 根据需要设置 动作阶段超时时间 </td>
-    <td><b>Objective C</b><br>
-  [options setValue:@(8) forKey:@"actionStageTimeout"];
-<br><b>Swift</b><br>
-  options.updateValue(8, forKey: "actionStageTimeout")</td>
+    <td>options["actionStageTimeout"] = 8 </td>
   </tr>
 </table>
 
@@ -281,8 +257,8 @@ Android混淆打包 如果开发者需要使用 proguard 进行混淆打包，�
 ```dart
     String license = "使用您的license!!!";
 
-    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,TDLivenessShowStyle.Present,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
-          print("Liveness验证成功!seqId: $seqId");
+    await _trustdeviceProPlugin.showLiveness(license,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
+          print("Liveness验证成功!seqId: $seqId,livenessId:$livenessId,bestImageString:$bestImageString");
        }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
           print("Liveness验证失败!, 错误码: $errorCode 错误内容: $errorMsg");
       }));
