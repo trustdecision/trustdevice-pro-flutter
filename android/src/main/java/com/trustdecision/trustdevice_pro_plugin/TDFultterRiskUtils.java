@@ -35,6 +35,16 @@ public class TDFultterRiskUtils {
     static final String KEY_CAPTCHA_SKIP_CAPTCHA = "skipCaptcha";
     static final String KEY_CAPTCHA_MFAID = "mfaId";
 
+    ///Android device liveness configuration
+    static final String KEY_LIVENESS_LANGUAGE = "language";
+    static final String KEY_LIVENESS_PLAYAUDIO = "playAudio";
+    static final String KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD = "livenessDetectionThreshold";
+    static final String KEY_LIVENESS_LIVENESSHTTPTIMEOUT = "livenessHttpTimeOut";
+    static final String KEY_LIVENESS_SHOWREADYPAGE = "showReadyPage";
+    static final String KEY_LIVENESS_FACEMISSINGINTERVAL = "faceMissingInterval";
+    static final String KEY_LIVENESS_PREPARESTAGETIMEOUT = "prepareStageTimeout";
+    static final String KEY_LIVENESS_ACTIONSTAGETIMEOUT = "actionStageTimeout";
+
     /**
      * 转换configMap成builder
      *
@@ -174,6 +184,56 @@ public class TDFultterRiskUtils {
             if (enableGoogleAid != null) {
                 if (!(boolean) enableGoogleAid)
                     builder.disableGoogleAid();
+            }
+        }
+
+        //liveness
+        if (configMap.containsKey(KEY_LIVENESS_LANGUAGE)) {
+            Object languageObj = configMap.get(KEY_LIVENESS_LANGUAGE);
+            if (languageObj != null) {
+                builder.language((String) languageObj);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD)) {
+            Object livenessDetectionThresholdObj = configMap.get(KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD);
+            if (livenessDetectionThresholdObj != null) {
+                builder.livenessDetectionThreshold((String) livenessDetectionThresholdObj);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_PLAYAUDIO)) {
+            Object playAudio = configMap.get(KEY_LIVENESS_PLAYAUDIO);
+            if (playAudio != null) {
+                builder.playAudio((boolean) playAudio);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_SHOWREADYPAGE)) {
+            Object showReadyPageObj = configMap.get(KEY_LIVENESS_SHOWREADYPAGE);
+            if (showReadyPageObj != null) {
+                builder.showReadyPage((boolean) showReadyPageObj);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_LIVENESSHTTPTIMEOUT)) {
+            Object livenessHttpTimeOutObj = configMap.get(KEY_LIVENESS_LIVENESSHTTPTIMEOUT);
+            if (livenessHttpTimeOutObj != null) {
+                builder.livenessHttpTimeOut((int) livenessHttpTimeOutObj);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_FACEMISSINGINTERVAL)) {
+            Object faceMissingInterval = configMap.get(KEY_LIVENESS_FACEMISSINGINTERVAL);
+            if (faceMissingInterval != null) {
+                builder.faceMissingInterval((int) faceMissingInterval);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_PREPARESTAGETIMEOUT)) {
+            Object prepareStageTimeoutObj = configMap.get(KEY_LIVENESS_PREPARESTAGETIMEOUT);
+            if (prepareStageTimeoutObj != null) {
+                builder.prepareStageTimeout((int) prepareStageTimeoutObj);
+            }
+        }
+        if (configMap.containsKey(KEY_LIVENESS_ACTIONSTAGETIMEOUT)) {
+            Object actionStageTimeoutObj = configMap.get(KEY_LIVENESS_ACTIONSTAGETIMEOUT);
+            if (actionStageTimeoutObj != null) {
+                builder.actionStageTimeout((int) actionStageTimeoutObj);
             }
         }
         return builder;

@@ -8,6 +8,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -122,6 +123,33 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                     }
                 });
             }
+
+        }else if (call.method.equals("showLiveness")) {
+            HashMap<String, Object> configMap = call.arguments();
+            TDRisk.showLiveness(configMap.get((String)"license"), new TDRiskLivenessCallback() {
+                @Override
+                public void onSuccess(String token) {
+                    HashMap<String, Object> argMap = new HashMap<>();
+                    try {
+                        argMap.put("function", "onSuccess");
+                        argMap.put("token", token);
+                        JSONObject livenessresult = new JSONObject(response);
+                    } catch (Throwable e) {
+
+                    }
+                    channel.invokeMethod("showLiveness", argMap);
+                }
+
+                @Override
+                public void onError(String errorCode, String errorMsg, String sequenceId) {
+                    HashMap<String, Object> argMap = new HashMap<>();
+                    argMap.put("function", "onFailed");
+                    argMap.put("errorCode", errorCode);
+                    argMap.put("errorMsg", errorMsg);
+                    argMap.put("sequenceId", sequenceId);
+                    channel.invokeMethod("showLiveness", argMap);
+                }
+            });
 
         } else {
             result.notImplemented();
