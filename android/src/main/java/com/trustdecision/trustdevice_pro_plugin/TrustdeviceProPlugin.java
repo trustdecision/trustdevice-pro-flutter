@@ -8,10 +8,10 @@ import android.os.HandlerThread;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import android.util.Log;
 
 import cn.tongdun.mobrisk.TDRisk;
 import cn.tongdun.mobrisk.TDRiskCallback;
@@ -126,36 +126,52 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                 });
             }
 
-        }else if (call.method.equals("showLiveness")) {
-            Log.i("----dashu", "showLiveness");
-            HashMap<String, Object> configMap = call.arguments();
-            TDRisk.showLiveness((String)configMap.get("license"), new TDRiskLivenessCallback() {
+        } else if (call.method.equals("showLiveness")) {
+            mMainHandler.post(new Runnable() {
                 @Override
-                public void onSuccess(String token) {
-                    Log.i("----dashu", "showLiveness" + token);
-                    HashMap<String, Object> argMap = new HashMap<>();
-                    try {
-                        argMap.put("function", "onSuccess");
-                        argMap.put("token", token);
-                        JSONObject livenessresult = new JSONObject(token);
-                    } catch (Throwable e) {
+                public void run() {
+                    HashMap<String, Object> configMap = call.arguments();
+                    TDRisk.showLiveness((String) configMap.get("license"), new TDRiskLivenessCallback() {
+                        @Override
+                        public void onSuccess(String jsonStr) {
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HashMap<String, Object> argMap = new HashMap<>();
+                                    try {
+                                        JSONObject livenessresult = new JSONObject(jsonStr);
+                                        argMap.put("seqId", livenessresult.getString("sequence_id"));
+                                        argMap.put("errorCode", livenessresult.getInt("code"));
+                                        argMap.put("errorMsg", livenessresult.getString("message"));
+                                        argMap.put("score", livenessresult.getDouble("score"));
+                                        argMap.put("bestImageString", livenessresult.getString("image"));
+                                        argMap.put("livenessId", livenessresult.getString("liveness_id"));
+                                    } catch (Throwable e) {
+                                    }
+                                    argMap.put("function", "onSuccess");
+                                    channel.invokeMethod("showLiveness", argMap);
+                                }
+                            });
+                        }
 
-                    }
-                    channel.invokeMethod("showLiveness", argMap);
-                }
-
-                @Override
-                public void onError(String errorCode, String errorMsg, String sequenceId) {
-                    Log.i("----dashu", "showLiveness" + errorCode +"_" + errorMsg +"_" + sequenceId);
-                    HashMap<String, Object> argMap = new HashMap<>();
-                    argMap.put("function", "onFailed");
-                    argMap.put("errorCode", errorCode);
-                    argMap.put("errorMsg", errorMsg);
-                    argMap.put("sequenceId", sequenceId);
-                    channel.invokeMethod("showLiveness", argMap);
+                        @Override
+                        public void onError(String errorCode, String errorMsg, String sequenceId) {
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HashMap<String, Object> argMap = new HashMap<>();
+                                    argMap.put("function", "onFailed");
+                                    argMap.put("errorCode", Integer.valueOf(errorCode));
+                                    argMap.put("errorMsg", errorMsg);
+                                    argMap.put("seqId", sequenceId);
+                                    argMap.put("livenessId", "");
+                                    channel.invokeMethod("showLiveness", argMap);
+                                }
+                            });
+                        }
+                    });
                 }
             });
-
         } else {
             result.notImplemented();
         }
