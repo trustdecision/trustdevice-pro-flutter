@@ -1,3 +1,7 @@
+## 1.2.6
+
+* Update document format
+
 ## 1.2.5
 
 * change TDLiveness from 2.3.2 to 2.3.3
