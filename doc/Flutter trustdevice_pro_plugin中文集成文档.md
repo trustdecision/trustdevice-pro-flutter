@@ -31,7 +31,7 @@
 
 将trustdevice_pro_plugin添加到Flutter应用程序中的pubspec.yaml
 
-```
+```yaml
 dependencies:
   flutter:
     sdk: flutter
@@ -42,8 +42,6 @@ dependencies:
 ### Android权限申请
 
 在应⽤module下的 AndroidManifest.xml ⽂件中声明以下权限
-
-xml
 
 ```xml
 <manifest>
@@ -84,10 +82,8 @@ xml
 
 ### 方法定义
 
-dart
-
-```javascript
-Future<void> initWithOptions(Map<String, dynamic> config)
+```dart
+  Future<void> initWithOptions(Map<String, dynamic> config)
 ```
 
 ## 获取blackBox
@@ -100,22 +96,18 @@ Future<void> initWithOptions(Map<String, dynamic> config)
 
 ### 方法定义
 
-dart
-
 ```dart
-// 同步获取
-Future<String> getBlackbox()
-// 异步获取  
-Future<String> getBlackboxAsync();
+  // 同步获取
+  Future<String> getBlackbox()
+  // 异步获取  
+  Future<String> getBlackboxAsync();
 ```
 
 ## 最佳实践
 
 1. 在应用入口Application的onCreate方法中调用初始化并异步获取blackBox
 
-dart
-
-```Text
+```dart
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 class _MyAppState extends State<MyApp> {
@@ -145,8 +137,6 @@ class _MyAppState extends State<MyApp> {
 
 1. 在实际业务节点同步获取blackBox
 
-Dart
-
 ```dart
 // 比如注册的时候 
 Future<void> _register() async {
@@ -164,19 +154,15 @@ Future<void> _register() async {
 
 ## 获取版本号
 
-dart
-
-```Text
-Future<String> getSDKVersion()
+```dart
+  Future<String> getSDKVersion()
 ```
 
 ## 混淆打包
 
 如果开发者需要使用 proguard 进行混淆打包，请在 proguard 配置文件添加如下代码：
 
-XML
-
-```Text
+```xml
 -keep class cn.tongdun.**{*;}
 -keep class com.trustdecision.**{*;}
 ```

@@ -31,7 +31,7 @@ Please note that when integrating SDK products provided by the TrustDecision in 
 
 Add trustdevice_pro_plugin to pubspec.yaml of your project.
 
-```
+```yaml
 dependencies:
   flutter:
     sdk: flutter
@@ -42,8 +42,6 @@ dependencies:
 ### AndroidManifest.xml
 
 Declare the following permissions in the AndroidManifest.xml file under the application module
-
-xml
 
 ```xml
 <manifest>
@@ -85,10 +83,8 @@ xml
 
 ### Definition
 
-dart
-
-```javascript
-Future<void> initWithOptions(Map<String, dynamic> config)
+```dart
+  Future<void> initWithOptions(Map<String, dynamic> config)
 ```
 
 ## Get blackBox
@@ -100,22 +96,18 @@ Future<void> initWithOptions(Map<String, dynamic> config)
 
 ### Definition
 
-dart
-
 ```dart
-// get by synchronous call 
-Future<String> getBlackbox()
-// get by asynchronous call
-Future<String> getBlackboxAsync();
+  // get by synchronous call 
+  Future<String> getBlackbox()
+  // get by asynchronous call
+  Future<String> getBlackboxAsync();
 ```
 
 ## Best Practices
 
 1. Call initialization in the `onCreate` method of the application, and obtain blackBox asynchronously
 
-dart
-
-```Text
+```dart
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 class _MyAppState extends State<MyApp> {
@@ -145,8 +137,6 @@ class _MyAppState extends State<MyApp> {
 
 1. Obtain blackBox in actual business scenarios
 
-Dart
-
 ```dart
 Future<void> _register() async {
    var blackbox = await _trustdeviceProPlugin.getBlackbox();
@@ -163,17 +153,13 @@ Future<void> _register() async {
 
 ## Get SDK Version
 
-dart
-
-```Text
-Future<String> getSDKVersion()
+```dart
+  Future<String> getSDKVersion()
 ```
 
 ## Keep Configuration
 
-XML
-
-```Text
+```xml
 -keep class cn.tongdun.**{*;}
 -keep class com.trustdecision.**{*;}
 ```
