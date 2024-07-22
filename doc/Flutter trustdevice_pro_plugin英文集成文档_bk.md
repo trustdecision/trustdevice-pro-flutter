@@ -262,11 +262,11 @@ Future<void> _register() async {
 ```dart
     String license = "please use your license!!!";
 
-    await _trustdeviceProPlugin.showLivenessWithShowStyle(license,showLiveness.Present,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
+    await _trustdeviceProPlugin.showLiveness(license,TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
           print("Liveness success!seqId: $seqId,livenessId:$livenessId,bestImageString:$bestImageString");
        }, onFailed: (String seqId,int errorCode,String errorMsg,String livenessId) {
           print("Liveness failed!, errorCode: $errorCode errorMsg: $errorMsg");
-      }));
+    }));
 ```
 
 ## Error Code
