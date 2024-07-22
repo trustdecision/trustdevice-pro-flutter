@@ -105,7 +105,7 @@ Declare the following permissions in the AndroidManifest.xml file under the appl
 
 ## Best Practices
 
-1. Call initialization in the `onCreate` method of the application, and obtain blackBox asynchronously
+1.Call initialization in the `onCreate` method of the application, and obtain blackBox asynchronously
 
 ```dart
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-1. Obtain blackBox in actual business scenarios
+2.Obtain blackBox in actual business scenarios
 
 ```dart
 Future<void> _register() async {

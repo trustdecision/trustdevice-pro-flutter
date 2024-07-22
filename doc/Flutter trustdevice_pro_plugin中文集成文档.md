@@ -105,7 +105,7 @@ dependencies:
 
 ## 最佳实践
 
-1. 在应用入口Application的onCreate方法中调用初始化并异步获取blackBox
+1.在应用入口Application的onCreate方法中调用初始化并异步获取blackBox
 
 ```dart
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-1. 在实际业务节点同步获取blackBox
+2.在实际业务节点同步获取blackBox
 
 ```dart
 // 比如注册的时候 

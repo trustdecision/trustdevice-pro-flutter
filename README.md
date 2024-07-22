@@ -112,7 +112,7 @@ Future<String> getBlackboxAsync();
 
 ## Best Practices
 
-1. Call initialization in the `onCreate` method of the application, and obtain blackBox asynchronously
+1.Call initialization in the `onCreate` method of the application, and obtain blackBox asynchronously
 
 dart
 
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-1. Obtain blackBox in actual business scenarios
+2.Obtain blackBox in actual business scenarios
 
 Dart
 
