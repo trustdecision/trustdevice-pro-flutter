@@ -1,3 +1,8 @@
+## 1.2.7
+
+* Update Android TDLiveness from 2.3.2 to 2.3.3
+* Update Android Mobisk version to 4.3.5.2
+
 ## 1.2.6
 
 * Update document format
