@@ -189,6 +189,26 @@ Future<void> _register() async {
 
 # 活体功能模块
 
+## 安装活体库依赖
+
+### iOS
+
+1.双击打开 Runner.xcworkspace 工程；
+
+2.找到 trustdevice_pro_plugin.podspec 文件；
+
+3.在 trustdevice_pro_plugin.podspec 文件中添加活体库依赖
+
+```
+  s.dependency 'TrustDecisionLiveness', '2.3.3'
+```
+4.在 Runner.xcworkspace 所在文件夹下，执行
+
+```
+  pod install --repo-update 
+```
+
+
 ## initWithOptions选传参数
 
 <table>
