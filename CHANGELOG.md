@@ -1,3 +1,7 @@
+## 1.2.8
+
+* Default removal of captcha and liveness detection
+
 ## 1.2.7
 
 * Update Android TDLiveness from 2.3.2 to 2.3.3
