@@ -185,6 +185,25 @@ Future<void> _register() async {
 
 # Liveness Module
 
+## Install the Liveness Module dependency
+
+### iOS
+
+1.Double-click to open the Runner.xcworkspace project;
+
+2.Find the trustdevice_pro_plugin.podspec file;
+
+3.Add the liveness module dependency in the trustdevice_pro_plugin.podspec file
+
+```
+s.dependency 'TrustDecisionLiveness', '2.3.3'
+```
+4.In the folder where Runner.xcworkspace is located, execute
+
+```
+pod install --repo-update
+```
+
 ## Initial configuration optional parameter list
 
 <table>
