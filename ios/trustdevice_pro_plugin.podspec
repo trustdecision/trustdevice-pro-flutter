@@ -19,8 +19,7 @@ A new Flutter project.
   s.static_framework = true
 s
   s.dependency 'Flutter'
-  s.dependency 'TrustDecisionPro', '4.2.7.3'
-  s.dependency 'TrustDecisionLiveness', '2.3.3'
+  s.dependency 'TrustDecisionPro', '4.2.7.4'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
