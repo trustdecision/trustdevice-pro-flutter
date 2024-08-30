@@ -1,3 +1,7 @@
+## 1.2.9
+
+* Update dependency libraries
+
 ## 1.2.8
 
 * Default removal of captcha and liveness detection
