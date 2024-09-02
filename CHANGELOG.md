@@ -1,3 +1,6 @@
+## 1.3.0
+
+*Android Default removal of captcha and liveness detection
 ## 1.2.9
 
 * Update dependency libraries
