@@ -210,9 +210,9 @@ Future<void> _register() async {
 
 
 ### Android
-1. 打开 android/build.gradle 文件
+1.打开 android/build.gradle 文件
 
-2. 在 android/build.gradle 文件中添加活体库依赖
+2 在 android/build.gradle 文件中添加活体库依赖
 ```
 dependencies {
     implementation 'com.trustdecision.android:liveness:2.3.4'
