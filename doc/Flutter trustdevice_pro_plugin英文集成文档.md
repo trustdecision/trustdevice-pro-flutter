@@ -206,9 +206,9 @@ pod install --repo-update
 
 
 ### Android
-1. Open the android/build.gradle file
+1.Open the android/build.gradle file
 
-2. Add live library dependency in android/build.gradle file
+2.Add live library dependency in android/build.gradle file
 ```
 dependencies {
     implementation 'com.trustdecision.android:liveness:2.3.4'
