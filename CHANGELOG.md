@@ -1,6 +1,6 @@
 ## 1.3.1
 
-* Change the case of the method name, change getBlackbox to getBlackBox, and change getBlackboxAsync to getBlackBoxAsync
+* ⚠️⚠️⚠️ Change the method name, change getBlackbox to getBlackBox, and change getBlackboxAsync to getBlackBoxAsync
 * Mobirisk reference is the latest
 
 ## 1.3.0

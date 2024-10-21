@@ -215,7 +215,7 @@ Future<void> _register() async {
 2 在 android/build.gradle 文件中添加活体库依赖
 ```
 dependencies {
-    implementation 'com.trustdecision.android:liveness:2.4.0'
+    implementation 'com.trustdecision.android:liveness:+'
 }
 ```
 
