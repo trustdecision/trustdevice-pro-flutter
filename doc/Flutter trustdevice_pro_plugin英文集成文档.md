@@ -129,7 +129,8 @@ class _MyAppState extends State<MyApp> {
     //Anti debugging switch, used during development phase
  		options["debug"] = true;
     _trustdeviceProPlugin.initWithOptions(options);
-    _trustdeviceProPlugin.getBlackBoxAsync();
+    var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
+    print("_initWithOptions blackBox: ${blackBox}");
   }
   
 }
