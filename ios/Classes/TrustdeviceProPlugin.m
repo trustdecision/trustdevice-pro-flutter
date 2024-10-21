@@ -88,11 +88,11 @@ static FlutterMethodChannel* _channel = nil;
         
         /// 这个无法用textView设置，只能默认设置
         manager->initWithOptions([options copy]);
-    }else if ([@"getBlackbox" isEqualToString:call.method]) {
+    }else if ([@"getBlackBox" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* blackBox = manager->getBlackBox();
         result(blackBox);
-    }else if ([@"getBlackboxAsync" isEqualToString:call.method]) {
+    }else if ([@"getBlackBoxAsync" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         manager->getBlackBoxAsync(^(NSString* blackBox){
             dispatch_async(dispatch_get_main_queue(), ^{

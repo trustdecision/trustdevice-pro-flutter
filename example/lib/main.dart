@@ -95,12 +95,12 @@ class _MyAppState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
                     var future = _getBlackBox();
-                    future.then((blackbox) => {
+                    future.then((blackBox) => {
                           setState(() {
-                            if (blackbox != null) {
-                              _mResultString = blackbox;
+                            if (blackBox != null) {
+                              _mResultString = blackBox;
                               print(
-                                  "getBlackBox blackbox: ${_mResultString}");
+                                  "getBlackBox blackBox: ${_mResultString}");
                             }
                           })
                         });
@@ -117,12 +117,12 @@ class _MyAppState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
                     var future = _getBlackBoxAsync();
-                    future.then((blackbox) => {
+                    future.then((blackBox) => {
                           setState(() {
-                            if (blackbox != null) {
-                              _mResultString = blackbox;
+                            if (blackBox != null) {
+                              _mResultString = blackBox;
                               print(
-                                  "getBlackBox blackbox: ${_mResultString}");
+                                  "getBlackBox blackBox: ${_mResultString}");
                             }
                           })
                         });
@@ -203,16 +203,16 @@ class _MyAppState extends State<MyHomePage> {
    * Get blackox
    */
   Future<String> _getBlackBox() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackBox();
-    return Future.value(blackbox);
+    var blackBox = await _trustdeviceProPlugin.getBlackBox();
+    return Future.value(blackBox);
   }
 
   /**
    * Get blackox Async
    */
   Future<String> _getBlackBoxAsync() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackBoxAsync();
-    return Future.value(blackbox);
+    var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
+    return Future.value(blackBox);
   }
   
   /**

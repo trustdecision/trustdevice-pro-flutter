@@ -15,19 +15,19 @@ class TrustdeviceProPlugin {
     return TrustdeviceProPluginPlatform.instance.getSDKVersion();
   }
 
-  ///Initialize the configuration and return to blackbox
+  ///Initialize the configuration and return to blackBox
   Future<void> initWithOptions(Map<String, dynamic> configMap) {
     return TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
   }
 
-  ///Get blackbox
-  Future<String> getBlackbox() {
-    return TrustdeviceProPluginPlatform.instance.getBlackbox();
+  ///Get blackBox
+  Future<String> getBlackBox() {
+    return TrustdeviceProPluginPlatform.instance.getBlackBox();
   }
 
-  ///Get blackbox Async
-  Future<String> getBlackboxAsync() {
-    return TrustdeviceProPluginPlatform.instance.getBlackboxAsync();
+  ///Get blackBox Async
+  Future<String> getBlackBoxAsync() {
+    return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 
   ///showCaptcha

@@ -91,16 +91,16 @@ Declare the following permissions in the AndroidManifest.xml file under the appl
 
 ### Cautions
 
-- Call `getBlackbox` after `initWithOptions`.
+- Call `getBlackBox` after `initWithOptions`.
 - Don't cache blackBox returned by getBlackBox in the app. Please rely on this function to get blackBox.
 
 ### Definition
 
 ```dart
   // get by synchronous call 
-  Future<String> getBlackbox()
+  Future<String> getBlackBox()
   // get by asynchronous call
-  Future<String> getBlackboxAsync();
+  Future<String> getBlackBoxAsync();
 ```
 
 ## Best Practices
@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> {
     //Anti debugging switch, used during development phase
  		options["debug"] = true;
     _trustdeviceProPlugin.initWithOptions(options);
-    _trustdeviceProPlugin.getBlackboxAsync();
+    _trustdeviceProPlugin.getBlackBoxAsync();
   }
   
 }
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
 
 ```dart
 Future<void> _register() async {
-   var blackbox = await _trustdeviceProPlugin.getBlackbox();
+   var blackBox = await _trustdeviceProPlugin.getBlackBox();
    // ...
 }
 ```

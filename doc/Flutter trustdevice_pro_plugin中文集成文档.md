@@ -90,7 +90,7 @@ dependencies:
 
 ### 注意事项
 
-- 请在initWithOptions后调用getBlackbox/getBlackboxAsync
+- 请在initWithOptions后调用getBlackBox/getBlackBoxAsync
 - 不要在App内对返回的blackBox进行缓存，获取blackBox请依赖getBlackBox方法
 - 尽量在首次异步获取blackBox的成功之后，再同步获取blackBox
 
@@ -98,9 +98,9 @@ dependencies:
 
 ```dart
   // 同步获取
-  Future<String> getBlackbox()
+  Future<String> getBlackBox()
   // 异步获取  
-  Future<String> getBlackboxAsync();
+  Future<String> getBlackBoxAsync();
 ```
 
 ## 最佳实践
@@ -129,7 +129,7 @@ class _MyAppState extends State<MyApp> {
     //Anti debugging switch, used during development phase
  		options["debug"] = true;
     _trustdeviceProPlugin.initWithOptions(options);
-    _trustdeviceProPlugin.getBlackboxAsync();
+    _trustdeviceProPlugin.getBlackBoxAsync();
   }
   
 }
@@ -140,7 +140,7 @@ class _MyAppState extends State<MyApp> {
 ```dart
 // 比如注册的时候 
 Future<void> _register() async {
-   var blackbox = await _trustdeviceProPlugin.getBlackbox();
+   var blackBox = await _trustdeviceProPlugin.getBlackBox();
    // ...
 }
 ```

@@ -64,30 +64,30 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                 }
             });
 
-        } else if (call.method.equals("getBlackbox")) {
+        } else if (call.method.equals("getBlackBox")) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    String blackbox = TDRisk.getBlackBox();
+                    String blackBox = TDRisk.getBlackBox();
                     mMainHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            result.success(blackbox);
+                            result.success(blackBox);
                         }
                     });
                 }
             });
-        } else if (call.method.equals("getBlackboxAsync")) {
+        } else if (call.method.equals("getBlackBoxAsync")) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     TDRisk.getBlackBox(new TDRiskCallback() {
                         @Override
-                        public void onEvent(String blackbox) {
+                        public void onEvent(String blackBox) {
                             mMainHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    result.success(blackbox);
+                                    result.success(blackBox);
                                 }
                             });
                         }
