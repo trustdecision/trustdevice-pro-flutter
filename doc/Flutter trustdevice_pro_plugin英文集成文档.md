@@ -28,14 +28,14 @@ Please note that when integrating SDK products provided by the TrustDecision in 
 There are 3 steps to integrate Liveness Detection SDK:
 
 1. Use the [Retrive license API](#1-retrive-license-api) to get a license within the effective timeframe.
-2. Install the Liveness Detection SDK Flutter Plugin then get the "livenessId".
+2. Install the SDK Flutter Plugin then get the "livenessId".
 3. Use the [Retrive result API](#3-retrive-result-api) with the "livenessId" generated in Step 2 to obtain a selfie if the liveness detection is successful, or receive detailed results in case of failure.
 
 ## 1. Retrive license API
 
 Please follow the steps in <https://en-doc.trustdecision.com/reference/liveness-api#retrive-license-api>
 
-## 2.Install the Liveness Detection SDK Flutter Plugin
+## 2.Install the SDK Flutter Plugin
 
 ### Plugin Install
 

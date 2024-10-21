@@ -29,14 +29,14 @@
 集成活体检测SDK共有3个步骤：
 
 1. 调用 [获取License API](#1获取license-api)，得到一个在时间有效期范围内的License。
-2. 安装活体检测SDK Flutter插件，获取“livenessId”。
+2. 安装SDK Flutter插件，获取“livenessId”。
 3. 调用 [获取结果 API](#3获取结果-api)，传入第2步中获得的“livenessId”，在活体检测成功时获取最佳人脸自拍照，或在失败时接收详细原因。
 
 ## 1.获取License API
 请按 <https://cn-doc.trustdecision.com/reference/liveness-api#获取license-api> 步骤操作
 
 
-## 2.安装活体检测SDK Flutter插件
+## 2.安装SDK Flutter插件
 
 ### 插件安装
 
