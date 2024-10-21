@@ -106,7 +106,7 @@ class _MyAppState extends State<MyHomePage> {
                         });
                   },
                   child: Text(
-                    "Get blackbox",
+                    "Get blackBox",
                     style: TextStyle(color: Colors.white),
                   )),
             ),
@@ -128,7 +128,7 @@ class _MyAppState extends State<MyHomePage> {
                         });
                   },
                   child: Text(
-                    "Get blackbox Async",
+                    "Get blackBox Async",
                     style: TextStyle(color: Colors.white),
                   )),
             ),
@@ -203,7 +203,7 @@ class _MyAppState extends State<MyHomePage> {
    * Get blackox
    */
   Future<String> _getBlackBox() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackbox();
+    var blackbox = await _trustdeviceProPlugin.getBlackBox();
     return Future.value(blackbox);
   }
 
@@ -211,7 +211,7 @@ class _MyAppState extends State<MyHomePage> {
    * Get blackox Async
    */
   Future<String> _getBlackBoxAsync() async {
-    var blackbox = await _trustdeviceProPlugin.getBlackboxAsync();
+    var blackbox = await _trustdeviceProPlugin.getBlackBoxAsync();
     return Future.value(blackbox);
   }
   

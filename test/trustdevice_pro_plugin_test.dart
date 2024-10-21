@@ -11,8 +11,8 @@ class MockTrustdeviceProPluginPlatform
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<String> getBlackbox() {
-    // TODO: implement getBlackbox
+  Future<String> getBlackBox() {
+    // TODO: implement getBlackBox
     throw UnimplementedError();
   }
 
@@ -29,8 +29,8 @@ class MockTrustdeviceProPluginPlatform
   }
 
   @override
-  Future<String> getBlackboxAsync() {
-    // TODO: implement getBlackboxAsync
+  Future<String> getBlackBoxAsync() {
+    // TODO: implement getBlackBoxAsync
     throw UnimplementedError();
   }
 
