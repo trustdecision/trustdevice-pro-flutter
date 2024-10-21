@@ -200,7 +200,7 @@ Future<void> _register() async {
 3.在 trustdevice_pro_plugin.podspec 文件中添加活体库依赖
 
 ```
-  s.dependency 'TrustDecisionLiveness', '2.3.3'
+  s.dependency 'TrustDecisionLiveness'
 ```
 4.在 Runner.xcworkspace 所在文件夹下，执行
 
@@ -215,7 +215,7 @@ Future<void> _register() async {
 2 在 android/build.gradle 文件中添加活体库依赖
 ```
 dependencies {
-    implementation 'com.trustdecision.android:liveness:2.3.4'
+    implementation 'com.trustdecision.android:liveness:2.4.0'
 }
 ```
 
