@@ -36,7 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.3.0
+  trustdevice_pro_plugin: ^1.3.1
 ```
 
 ### AndroidManifest.xml
@@ -196,7 +196,7 @@ Future<void> _register() async {
 3.Add the liveness module dependency in the trustdevice_pro_plugin.podspec file
 
 ```
-s.dependency 'TrustDecisionLiveness', '2.3.3'
+s.dependency 'TrustDecisionLiveness'
 ```
 4.In the folder where Runner.xcworkspace is located, execute
 
@@ -211,7 +211,7 @@ pod install --repo-update
 2.Add live library dependency in android/build.gradle file
 ```
 dependencies {
-    implementation 'com.trustdecision.android:liveness:2.3.4'
+    implementation 'com.trustdecision.android:liveness:2.4.0'
 }
 ```
 
