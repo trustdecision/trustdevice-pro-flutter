@@ -1,3 +1,7 @@
+## 1.3.2
+
+*  add project gradle namespace
+
 ## 1.3.1
 
 * ⚠️⚠️⚠️ Change the method name, change getBlackbox to getBlackBox, and change getBlackboxAsync to getBlackBoxAsync

@@ -47,7 +47,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.3.1
+  trustdevice_pro_plugin: ^1.3.2
 ```
 
 ### Android权限申请
