@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'trustdevice_pro_plugin'
-  s.version          = '1.3.2'
+  s.version          = '1.3.3'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.

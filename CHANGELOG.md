@@ -1,3 +1,7 @@
+## 1.3.3
+
+*  add params profileUrl
+
 ## 1.3.2
 
 *  add project gradle namespace
