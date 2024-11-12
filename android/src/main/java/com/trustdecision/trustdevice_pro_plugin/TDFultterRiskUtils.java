@@ -12,6 +12,8 @@ public class TDFultterRiskUtils {
     static final String KEY_APPKEY = "appKey";
     static final String KEY_APPNAME = "appName";
     static final String KEY_COUNTRY = "country";
+    static final String KEY_URL = "url";
+    static final String KEY_PROFILE_URL = "profileUrl";
     static final String KEY_DEBUG = "debug";
     static final String KEY_TIME_LIMIT = "timeLimit";
     static final String KEY_LOCATION = "location";
@@ -69,6 +71,18 @@ public class TDFultterRiskUtils {
             String country = (String) configMap.get(KEY_COUNTRY);
             if (!TextUtils.isEmpty(country)) {
                 builder.country(country.toUpperCase());
+            }
+        }
+        if (configMap.containsKey(KEY_URL)) {
+            String url = (String) configMap.get(KEY_URL);
+            if (!TextUtils.isEmpty(url)) {
+                builder.url(url);
+            }
+        }
+        if (configMap.containsKey(KEY_PROFILE_URL)) {
+            String url = (String) configMap.get(KEY_PROFILE_URL);
+            if (!TextUtils.isEmpty(url)) {
+                builder.url(url);
             }
         }
         if (configMap.containsKey(KEY_DEBUG)) {
