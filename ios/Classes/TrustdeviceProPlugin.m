@@ -57,7 +57,6 @@ static FlutterMethodChannel* _channel = nil;
         NSDictionary* configOptions = call.arguments;
         NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithDictionary:configOptions];
         
-        // 参数处理
         id allowedObj = options[@"debug"];
         if([allowedObj isKindOfClass:[NSNumber class]]){
             if([allowedObj boolValue] == YES){
@@ -86,7 +85,6 @@ static FlutterMethodChannel* _channel = nil;
             }
         }
         
-        /// 这个无法用textView设置，只能默认设置
         manager->initWithOptions([options copy]);
     }else if ([@"getBlackBox" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
