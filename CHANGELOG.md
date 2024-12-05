@@ -1,3 +1,7 @@
+## 1.3.4
+
+*  modify mobrisk reference
+
 ## 1.3.3
 
 *  add params profileUrl
