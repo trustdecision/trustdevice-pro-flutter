@@ -63,6 +63,10 @@ class _MyAppState extends State<MyHomePage> {
               margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
               width: double.infinity,
               child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: () {
                     _getSDKVersion().then((sdkVersion) => {
                           Fluttertoast.showToast(
@@ -79,7 +83,10 @@ class _MyAppState extends State<MyHomePage> {
               margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
               width: double.infinity,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: () {
                     _initWithOptions();
                   },
@@ -92,7 +99,10 @@ class _MyAppState extends State<MyHomePage> {
               margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
               width: double.infinity,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: () {
                     var future = _getBlackBox();
                     future.then((blackBox) => {
@@ -114,7 +124,10 @@ class _MyAppState extends State<MyHomePage> {
               margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
               width: double.infinity,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: () {
                     var future = _getBlackBoxAsync();
                     future.then((blackBox) => {
@@ -136,7 +149,10 @@ class _MyAppState extends State<MyHomePage> {
               margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
               width: double.infinity,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: () {
                     _showLiveness(TDLivenessCallback(onSuccess: (String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) {
                         setState(() {
