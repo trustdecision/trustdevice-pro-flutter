@@ -13,10 +13,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import cn.tongdun.mobrisk.TDRisk;
-import cn.tongdun.mobrisk.TDRiskCallback;
-import cn.tongdun.mobrisk.TDRiskCaptchaCallback;
-import cn.tongdun.mobrisk.TDRiskLivenessCallback;
+import com.trustdecision.mobrisk.TDRisk;
+import com.trustdecision.mobrisk.TDRiskCallback;
+import com.trustdecision.mobrisk.TDRiskCaptchaCallback;
+import com.trustdecision.mobrisk.TDRiskLivenessCallback;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;

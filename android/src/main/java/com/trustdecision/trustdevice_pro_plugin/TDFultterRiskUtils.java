@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
-import cn.tongdun.mobrisk.TDRisk;
+import com.trustdecision.mobrisk.TDRisk;
 
 public class TDFultterRiskUtils {
     ///Mandatory Shared Configuration
