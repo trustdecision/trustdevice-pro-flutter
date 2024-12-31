@@ -194,9 +194,9 @@ public class TDFultterRiskUtils {
 
         if (configMap.containsKey(KEY_LANGUAGE)) {
             Object languageObj = configMap.get(KEY_LANGUAGE);
-            if (!TextUtils.isEmpty(languageObj)) {
-                String languageStr = (String) languageObj
-                if (TextUtils.isDigitsOnly(languageStr) {
+            if (languageObj != null) {
+                String languageStr = (String) languageObj;
+                if (TextUtils.isDigitsOnly(languageStr)) {
                     builder.language(Integer.parseInt(languageStr));
                 } else {
                     builder.language(languageStr);
