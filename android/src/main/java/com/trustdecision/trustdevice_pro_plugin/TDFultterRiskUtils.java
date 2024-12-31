@@ -18,6 +18,7 @@ public class TDFultterRiskUtils {
     static final String KEY_TIME_LIMIT = "timeLimit";
     static final String KEY_LOCATION = "location";
     static final String KEY_COLLECT_LEVEL = "collectLevel";
+    static final String KEY_LANGUAGE = "language";
 
     ///Android device fingerprint configuration
     static final String KEY_FP_ANDROID_RUNNING_TASKS = "runningTasks";
@@ -28,7 +29,6 @@ public class TDFultterRiskUtils {
     static final String KEY_FP_ANDROID_GOOGLE_AID = "googleAid";
 
     ///Android device Captcha configuration
-    static final String KEY_CAPTCHA_LANGUAGE = "language";
     static final String KEY_CAPTCHA_TAPTOCLOSE = "tapToClose";
     static final String KEY_CAPTCHA_NEEDSEQID = "needSeqid";
     static final String KEY_CAPTCHA_HIDE_LOADHUD = "hideLoadHud";
@@ -38,7 +38,6 @@ public class TDFultterRiskUtils {
     static final String KEY_CAPTCHA_MFAID = "mfaId";
 
     ///Android device liveness configuration
-    static final String KEY_LIVENESS_LANGUAGE = "language";
     static final String KEY_LIVENESS_PLAYAUDIO = "playAudio";
     static final String KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD = "livenessDetectionThreshold";
     static final String KEY_LIVENESS_LIVENESSHTTPTIMEOUT = "livenessHttpTimeOut";
@@ -143,14 +142,6 @@ public class TDFultterRiskUtils {
             }
         }
         ///Android device Captcha configuration
-        if (configMap.containsKey(KEY_CAPTCHA_LANGUAGE)) {
-            Object languageObj = configMap.get(KEY_CAPTCHA_LANGUAGE);
-            if (languageObj != null) {
-                String languageStr = (String) languageObj;
-                if (!TextUtils.isEmpty(languageStr))
-                    builder.language(Integer.parseInt(languageStr));
-            }
-        }
         if (configMap.containsKey(KEY_CAPTCHA_TAPTOCLOSE)) {
             Object tapToCloseObj = configMap.get(KEY_CAPTCHA_TAPTOCLOSE);
             if (tapToCloseObj != null) {
@@ -201,13 +192,19 @@ public class TDFultterRiskUtils {
             }
         }
 
-        //liveness
-        if (configMap.containsKey(KEY_LIVENESS_LANGUAGE)) {
-            Object languageObj = configMap.get(KEY_LIVENESS_LANGUAGE);
-            if (languageObj != null) {
-                builder.language((String) languageObj);
+        if (configMap.containsKey(KEY_LANGUAGE)) {
+            Object languageObj = configMap.get(KEY_LANGUAGE);
+            if (!TextUtils.isEmpty(languageObj)) {
+                String languageStr = (String) languageObj
+                if (TextUtils.isDigitsOnly(languageStr) {
+                    builder.language(Integer.parseInt(languageStr));
+                } else {
+                    builder.language(languageStr);
+                }
             }
         }
+
+        //liveness
         if (configMap.containsKey(KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD)) {
             Object livenessDetectionThresholdObj = configMap.get(KEY_LIVENESS_LIVENESSDETECTIONTHRESHOLD);
             if (livenessDetectionThresholdObj != null) {
