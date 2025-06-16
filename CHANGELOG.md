@@ -1,4 +1,8 @@
-## 1.3.5
+## 1.3.8
+
+*  Fix liveness detection missing parameters causing callback to fail
+
+## 1.3.7
 
 *  Fix Language type
 
