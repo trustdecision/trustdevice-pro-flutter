@@ -140,12 +140,12 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                                     HashMap<String, Object> argMap = new HashMap<>();
                                     try {
                                         JSONObject livenessresult = new JSONObject(jsonStr);
-                                        argMap.put("seqId", livenessresult.getString("sequence_id"));
-                                        argMap.put("errorCode", livenessresult.getInt("code"));
-                                        argMap.put("errorMsg", livenessresult.getString("message"));
-                                        argMap.put("score", livenessresult.getDouble("score"));
-                                        argMap.put("bestImageString", livenessresult.getString("image"));
-                                        argMap.put("livenessId", livenessresult.getString("liveness_id"));
+                                        argMap.put("seqId", livenessresult.optString("sequence_id"));
+                                        argMap.put("errorCode", livenessresult.optInt("code"));
+                                        argMap.put("errorMsg", livenessresult.optString("message"));
+                                        argMap.put("score", livenessresult.optDouble("score", 0));
+                                        argMap.put("bestImageString", livenessresult.optString("image"));
+                                        argMap.put("livenessId", livenessresult.optString("liveness_id"));
                                     } catch (Throwable e) {
                                     }
                                     argMap.put("function", "onSuccess");
