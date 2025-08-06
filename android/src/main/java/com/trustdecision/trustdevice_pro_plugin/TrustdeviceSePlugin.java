@@ -108,6 +108,9 @@ public class TrustdeviceSePlugin implements FlutterPlugin, MethodCallHandler, Ac
                     });
                 }
             });
+        } else if (call.method.equals("getSDKVersion")) {
+            String sdkVersion = TDDeviceManager.getSDKVersion();
+            result.success(sdkVersion);
         } else {
             result.notImplemented();
         }

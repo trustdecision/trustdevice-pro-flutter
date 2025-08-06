@@ -14,6 +14,11 @@ class TrustdeviceSePlugin {
     return TrustdeviceSePluginPlatform.instance.getDeviceInfo();
   } 
 
+  ///Obtain the sdk version number
+  Future<String> getSDKVersion() {
+    return TrustdeviceSePluginPlatform.instance.getSDKVersion();
+  }
+
 }
 
 

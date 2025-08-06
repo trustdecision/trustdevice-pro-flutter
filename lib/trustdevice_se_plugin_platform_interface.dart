@@ -12,7 +12,7 @@ abstract class TrustdeviceSePluginPlatform extends PlatformInterface {
 
   /// The default instance of [TrustdeviceSePluginPlatform] to use.
   ///
-  /// Defaults to [MethodChannelTrustdeviceProPlugin].
+  /// Defaults to [MethodChannelTrustdeviceSePlugin].
   static TrustdeviceSePluginPlatform get instance => _instance;
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [TrustdeviceProPluginPlatform] when
@@ -26,7 +26,11 @@ abstract class TrustdeviceSePluginPlatform extends PlatformInterface {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
-   Future<Map<String, dynamic>> getDeviceInfo() {
+  Future<Map<String, dynamic>> getDeviceInfo() {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
+
+  Future<String> getSDKVersion() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 

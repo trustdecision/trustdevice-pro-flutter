@@ -52,7 +52,7 @@ static FlutterMethodChannel* _channel = nil;
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
         result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-    }else if ([@"initWithOptions" isEqualToString:call.method]) {
+    } else if ([@"initWithOptions" isEqualToString:call.method]) {
         TDDeviceManager_t *manager = [TDDeviceManager sharedManager];
         NSDictionary* configOptions = call.arguments;
         NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithDictionary:configOptions];
@@ -86,7 +86,7 @@ static FlutterMethodChannel* _channel = nil;
         }
         
         manager->initWithOptions([options copy]);
-    }else if ([@"getDeviceInfo" isEqualToString:call.method]) {
+    } else if ([@"getDeviceInfo" isEqualToString:call.method]) {
         TDDeviceManager_t *manager = [TDDeviceManager sharedManager];
         
         manager->getDeviceInfo(^(TDDeviceResponse response){
@@ -126,6 +126,10 @@ static FlutterMethodChannel* _channel = nil;
             });
         });
 
+    } else if ([@"getSDKVersion" isEqualToString:call.method]) {
+        TDDeviceManager_t *manager = [TDDeviceManager sharedManager];
+        NSString* version = manager->getSDKVersion();
+        result(version);
     } else {
         result(FlutterMethodNotImplemented);
     }

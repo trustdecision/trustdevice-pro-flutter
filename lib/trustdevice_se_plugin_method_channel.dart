@@ -24,4 +24,10 @@ class MethodChannelTrustdeviceSePlugin extends TrustdeviceSePluginPlatform {
     return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 
+  @override
+  Future<String> getSDKVersion() async {
+    String result = await methodChannel.invokeMethod("getSDKVersion");
+    return result;
+  }
+
 }
