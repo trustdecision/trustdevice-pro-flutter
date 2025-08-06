@@ -75,7 +75,7 @@ public class TDFultterRiskUtils {
             builder.appName((String) configMap.get(KEY_APPNAME));
         }
         if (configMap.containsKey(KEY_CHANNEL)) {
-            builder.appName((String) configMap.get(KEY_CHANNEL));
+            builder.channel((String) configMap.get(KEY_CHANNEL));
         }
         if (configMap.containsKey(KEY_COUNTRY)) {
             String country = (String) configMap.get(KEY_COUNTRY);
