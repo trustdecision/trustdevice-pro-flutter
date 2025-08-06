@@ -40,7 +40,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   permission_handler: ^10.2.0
-  fluttertoast: ^8.2.1
+  fluttertoast: ^8.2.2  # 推荐使用官方维护版本
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

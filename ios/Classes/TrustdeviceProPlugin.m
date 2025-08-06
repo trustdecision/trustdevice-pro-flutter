@@ -1,4 +1,5 @@
 #import "TrustdeviceProPlugin.h"
+#import "TrustdeviceSePlugin.h" // 导入子类头文件
 #import <TDMobRisk/TDMobRisk.h>
 
 @interface TrustdeviceProPlugin()
@@ -16,6 +17,9 @@ static FlutterMethodChannel* _channel = nil;
     TrustdeviceProPlugin* instance = [[TrustdeviceProPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
     _channel = channel;
+
+    // 2. 注册子功能
+    [TrustdeviceSePlugin registerWithRegistrar:registrar];
 }
 
 - (UIWindow *)getKeyWindow

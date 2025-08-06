@@ -39,6 +39,15 @@ class MockTrustdeviceProPluginPlatform
     // TODO: implement showCaptcha
     throw UnimplementedError();
   }
+  
+   Future<dynamic> getRootViewController() {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
+
+  Future<void> showLiveness(String license,TDLivenessCallback callback) {
+    throw UnimplementedError('getResult() has not been implemented.');
+  }
+
 }
 
 void main() {

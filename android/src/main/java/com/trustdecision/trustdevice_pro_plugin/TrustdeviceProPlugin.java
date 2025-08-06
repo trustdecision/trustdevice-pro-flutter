@@ -40,10 +40,17 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
     private Context mApplicationContext;
     private Activity mActivity;
 
+    private TrustdeviceSePlugin sePlugin; 
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "trustdevice_pro_plugin");
         channel.setMethodCallHandler(this);
+
+        // 初始化并注册子插件
+        sePlugin = new TrustdeviceSePlugin();
+        sePlugin.onAttachedToEngine(flutterPluginBinding);
+
         mApplicationContext = flutterPluginBinding.getApplicationContext();
         mHandlerThread = new HandlerThread("TDFlutterPlugin_android");
         mHandlerThread.start();
@@ -179,6 +186,11 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        // 清理子插件
+        if (sePlugin != null) {
+            sePlugin.onDetachedFromEngine(binding);
+        }
+
         channel.setMethodCallHandler(null);
         if (mHandlerThread != null)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
