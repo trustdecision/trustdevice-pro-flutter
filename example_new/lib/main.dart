@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:trustdevice_pro_plugin/trustdevice_se_plugin.dart';
+import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _trustdeviceSePlugin = TrustdeviceSePlugin();
+  final _trustdeviceProPlugin = TrustdeviceProPlugin();
   
   // 存储设备信息
   String _fpVersion = '加载中...';
@@ -58,40 +58,44 @@ class _MyHomePageState extends State<MyHomePage> {
         _errorMessage = '';
       });
 
-      var options = {
-        "partner": "test",
-        "appKey": "testappkey",
-        "appName": "App",
-        "country": "cn",
-        "debug": kDebugMode,
-      };
+      // var options = {
+      //   "partner": "demo",
+      //   "appKey": "appKey",
+      //   "channel": "channel",
+      //   "country": "cn",
+      //   "debug": kDebugMode,
+      // };
+
       
       // 初始化插件
-      await _trustdeviceSePlugin.initWithOptions(options);
+      await _trustdeviceProPlugin.initWithOptions(options);
+
+      var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
+      print("get blackbox:${blackBox}");
       
-      // 获取设备信息
-      final resultData = await _trustdeviceSePlugin.getDeviceInfo();
+      // // 获取设备信息
+      // final resultData = await _trustdeviceSePlugin.getDeviceInfo();
       
-      // 解析返回的数据
-      final fpVersion = resultData['fpVersion'] as String? ?? '';
-      final blackBox = resultData['blackBox'] as String? ?? '';
-      final anonymousId = resultData['anonymousId'] as String? ?? '';
-      final deviceRiskScore = resultData['deviceRiskScore'] as int? ?? 0;
-      final sealedResult = resultData['sealedResult'] as String? ?? '';
+      // // 解析返回的数据
+      // final fpVersion = resultData['fpVersion'] as String? ?? '';
+      // final blackBox = resultData['blackBox'] as String? ?? '';
+      // final anonymousId = resultData['anonymousId'] as String? ?? '';
+      // final deviceRiskScore = resultData['deviceRiskScore'] as int? ?? 0;
+      // final sealedResult = resultData['sealedResult'] as String? ?? '';
       
-      // 解析嵌套的apiStatus对象
-      final apiStatus = resultData['apiStatus'] as Map<String, dynamic>? ?? {};
-      final statusCode = apiStatus['code'] as int? ?? -1;
-      final statusMessage = apiStatus['message'] as String? ?? '';
+      // // 解析嵌套的apiStatus对象
+      // final apiStatus = resultData['apiStatus'] as Map<String, dynamic>? ?? {};
+      // final statusCode = apiStatus['code'] as int? ?? -1;
+      // final statusMessage = apiStatus['message'] as String? ?? '';
       
       setState(() {
-        _fpVersion = fpVersion;
-        _blackBox = blackBox;
-        _anonymousId = anonymousId;
-        _deviceRiskScore = '$deviceRiskScore';
-        _sealedResult = sealedResult.isNotEmpty ? sealedResult : '无结果';
-        _apiStatus = '$statusCode ($statusMessage)';
-        _isLoading = false;
+        // _fpVersion = fpVersion;
+        // _blackBox = blackBox;
+        // _anonymousId = anonymousId;
+        // _deviceRiskScore = '$deviceRiskScore';
+        // _sealedResult = sealedResult.isNotEmpty ? sealedResult : '无结果';
+        // _apiStatus = '$statusCode ($statusMessage)';
+        // _isLoading = false;
       });
       
     } on PlatformException catch (e) {

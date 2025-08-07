@@ -1,3 +1,7 @@
+## 1.4.0
+
+*  Add standard trustdevice sdk support
+
 ## 1.3.8
 
 *  Fix liveness detection missing parameters causing callback to fail
