@@ -58,13 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
         _errorMessage = '';
       });
 
-      // var options = {
-      //   "partner": "demo",
-      //   "appKey": "appKey",
-      //   "channel": "channel",
-      //   "country": "cn",
-      //   "debug": kDebugMode,
-      // };
+      var options = {
+        "partner": "demo",
+        "appKey": "appKey",
+        "channel": "channel",
+        "country": "cn",    
+      };
 
       
       // 初始化插件
