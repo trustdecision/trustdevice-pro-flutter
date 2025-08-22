@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - TrustDecisionPro (5.1.2.1):
+    - TrustDecisionPro/FMDeviceManagerFramework (= 5.1.2.1)
+    - TrustDecisionPro/TDCorePlugin (= 5.1.2.1)
+    - TrustDecisionPro/TDMobRisk (= 5.1.2.1)
+  - TrustDecisionPro/FMDeviceManagerFramework (5.1.2.1)
+  - TrustDecisionPro/TDCorePlugin (5.1.2.1)
+  - TrustDecisionPro/TDMobRisk (5.1.2.1)
+  - trustdevice_pro_plugin (1.3.8):
+    - Flutter
+    - TrustDecisionPro
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - trustdevice_pro_plugin (from `.symlinks/plugins/trustdevice_pro_plugin/ios`)
+
+SPEC REPOS:
+  trunk:
+    - TrustDecisionPro
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  trustdevice_pro_plugin:
+    :path: ".symlinks/plugins/trustdevice_pro_plugin/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  TrustDecisionPro: 83214c53c5908496c50b1536ccb2d18d45880846
+  trustdevice_pro_plugin: b4a0bc9ec3eb9ff24f0a6fbeabb60c7027c64877
+
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+
+COCOAPODS: 1.16.2

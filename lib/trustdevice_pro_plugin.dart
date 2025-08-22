@@ -1,5 +1,7 @@
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
+export 'trustdevice_se_plugin.dart'; // 在pro_plugin中暴露se_plugin
+
 
 enum TDLivenessShowStyle {
 

@@ -1,1 +1,5 @@
 package_config.json
+.dart_tool
+.dart_tool/*
+.DS_Store
+.vscode/

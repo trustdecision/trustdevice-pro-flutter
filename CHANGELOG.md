@@ -1,3 +1,11 @@
+## 1.4.1
+
+*  Fix config for pro
+
+## 1.4.0
+
+*  Add standard trustdevice sdk support
+
 ## 1.3.8
 
 *  Fix liveness detection missing parameters causing callback to fail
