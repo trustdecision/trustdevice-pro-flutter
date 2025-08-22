@@ -24,4 +24,4 @@ plugins {
 }
 
 include(":app")
-rootProject.name = "adroid_new"
+rootProject.name = "adroid"

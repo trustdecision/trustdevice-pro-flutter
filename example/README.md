@@ -1,6 +1,6 @@
-# trustdevice_pro_plugin_example
+# example
 
-Demonstrates how to use the trustdevice_pro_plugin plugin.
+A new Flutter project.
 
 ## Getting Started
 

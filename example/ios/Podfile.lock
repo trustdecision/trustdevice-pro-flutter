@@ -1,9 +1,5 @@
 PODS:
   - Flutter (1.0.0)
-  - fluttertoast (0.0.2):
-    - Flutter
-  - permission_handler_apple (9.1.1):
-    - Flutter
   - TrustDecisionPro (5.1.2.1):
     - TrustDecisionPro/FMDeviceManagerFramework (= 5.1.2.1)
     - TrustDecisionPro/TDCorePlugin (= 5.1.2.1)
@@ -17,8 +13,6 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
-  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - trustdevice_pro_plugin (from `.symlinks/plugins/trustdevice_pro_plugin/ios`)
 
 SPEC REPOS:
@@ -28,20 +22,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  fluttertoast:
-    :path: ".symlinks/plugins/fluttertoast/ios"
-  permission_handler_apple:
-    :path: ".symlinks/plugins/permission_handler_apple/ios"
   trustdevice_pro_plugin:
     :path: ".symlinks/plugins/trustdevice_pro_plugin/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  fluttertoast: 21eecd6935e7064cc1fcb733a4c5a428f3f24f0f
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   TrustDecisionPro: 83214c53c5908496c50b1536ccb2d18d45880846
   trustdevice_pro_plugin: b4a0bc9ec3eb9ff24f0a6fbeabb60c7027c64877
 
-PODFILE CHECKSUM: 1a782344d33c12ced0182eeab11e8668d253eb48
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
 
 COCOAPODS: 1.16.2

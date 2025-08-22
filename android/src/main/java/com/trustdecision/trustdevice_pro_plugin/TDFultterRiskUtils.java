@@ -227,6 +227,9 @@ public class TDFultterRiskUtils {
         if (configMap.containsKey(KEY_APPNAME)) {
             builder.appName((String) configMap.get(KEY_APPNAME));
         }
+        if (configMap.containsKey(KEY_CHANNEL)) {
+            builder.channel((String) configMap.get(KEY_CHANNEL));
+        }
         if (configMap.containsKey(KEY_COUNTRY)) {
             String country = (String) configMap.get(KEY_COUNTRY);
             if (!TextUtils.isEmpty(country)) {
@@ -273,6 +276,14 @@ public class TDFultterRiskUtils {
                 builder.collectLevel(TDRisk.COLLECT_LEVEL_L);
             }
         }
+
+         if (configMap.containsKey(KEY_CUSTOM_MESSAGE)) {
+            String customMessage = (String) configMap.get(KEY_CUSTOM_MESSAGE);
+            if (customMessage != null) {
+                builder.customMessage(customMessage);
+            }
+        }
+        
         ///Android device fingerprint configuration
         if (configMap.containsKey(KEY_FP_ANDROID_RUNNING_TASKS)) {
             Object runningTasks = configMap.get(KEY_FP_ANDROID_RUNNING_TASKS);
@@ -302,6 +313,38 @@ public class TDFultterRiskUtils {
                     builder.disableInstallPackageList();
             }
         }
+
+        if (configMap.containsKey(KEY_FP_ANDROID_GOOGLE_AID)) {
+            Object enableGoogleAid = configMap.get(KEY_FP_ANDROID_GOOGLE_AID);
+            if (enableGoogleAid != null) {
+                if (!(boolean) enableGoogleAid)
+                    builder.disableGoogleAid();
+            }
+        }
+
+        if (configMap.containsKey(KEY_FP_ANDROID_OAID)) {
+            Object oaid = configMap.get(KEY_FP_ANDROID_OAID);
+            if (oaid != null) {
+                if (!(boolean) oaid )
+                    builder.disableOptions(TDDeviceManager.OPTION_OAID);
+            }
+        }
+        if (configMap.containsKey(KEY_FP_ANDROID_AID)) {
+            Object aid = configMap.get(KEY_FP_ANDROID_AID);
+            if (aid != null) {
+                if (!(boolean) aid)
+                    builder.disableOptions(TDDeviceManager.OPTION_AID);
+            }
+        }
+        if (configMap.containsKey(KEY_FP_ANDROID_ANDROID_ID)) {
+            Object androidID = configMap.get(KEY_FP_ANDROID_ANDROID_ID);
+            if (androidID != null) {
+                if (!(boolean) androidID)
+                    builder.disableOptions(TDDeviceManager.OPTION_ANDROID_ID);
+            }
+        }
+
+
         ///Android device Captcha configuration
         if (configMap.containsKey(KEY_CAPTCHA_TAPTOCLOSE)) {
             Object tapToCloseObj = configMap.get(KEY_CAPTCHA_TAPTOCLOSE);
