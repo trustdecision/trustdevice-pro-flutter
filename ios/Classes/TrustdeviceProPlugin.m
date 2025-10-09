@@ -143,56 +143,31 @@ static FlutterMethodChannel* _channel = nil;
         NSString*license = options[@"license"];
         
         TDLivenessShowStyle showStyle = TDLivenessShowStylePresent;
-        
-        manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(TDLivenessResultStruct resultStruct) {
-            NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
-            
-            if(resultStruct.resultType == TDLivenessResultTypeSuccess){
-                resultDictionary[@"function"] = @"onSuccess";
-                if(resultStruct.seqId){
-                    resultDictionary[@"seqId"] = @(resultStruct.seqId);
-                }else{
-                    resultDictionary[@"seqId"] = @"";
-                }
-                resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
-                if(resultStruct.errorMsg){
-                    resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
-                }else{
-                    resultDictionary[@"errorMsg"] = @"";
-                }
-                resultDictionary[@"score"] = @(resultStruct.score);
-                if(resultStruct.bestImageString){
-                    resultDictionary[@"bestImageString"] = @(resultStruct.bestImageString);
-                }else{
-                    resultDictionary[@"bestImageString"] = @"";
-                }
-                if(resultStruct.livenessId){
-                    resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
-                }else{
-                    resultDictionary[@"livenessId"] = @"";
-                }
-                
-            }else{
-                resultDictionary[@"function"] = @"onFailed";
-                if(resultStruct.seqId){
-                    resultDictionary[@"seqId"] = @(resultStruct.seqId);
-                }else{
-                    resultDictionary[@"seqId"] = @"";
-                }
-                resultDictionary[@"errorCode"] = @(resultStruct.errorCode);
-                if(resultStruct.errorMsg){
-                    resultDictionary[@"errorMsg"] = @(resultStruct.errorMsg);
-                }else{
-                    resultDictionary[@"errorMsg"] = @"";
-                }
-                if(resultStruct.livenessId){
-                    resultDictionary[@"livenessId"] = @(resultStruct.livenessId);
-                }else{
-                    resultDictionary[@"livenessId"] = @"";
-                }
-            }
-            [_channel invokeMethod:@"showLiveness" arguments:resultDictionary];
+        NSMutableDictionary* mutableResultDictionary = [NSMutableDictionary dictionary];
+        manager->showLivenessWithShowStyle(targetVC,license,showStyle,^(NSDictionary* successResultDictionary) {
+            [mutableResultDictionary addEntriesFromDictionary:successResultDictionary];
+            mutableResultDictionary[@"function"] = @"onSuccess";
+            NSUInteger code = [successResultDictionary[@"code"] integerValue];
+            NSString* message = successResultDictionary[@"message"];
+            NSString* imageString = successResultDictionary[@"image"];
+            NSString* sequence_id = successResultDictionary[@"sequence_id"];
+            NSString* liveness_id = successResultDictionary[@"liveness_id"];
+
+           // NSLog(@"success,code:%ld,message:%@,imageString:%@,sequence_id:%@,liveness_id:%@",code,message,imageString,sequence_id,liveness_id);
+
+            [_channel invokeMethod:@"showLiveness" arguments:mutableResultDictionary];
+
+        },^(NSDictionary* failResultDictionary) {
+            [mutableResultDictionary addEntriesFromDictionary:failResultDictionary];
+            mutableResultDictionary[@"function"] = @"onFailed";
+            NSUInteger code = [failResultDictionary[@"code"] integerValue];
+            NSString* message = failResultDictionary[@"message"];
+            NSString* sequence_id = failResultDictionary[@"sequence_id"];
+           // NSLog(@"fail,code:%ld,message:%@,sequence_id:%@",code,message,sequence_id);
+            [_channel invokeMethod:@"showLiveness" arguments:mutableResultDictionary];
+
         });
+    
     } else {
         result(FlutterMethodNotImplemented);
     }

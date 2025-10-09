@@ -84,8 +84,8 @@ class TDRiskCaptchaCallback {
 
 
 class TDLivenessCallback {
-  final void Function(String seqId,int errorCode,String errorMsg,double score,String bestImageString,String livenessId) onSuccess;
-  final void Function(String seqId,int errorCode,String errorMsg,String livenessId) onFailed;
+  final void Function(Map<dynamic, dynamic> successResultMap) onSuccess;
+  final void Function(Map<dynamic, dynamic> failResultMap) onFailed;
 
   const TDLivenessCallback({
     required this.onSuccess,

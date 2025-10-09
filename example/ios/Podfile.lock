@@ -1,35 +1,51 @@
 PODS:
   - Flutter (1.0.0)
-  - TrustDecisionPro (5.1.2.1):
-    - TrustDecisionPro/FMDeviceManagerFramework (= 5.1.2.1)
-    - TrustDecisionPro/TDCorePlugin (= 5.1.2.1)
-    - TrustDecisionPro/TDMobRisk (= 5.1.2.1)
-  - TrustDecisionPro/FMDeviceManagerFramework (5.1.2.1)
-  - TrustDecisionPro/TDCorePlugin (5.1.2.1)
-  - TrustDecisionPro/TDMobRisk (5.1.2.1)
-  - trustdevice_pro_plugin (1.3.8):
+  - fluttertoast (0.0.2):
     - Flutter
-    - TrustDecisionPro
+  - permission_handler_apple (9.1.1):
+    - Flutter
+  - TrustDecisionLiveness (3.0.0)
+  - TrustDecisionPro (5.2.1):
+    - TrustDecisionPro/FMDeviceManagerFramework (= 5.2.1)
+    - TrustDecisionPro/TDCorePlugin (= 5.2.1)
+    - TrustDecisionPro/TDMobRisk (= 5.2.1)
+  - TrustDecisionPro/FMDeviceManagerFramework (5.2.1)
+  - TrustDecisionPro/TDCorePlugin (5.2.1)
+  - TrustDecisionPro/TDMobRisk (5.2.1)
+  - trustdevice_pro_plugin (1.4.2):
+    - Flutter
+    - TrustDecisionLiveness
+    - TrustDecisionPro (= 5.2.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - trustdevice_pro_plugin (from `.symlinks/plugins/trustdevice_pro_plugin/ios`)
 
 SPEC REPOS:
   trunk:
+    - TrustDecisionLiveness
     - TrustDecisionPro
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   trustdevice_pro_plugin:
     :path: ".symlinks/plugins/trustdevice_pro_plugin/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  TrustDecisionPro: 83214c53c5908496c50b1536ccb2d18d45880846
-  trustdevice_pro_plugin: b4a0bc9ec3eb9ff24f0a6fbeabb60c7027c64877
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
+  permission_handler_apple: 3787117e48f80715ff04a3830ca039283d6a4f29
+  TrustDecisionLiveness: 9aaf38a78a98e4ae377363074dff56fe62265c69
+  TrustDecisionPro: 96f73b1ea80dd9a1978b1e7383d803fdc1f8e1fe
+  trustdevice_pro_plugin: c8b501ae5c3c39e4472b5050b73846ce8121f0c1
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 
 COCOAPODS: 1.16.2

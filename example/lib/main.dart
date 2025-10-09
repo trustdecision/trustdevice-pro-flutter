@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 void main() {
@@ -9,182 +12,239 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '设备信息展示',
+      title: 'trustdevice_pro_plugin',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: '设备信息展示'),
+      home: const MyHomePage(title: 'trustdevice_pro_plugin'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyAppState extends State<MyHomePage> {
   final _trustdeviceProPlugin = TrustdeviceProPlugin();
-  
-  // 存储设备信息
-  String _fpVersion = '加载中...';
-  String _blackBox = '加载中...';
-  String _anonymousId = '加载中...';
-  String _deviceRiskScore = '加载中...';
-  String _sealedResult = '加载中...';
-  String _apiStatus = '加载中...';
-  
-  // 加载状态
-  bool _isLoading = true;
-  String _errorMessage = '';
+  var _mResultString = "";
 
   @override
   void initState() {
     super.initState();
+    // _requestPermission().then((value) => {
+    //
+    // })
     _initWithOptions();
-  }
-
-  Future<void> _initWithOptions() async {
-    try {
-      setState(() {
-        _isLoading = true;
-        _errorMessage = '';
-      });
-
-      var options = {
-        "partner": "demo",
-        "appKey": "appKey",
-        "channel": "channel",
-        "country": "cn",    
-      };
-
-      
-      // 初始化插件
-      await _trustdeviceProPlugin.initWithOptions(options);
-
-      var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
-      print("get blackbox:${blackBox}");
-      
-      // // 获取设备信息
-      // final resultData = await _trustdeviceSePlugin.getDeviceInfo();
-      
-      // // 解析返回的数据
-      // final fpVersion = resultData['fpVersion'] as String? ?? '';
-      // final blackBox = resultData['blackBox'] as String? ?? '';
-      // final anonymousId = resultData['anonymousId'] as String? ?? '';
-      // final deviceRiskScore = resultData['deviceRiskScore'] as int? ?? 0;
-      // final sealedResult = resultData['sealedResult'] as String? ?? '';
-      
-      // // 解析嵌套的apiStatus对象
-      // final apiStatus = resultData['apiStatus'] as Map<String, dynamic>? ?? {};
-      // final statusCode = apiStatus['code'] as int? ?? -1;
-      // final statusMessage = apiStatus['message'] as String? ?? '';
-      
-      setState(() {
-        // _fpVersion = fpVersion;
-        // _blackBox = blackBox;
-        // _anonymousId = anonymousId;
-        // _deviceRiskScore = '$deviceRiskScore';
-        // _sealedResult = sealedResult.isNotEmpty ? sealedResult : '无结果';
-        // _apiStatus = '$statusCode ($statusMessage)';
-        // _isLoading = false;
-      });
-      
-    } on PlatformException catch (e) {
-      setState(() {
-        print("e.code:${e.code}");
-        print("e.message:${e.message}");
-        _errorMessage = '设备信息获取失败: ${e.message}';
-        _isLoading = false;
-      });
-    } catch (e) {
-      print("error:$e");
-      setState(() {
-        _errorMessage = '未知错误: $e';
-        _isLoading = false;
-      });
-    }
-  }
-
-  // 复制内容到剪贴板
-  void _copyToClipboard(String text, String label) {
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('已复制$label到剪贴板'),
-        duration: const Duration(seconds: 1),
-      )
-    );
-  }
-
-  // 构建信息展示卡片
-  Widget _buildInfoCard(String title, String value) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: SelectableText(
-          value,
-          style: const TextStyle(fontSize: 14),
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.copy, size: 20),
-          onPressed: () => _copyToClipboard(value, title),
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _isLoading ? null : _initWithOptions,
-          ),
-        ],
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _errorMessage.isNotEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(_errorMessage, style: const TextStyle(color: Colors.red)),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: _initWithOptions,
-                        child: const Text('重试'),
-                      )
-                    ],
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                )
-              : ListView(
-                  children: [
-                    _buildInfoCard('指纹版本', _fpVersion),
-                    _buildInfoCard('黑盒数据', _blackBox),
-                    _buildInfoCard('匿名ID', _anonymousId),
-                    _buildInfoCard('风险分数', _deviceRiskScore),
-                    _buildInfoCard('密封结果', _sealedResult),
-                    _buildInfoCard('API状态', _apiStatus),
-                  ],
-                ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _initWithOptions,
-        tooltip: '刷新信息',
-        child: const Icon(Icons.refresh),
+                  onPressed: () {
+                    _getSDKVersion().then((sdkVersion) => {
+                          Fluttertoast.showToast(
+                              msg: "The sdk version is ${sdkVersion}",
+                              textColor: Colors.white)
+                        });
+                  },
+                  child: Text(
+                    "Get sdk version",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    _initWithOptions();
+                  },
+                  child: Text(
+                    "initialization",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    var future = _getBlackBox();
+                    future.then((blackBox) => {
+                          setState(() {
+                            if (blackBox != null) {
+                              _mResultString = blackBox;
+                              print(
+                                  "getBlackBox blackBox: ${_mResultString}");
+                            }
+                          })
+                        });
+                  },
+                  child: Text(
+                    "Get blackBox",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    var future = _getBlackBoxAsync();
+                    future.then((blackBox) => {
+                          setState(() {
+                            if (blackBox != null) {
+                              _mResultString = blackBox;
+                              print(
+                                  "getBlackBox blackBox: ${_mResultString}");
+                            }
+                          })
+                        });
+                  },
+                  child: Text(
+                    "Get blackBox Async",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    _showLiveness(TDLivenessCallback(onSuccess: (Map<dynamic, dynamic> successResultMap) {
+                        setState(() {
+                             String sequence_id = successResultMap["sequence_id"];
+                             String liveness_id = successResultMap["liveness_id"];
+                             String image = successResultMap["image"];
+                             _mResultString = "Liveness验证成功!seqId: $sequence_id,livenessId:$liveness_id,bestImageString:$image";
+                             print(_mResultString);
+                        });
+                    }, onFailed: (Map<dynamic, dynamic> failResultMap) {
+                       setState(() {
+                             String sequence_id = failResultMap["sequence_id"];
+                             int code = failResultMap["code"];
+                             String message = failResultMap["message"];
+                             _mResultString = "Liveness验证失败!,seqId: $sequence_id, 错误码: $code 错误内容: $message";
+                             print(_mResultString);
+                       });
+                    }));
+                  },
+                  child: Text(
+                    "showLiveness",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
+              child: Text("result : ${_mResultString}"),
+            )
+          ],
+        ),
       ),
     );
   }
+
+  /**
+   * request requestPermission
+   */
+  Future<void> _requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.phone,
+    ].request();
+  }
+
+  /**
+   * Obtain the sdk version number
+   */
+  Future<String> _getSDKVersion() async {
+    var sdkVersion = await _trustdeviceProPlugin.getSDKVersion();
+    return Future.value(sdkVersion);
+  }
+
+  /**
+   *Initialize the configuration
+   */
+  Future<void> _initWithOptions() async {
+    var options = {
+      "partner": "tongdun", // 需要替换成你自己的
+      "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
+      "appName": "App", // 需要替换成你自己的
+      "country": "sg", // 需要替换成你自己的
+      "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
+    };
+    //initialize the configuration
+    _trustdeviceProPlugin.initWithOptions(options);
+  }
+
+  /**
+   * Get blackox
+   */
+  Future<String> _getBlackBox() async {
+    var blackBox = await _trustdeviceProPlugin.getBlackBox();
+    return Future.value(blackBox);
+  }
+
+  /**
+   * Get blackox Async
+   */
+  Future<String> _getBlackBoxAsync() async {
+    var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
+    return Future.value(blackBox);
+  }
+  
+  /**
+   * showLiveness
+   */
+  Future<void> _showLiveness(TDLivenessCallback callback) async {
+
+    String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzYwMDc4NjU0fQ.pRy3j4KcT5-usemqfT0Sr87aL9P_5TfuZwBjehNNpPk";
+
+    await _trustdeviceProPlugin.showLiveness(license,callback);
+  }
+
 }
