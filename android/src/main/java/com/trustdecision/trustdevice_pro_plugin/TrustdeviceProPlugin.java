@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import com.trustdecision.mobrisk.TDRisk;
 import com.trustdecision.mobrisk.TDRiskCallback;
@@ -40,7 +41,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
     private Context mApplicationContext;
     private Activity mActivity;
 
-    private TrustdeviceSePlugin sePlugin; 
+    private TrustdeviceSePlugin sePlugin;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -147,12 +148,12 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                                     HashMap<String, Object> argMap = new HashMap<>();
                                     try {
                                         JSONObject livenessresult = new JSONObject(jsonStr);
-                                        argMap.put("seqId", livenessresult.optString("sequence_id"));
-                                        argMap.put("errorCode", livenessresult.optInt("code"));
-                                        argMap.put("errorMsg", livenessresult.optString("message"));
-                                        argMap.put("score", livenessresult.optDouble("score", 0));
-                                        argMap.put("bestImageString", livenessresult.optString("image"));
-                                        argMap.put("livenessId", livenessresult.optString("liveness_id"));
+                                        Iterator<String> keys = livenessresult.keys();
+                                        while (keys.hasNext()) {
+                                            String key = keys.next();
+                                            Object value = livenessresult.opt(key);
+                                            argMap.put(key, value);
+                                        }
                                     } catch (Throwable e) {
                                     }
                                     argMap.put("function", "onSuccess");
@@ -168,10 +169,10 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                                 public void run() {
                                     HashMap<String, Object> argMap = new HashMap<>();
                                     argMap.put("function", "onFailed");
-                                    argMap.put("errorCode", Integer.valueOf(errorCode));
-                                    argMap.put("errorMsg", errorMsg);
-                                    argMap.put("seqId", sequenceId);
-                                    argMap.put("livenessId", "");
+                                    argMap.put("code", Integer.valueOf(errorCode));
+                                    argMap.put("message", errorMsg);
+                                    argMap.put("sequence_id", sequenceId);
+                                    argMap.put("liveness_id", "");
                                     channel.invokeMethod("showLiveness", argMap);
                                 }
                             });
