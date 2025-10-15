@@ -4,7 +4,11 @@
 
 ## 1.4.3
 
-*  Change external parameters 
+*  Change external parameters
+
+## 1.4.2
+
+*  Fix config for pro
 
 ## 1.4.1
 
