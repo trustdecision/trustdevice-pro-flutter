@@ -12,7 +12,7 @@ PODS:
   - TrustDecisionPro/FMDeviceManagerFramework (5.2.1)
   - TrustDecisionPro/TDCorePlugin (5.2.1)
   - TrustDecisionPro/TDMobRisk (5.2.1)
-  - trustdevice_pro_plugin (1.4.3):
+  - trustdevice_pro_plugin (1.4.4):
     - Flutter
     - TrustDecisionLiveness
     - TrustDecisionPro (= 5.2.1)

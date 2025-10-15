@@ -1,3 +1,7 @@
+## 1.4.4
+
+*  Remove Default Liveness
+
 ## 1.4.3
 
 *  Change external parameters 

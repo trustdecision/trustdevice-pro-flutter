@@ -42,3 +42,13 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+
+    // liveness
+//    implementation("com.trustdecision.android:liveness:+")
+
+    // 添加Androidx依赖，活体检测SDK需要
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+}
