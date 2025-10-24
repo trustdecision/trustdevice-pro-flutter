@@ -32,6 +32,11 @@ class TrustdeviceProPlugin {
     return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 
+  // 签名
+  Future<Map<String, dynamic>>  sign(String url) {
+    return TrustdeviceProPluginPlatform.instance.sign(url);
+  } 
+
   ///showCaptcha
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
     return TrustdeviceProPluginPlatform.instance.showCaptcha(callback);

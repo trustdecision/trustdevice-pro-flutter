@@ -2,9 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
-  - TrustDecisionLiveness (3.0.0)
   - TrustDecisionPro (5.2.1):
     - TrustDecisionPro/FMDeviceManagerFramework (= 5.2.1)
     - TrustDecisionPro/TDCorePlugin (= 5.2.1)
@@ -14,8 +13,7 @@ PODS:
   - TrustDecisionPro/TDMobRisk (5.2.1)
   - trustdevice_pro_plugin (1.4.4):
     - Flutter
-    - TrustDecisionLiveness
-    - TrustDecisionPro (= 5.2.1)
+    - TrustDecisionPro
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -25,7 +23,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - TrustDecisionLiveness
     - TrustDecisionPro
 
 EXTERNAL SOURCES:
@@ -39,13 +36,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/trustdevice_pro_plugin/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
-  permission_handler_apple: 3787117e48f80715ff04a3830ca039283d6a4f29
-  TrustDecisionLiveness: 9aaf38a78a98e4ae377363074dff56fe62265c69
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  fluttertoast: 21eecd6935e7064cc1fcb733a4c5a428f3f24f0f
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   TrustDecisionPro: 96f73b1ea80dd9a1978b1e7383d803fdc1f8e1fe
-  trustdevice_pro_plugin: c8b501ae5c3c39e4472b5050b73846ce8121f0c1
+  trustdevice_pro_plugin: fde03218a6ae4d2a27ef19e6908eeed44541c791
 
-PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
+PODFILE CHECKSUM: 20e260c9bb3f61194c661a4ba028da86e4f3ed96
 
 COCOAPODS: 1.16.2

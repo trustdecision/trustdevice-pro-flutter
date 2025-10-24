@@ -1,3 +1,8 @@
+## 1.4.5
+
+*  Add sign api support
+
+
 ## 1.4.4
 
 *  Remove Default Liveness

@@ -12,6 +12,11 @@ class TrustdeviceSePlugin {
 
   Future<Map<String, dynamic>>  getDeviceInfo() {
     return TrustdeviceSePluginPlatform.instance.getDeviceInfo();
+  }
+
+  // 签名
+  Future<Map<String, dynamic>>  sign(String url) {
+    return TrustdeviceSePluginPlatform.instance.sign(url);
   } 
 
   ///Obtain the sdk version number

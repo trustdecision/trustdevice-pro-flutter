@@ -26,15 +26,19 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
   }
 
   Future<void> initWithOptions(Map<String, dynamic> configMap) {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('initWithOptions() has not been implemented.');
   }
 
   Future<String> getBlackBox() {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('getBlackBox() has not been implemented.');
   }
 
   Future<String> getBlackBoxAsync() {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('getBlackBoxAsync() has not been implemented.');
+  }
+
+  Future<Map<String, dynamic>> sign(String url) {
+    throw UnimplementedError('sign() has not been implemented.');
   }
 
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {

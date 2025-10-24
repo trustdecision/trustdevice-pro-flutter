@@ -14,6 +14,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.trustdecision.mobrisk.TDRisk;
+import com.trustdecision.mobrisk.TDAPISignResult;
+
 import com.trustdecision.mobrisk.TDDeviceManager;
 import com.trustdecision.mobrisk.TDDeviceInfoCallback;
 import com.trustdecision.mobrisk.TDDeviceAPIStatus;
@@ -106,6 +109,36 @@ public class TrustdeviceSePlugin implements FlutterPlugin, MethodCallHandler, Ac
                             });
                         }
                     });
+                }
+            });
+        } else if (call.method.equals("sign")) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // 获取参数
+                    String url = call.arguments();
+
+                    TDAPISignResult signResult = TDRisk.sign(mApplicationContext, url);
+                    // 获取签名并使用
+                    String signature = signResult.signature(); 
+                    // 获取错误信息和状态码
+                    String message = signResult.message();
+                    int code = signResult.code();
+
+                    // 注：原生回调在子线程中执行，需切换回主线程处理Flutter结果
+                    mMainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 统一封装所有返回字段（包括 TDAPISignResult）
+                            Map<String, Object> resultData = new HashMap<>();
+                            resultData.put("sign", signature);
+                            resultData.put("code", code);
+                            resultData.put("msg", message);
+                            
+                            result.success(resultData);
+                        }
+                    }); 
+                    
                 }
             });
         } else if (call.method.equals("getSDKVersion")) {
