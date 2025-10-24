@@ -47,6 +47,12 @@ class MockTrustdeviceProPluginPlatform
   Future<void> showLiveness(String license,TDLivenessCallback callback) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
+  
+  @override
+  Future<Map<String, dynamic>> sign(String url) {
+    // TODO: implement sign
+    throw UnimplementedError();
+  }
 
 }
 

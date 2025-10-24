@@ -101,8 +101,35 @@ static FlutterMethodChannel* _channel = nil;
                 result(blackBox);
             });
         });
-    }
-    else if ([@"getSDKVersion" isEqualToString:call.method]) {
+    } else if ([@"sign" isEqualToString:call.method]) {
+        TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+        NSString* path = call.arguments;
+        TDAPISignResult signResult = manager->sign(path);
+
+         // 获取签名并使用
+        NSString* signString = signResult.sign ? [NSString stringWithUTF8String:signResult.sign] : @"";
+        // 获取状态码
+        int code = signResult.code;
+
+        // 获取错误信息
+        NSString* errMsgString = signResult.msg ? [NSString stringWithUTF8String:signResult.msg] : @"";
+            
+        // 切换到主线程（Flutter result 必须在主线程调用）
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // 创建结果字典
+            NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+            
+            // 添加所有字段
+            resultDict[@"code"] = @(code);
+            resultDict[@"sign"] = signString;
+            resultDict[@"msg"] = errMsgString;
+            
+            // 返回成功结果
+            result(resultDict);
+        });
+        
+    } else if ([@"getSDKVersion" isEqualToString:call.method]) {
         TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
         NSString* version = manager->getSDKVersion();
         result(version);

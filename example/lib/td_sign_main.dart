@@ -44,7 +44,31 @@ class _MyAppState extends State<MyHomePage> {
     // _requestPermission().then((value) => {
     //
     // })
-    _initWithOptions();
+
+    // _initWithOptions();
+
+    // test 签名
+    // _testSign('dev/v2');
+
+    _testSign('');
+  }
+  Future<void> _testSign(url) async{
+    try {
+      final resultData = await _trustdeviceProPlugin.sign(url);
+      final sign = resultData['sign'] as String? ?? '';
+      final msg = resultData['msg'] as String? ?? '';
+      final code = resultData['code'] as int;
+      if (code == 0) {
+        // sign success
+        print('signtest0:$resultData');
+      } else {
+        // code,msg
+        print('signtest1:$resultData');
+      }
+    } catch (e) {
+      print("签名异常：$e");
+    }
+    
   }
 
   @override
@@ -211,8 +235,8 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-      "partner": "xxx", // 需要替换成你自己的
-      "appKey": "xxx", // 需要替换成你自己的
+      "partner": "tongdun", // 需要替换成你自己的
+      "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
       "appName": "App", // 需要替换成你自己的
       "country": "sg", // 需要替换成你自己的
       "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试

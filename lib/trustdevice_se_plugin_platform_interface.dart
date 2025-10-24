@@ -23,15 +23,19 @@ abstract class TrustdeviceSePluginPlatform extends PlatformInterface {
 
 
   Future<void> initWithOptions(Map<String, dynamic> configMap) {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('initWithOptions() has not been implemented.');
   }
 
   Future<Map<String, dynamic>> getDeviceInfo() {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('getDeviceInfo() has not been implemented.');
+  }
+
+  Future<Map<String, dynamic>> sign(String url) {
+    throw UnimplementedError('sign() has not been implemented.');
   }
 
   Future<String> getSDKVersion() {
-    throw UnimplementedError('getResult() has not been implemented.');
+    throw UnimplementedError('getSDKVersion() has not been implemented.');
   }
 
 }

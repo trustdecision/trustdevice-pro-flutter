@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
@@ -35,6 +37,15 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
   Future<String> getBlackBoxAsync() async {
     String result = await methodChannel.invokeMethod("getBlackBoxAsync");
     return result;
+  }
+
+  @override
+  Future<Map<String, dynamic>> sign(url) async {
+    final dynamic response = await methodChannel.invokeMethod('sign', url);
+
+    // 转换为JSON字符串再解析
+    final jsonString = jsonEncode(response);
+    return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) async {
