@@ -1,7 +1,10 @@
+## 1.4.8
+
+*  Support the latest fingerprints
+
 ## 1.4.5
 
 *  Add sign api support
-
 
 ## 1.4.4
 

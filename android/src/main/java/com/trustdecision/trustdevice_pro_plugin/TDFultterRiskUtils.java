@@ -64,15 +64,15 @@ public class TDFultterRiskUtils {
         if (configMap == null) {
             return builder;
         }
-        builder = new TDDeviceManager.Builder(); 
+        builder = new TDDeviceManager.Builder();
         if (configMap.containsKey(KEY_PARTNER)) {
-            builder.partnerCode((String) configMap.get(KEY_PARTNER));
+            builder.partner((String) configMap.get(KEY_PARTNER));
         }
         if (configMap.containsKey(KEY_APPKEY)) {
             builder.appKey((String) configMap.get(KEY_APPKEY));
         }
         if (configMap.containsKey(KEY_APPNAME)) {
-            builder.appName((String) configMap.get(KEY_APPNAME));
+            builder.channel((String) configMap.get(KEY_APPNAME));
         }
         if (configMap.containsKey(KEY_CHANNEL)) {
             builder.channel((String) configMap.get(KEY_CHANNEL));
@@ -116,15 +116,15 @@ public class TDFultterRiskUtils {
                     builder.disableGPS();
             }
         }
-       
-        if (configMap.containsKey(KEY_COLLECT_LEVEL)) {
-            String collectLevel = (String) configMap.get(KEY_COLLECT_LEVEL);
-            if ("M".equals(collectLevel)) {
-                builder.collectLevel(TDRisk.COLLECT_LEVEL_M);
-            } else if ("L".equals(collectLevel)) {
-                builder.collectLevel(TDRisk.COLLECT_LEVEL_L);
-            }
-        }
+
+        // if (configMap.containsKey(KEY_COLLECT_LEVEL)) {
+        //     String collectLevel = (String) configMap.get(KEY_COLLECT_LEVEL);
+        //     if ("M".equals(collectLevel)) {
+        //         builder.collectLevel(TDRisk.COLLECT_LEVEL_M);
+        //     } else if ("L".equals(collectLevel)) {
+        //         builder.collectLevel(TDRisk.COLLECT_LEVEL_L);
+        //     }
+        // }
 
         if (configMap.containsKey(KEY_CUSTOM_MESSAGE)) {
             String customMessage = (String) configMap.get(KEY_CUSTOM_MESSAGE);
@@ -163,13 +163,13 @@ public class TDFultterRiskUtils {
                     builder.disableInstallPackageList();
             }
         }
-        if (configMap.containsKey(KEY_FP_ANDROID_WIFI_MAC)) {
-            Object enableWifiMac = configMap.get(KEY_FP_ANDROID_WIFI_MAC);
-            if (enableWifiMac != null) {
-                if ((boolean) enableWifiMac)
-                    builder.enableWifiMac();
-            }
-        }
+        // if (configMap.containsKey(KEY_FP_ANDROID_WIFI_MAC)) {
+        //     Object enableWifiMac = configMap.get(KEY_FP_ANDROID_WIFI_MAC);
+        //     if (enableWifiMac != null) {
+        //         if ((boolean) enableWifiMac)
+        //             builder.enableWifiMac();
+        //     }
+        // }
         if (configMap.containsKey(KEY_FP_ANDROID_GOOGLE_AID)) {
             Object enableGoogleAid = configMap.get(KEY_FP_ANDROID_GOOGLE_AID);
             if (enableGoogleAid != null) {

@@ -37,7 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   ...
-  trustdevice_pro_plugin: ^1.4.5
+  trustdevice_pro_plugin: ^1.4.8
 ```
 
 ### AndroidManifest.xml
