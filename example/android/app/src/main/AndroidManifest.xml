@@ -1,26 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.trustdecision.trustdevice_pro_plugin_example">
-    <!--Compulsory permissions-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-    <!--The following permissions are optional. If this part of the authority is not declared, the acquisition of some device information will be abandoned, which will have a certain effect on data analysis and the accuracy of the fingerprint of the device fingerprint-->
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- This permission is required for Android 11 and above to obtain the installation package list. Collecting the installation package list involves risk and compliance. Whether this permission is required is optional for the business party
- select -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
-   <application
-        android:label="trustdevice_pro_plugin_example"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:label="example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
+            android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -44,4 +31,28 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <!--必选权限-->
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+   <!--如果您的应用是面向海外市场，在google play 上发布，请添加此项-->
+   <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+   <!--以下权限是可选权限，不声明此部分权限将放弃部分设备信息的采集，对数据分析及设备指纹的精准度有一定影响-->
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+   <!-- Android11及以上获取安装包列表需要该权限，采集安装包列表涉及到⻛险合规，是否需要该权限业务⽅⾃⾏选择 -->
+   <!-- <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/> -->
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
 </manifest>
