@@ -34,9 +34,9 @@ android {
     }
 }
 dependencies {
-    implementation 'com.trustdecision.android:mobrisk:+'
+    implementation 'com.trustdecision.android:mobrisk:5.1.2.3'
+    // liveness
+    // implementation 'com.trustdecision.android:liveness:2.5.3'
     // captcha
     //implementation 'com.trustdecision.android:captcha:+'
-    // liveness
-    //implementation 'com.trustdecision.android:liveness:+'
 }

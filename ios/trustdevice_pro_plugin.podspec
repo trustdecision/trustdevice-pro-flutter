@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'trustdevice_pro_plugin'
-  s.version          = '1.3.8'
+  s.version          = '1.3.9'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.
@@ -19,7 +19,8 @@ A new Flutter project.
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency 'TrustDecisionPro'
+  s.dependency 'TrustDecisionPro', '4.4.2.2'
+  #s.dependency 'TrustDecisionLiveness', '2.5.0'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.

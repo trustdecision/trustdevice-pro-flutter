@@ -236,7 +236,7 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _showLiveness(TDLivenessCallback callback) async {
 
-    String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzIxNDcyOTQ1fQ.r8VH9QiF_nNZfbJ8w7rtpz1U4b-8kP26lHfvfJ6R2-Q";
+    String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzYyMjU0NjMyfQ.21IhgGF0dQMiwc-lrZIOgxZvX9veYyUJQOryeLJq-Wo";
 
     await _trustdeviceProPlugin.showLiveness(license,callback);
   }
