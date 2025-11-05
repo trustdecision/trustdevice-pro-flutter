@@ -1,6 +1,6 @@
 ## 1.3.9
 
-*  Specify iOS TrustDecisionPro version 4.4.2.2 and Android com.trustdecision.android:mobrisk version 5.1.2.3 to adapt to TDLiveness version 2.5.x.
+*  This version Specify iOS TrustDecisionPro version 4.4.2.2 and Android com.trustdecision.android:mobrisk version 5.1.2.3 to adapt to TDLiveness older version 2.5.x, We recommend that you use the latest version.
 
 ## 1.3.8
 
