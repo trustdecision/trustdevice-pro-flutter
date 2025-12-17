@@ -173,7 +173,7 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                 @Override
                 public void run() {
                     HashMap<String, Object> configMap = call.arguments();
-                    TDRisk.showLiveness((String) configMap.get("license"), new TDRiskLivenessCallback() {
+                    TDRisk.showLiveness(mActivity, (String) configMap.get("license"), new TDRiskLivenessCallback() {
                         @Override
                         public void onSuccess(String jsonStr) {
                             mMainHandler.post(new Runnable() {
