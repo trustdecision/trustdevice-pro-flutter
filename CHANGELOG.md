@@ -1,4 +1,4 @@
-## 1.4.8
+## 1.4.9
 
 *  Support multi-task stack mode, with the same Activity
 * 
