@@ -1,5 +1,9 @@
 ## 1.4.8
 
+*  Support multi-task stack mode, with the same Activity
+* 
+## 1.4.8
+
 *  Support the latest fingerprints
 
 ## 1.4.5
