@@ -1,3 +1,7 @@
+## 1.5.0
+
+*  Add behavior collect support
+
 ## 1.4.9
 
 *  Support multi-task stack mode, with the same Activity
