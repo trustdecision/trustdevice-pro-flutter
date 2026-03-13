@@ -270,10 +270,10 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-      "partner": "LPZ13",
-      "appKey": "5978b5f9fd6a8bf5de02f0054d0dccec",
-      "appName": "App",
-      "country": "cn",
+       "partner": "xxx", // 需要替换成你自己的
+      "appKey": "xxx", // 需要替换成你自己的
+      "appName": "xxx", // 需要替换成你自己的
+      "country": "cn", // 参考集成文档修改
       "debug": kDebugMode,
     };
     _trustdeviceProPlugin.initWithOptions(options);

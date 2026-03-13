@@ -235,10 +235,10 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-      "partner": "tongdun", // 需要替换成你自己的
-      "appKey": "0d2e7e22f9737acbac739056aa23c738", // 需要替换成你自己的
-      "appName": "App", // 需要替换成你自己的
-      "country": "sg", // 需要替换成你自己的
+      "partner": "xxx", // 需要替换成你自己的
+      "appKey": "xxx", // 需要替换成你自己的
+      "appName": "xxx", // 需要替换成你自己的
+      "country": "sg", // 参考集成文档修改
       "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
     };
     //initialize the configuration
