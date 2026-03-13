@@ -47,7 +47,7 @@
    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
    <!-- Android11及以上获取安装包列表需要该权限，采集安装包列表涉及到⻛险合规，是否需要该权限业务⽅⾃⾏选择 -->
-   <!-- <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/> -->
+   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <queries>
         <intent>

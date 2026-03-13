@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
+import 'package:tdbehavior_flutter/tdbehavior_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,12 +16,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'trustdevice_pro_plugin',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return TDBehaviorWidget(
+      child: MaterialApp(
+        title: 'trustdevice_pro_plugin',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'trustdevice_pro_plugin'),
       ),
-      home: const MyHomePage(title: 'trustdevice_pro_plugin'),
     );
   }
 }
@@ -35,8 +38,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyHomePage> {
-  final _trustdeviceProPlugin = TrustdeviceProPlugin();
+  // final _trustdeviceProPlugin = TrustdeviceProPlugin();
   var _mResultString = "";
+  dynamic _trustdeviceProPlugin;
 
   @override
   void initState() {
@@ -44,6 +48,9 @@ class _MyAppState extends State<MyHomePage> {
     // _requestPermission().then((value) => {
     //
     // })
+    // 注册行为采集组件
+    final behaviorCollector = TDBehavior();
+    _trustdeviceProPlugin = TrustdeviceProPlugin(behaviorCollector);
     _initWithOptions();
   }
 
@@ -178,6 +185,58 @@ class _MyAppState extends State<MyHomePage> {
                   )),
             ),
             Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    _startBehavior();
+                  },
+                  child: Text(
+                    "startBehavior",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    _collectBehavior().then((data) {
+                      setState(() {
+                        _mResultString = data.toString();
+                      });
+                    });
+                  },
+                  child: Text(
+                    "collectBehavior",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    _stopBehavior();
+                  },
+                  child: Text(
+                    "stopBehavior",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
               child: Text("result : ${_mResultString}"),
@@ -211,14 +270,15 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-      "partner": "xxx", // 需要替换成你自己的
-      "appKey": "xxx", // 需要替换成你自己的
-      "appName": "App", // 需要替换成你自己的
-      "country": "sg", // 需要替换成你自己的
-      "debug": kDebugMode, // 上线时删除本行代码，防止应用被调试
+      "partner": "LPZ13",
+      "appKey": "5978b5f9fd6a8bf5de02f0054d0dccec",
+      "appName": "App",
+      "country": "cn",
+      "debug": kDebugMode,
     };
-    //initialize the configuration
     _trustdeviceProPlugin.initWithOptions(options);
+    // TDBehavior.initWithOptions(options);
+    
   }
 
   /**
@@ -245,6 +305,35 @@ class _MyAppState extends State<MyHomePage> {
     String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzYwNjA3Njg3fQ.P1Gh6S-Gj0b_FS3cvG6dRVZXIZ3I2-XzC8ffGkqShco";
 
     await _trustdeviceProPlugin.showLiveness(license,callback);
+  }
+
+  void _startBehavior() {
+    _trustdeviceProPlugin.start();
+    // TDBehavior.start();
+  }
+
+  Future<Map<String, dynamic>> _collectBehavior() async {
+    // return _trustdeviceProPlugin.collect();
+
+    // final result = await TDBehavior.collect();
+    final result = await _trustdeviceProPlugin.collect();
+    print('result:$result');
+    final int code = result['code'];
+    final String msg = result['msg'];
+    final String payload = result['payload'];
+
+    if (code == 0) {
+        print('Get behavior collect result successfully, payload: $payload');
+    } else {
+        print('Get behavior collect result failed, code: $code, msg: $msg');
+    }
+    return result;
+  }
+
+  void _stopBehavior() {
+    _trustdeviceProPlugin.stop();
+    // TDBehavior.stop();
+
   }
 
 }

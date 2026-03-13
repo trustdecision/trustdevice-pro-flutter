@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
 export 'trustdevice_se_plugin.dart'; // 在pro_plugin中暴露se_plugin
@@ -12,6 +14,20 @@ enum TDLivenessShowStyle {
 
 
 class TrustdeviceProPlugin {
+
+  final dynamic _behaviorCollector;
+  bool _isInitialized = false;
+
+  /// 构造方法 - 传入行为采集插件实例
+  /// 如果不需要行为采集，可以不传
+  TrustdeviceProPlugin([dynamic behaviorCollector])
+      : _behaviorCollector = behaviorCollector;
+  
+  /// 获取单例实例的静态方法（保持向后兼容）
+  static TrustdeviceProPlugin get instance {
+    return TrustdeviceProPlugin();
+  }
+
   ///Obtain the sdk version number
   Future<String> getSDKVersion() {
     return TrustdeviceProPluginPlatform.instance.getSDKVersion();
@@ -19,16 +35,34 @@ class TrustdeviceProPlugin {
 
   ///Initialize the configuration and return to blackBox
   Future<void> initWithOptions(Map<String, dynamic> configMap) {
-    return TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
+
+    try {
+      if (_behaviorCollector != null) {
+        _behaviorCollector!.initWithOptions(configMap);
+      }
+      TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
+      _isInitialized = true;
+
+      return Future.value();
+    } catch(e){
+      rethrow;
+    }
+    
   }
 
   ///Get blackBox
   Future<String> getBlackBox() {
+    if (!_isInitialized) {
+      throw StateError('Please call initWithOptions before getBlackBox');
+    }
     return TrustdeviceProPluginPlatform.instance.getBlackBox();
   }
 
   ///Get blackBox Async
   Future<String> getBlackBoxAsync() {
+    if (!_isInitialized) {
+      throw StateError('Please call initWithOptions before getBlackBoxAsync');
+    }
     return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 
@@ -45,6 +79,48 @@ class TrustdeviceProPlugin {
   ///showLiveness
   Future<void> showLiveness(String license,TDLivenessCallback callback) {
     return TrustdeviceProPluginPlatform.instance.showLiveness(license,callback);
+  }
+
+  /// 开始行为采集
+  void start() {
+    if (_behaviorCollector == null) {
+      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+    }
+    _behaviorCollector!.start();
+  }
+    /// 收集行为数据
+  Future<Map<String, dynamic>> collect({String? blackbox}) async {
+    if (_behaviorCollector == null) {
+      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+    }
+    // String? finalBlackbox = blackbox;
+    // if (finalBlackbox == null) {
+    //   try {
+    //     finalBlackbox = await getBlackBoxAsync();
+    //   } catch (e) {
+    //     // 如果 getBlackBoxAsync 抛出异常（未初始化），返回错误码 100
+    //     return {'code': 100, 'msg': 'Please call initWithOptions method first'};
+    //   }
+    // }
+    final result = await _behaviorCollector!.collect();
+    if (result == null) {
+      return {'code': -1, 'msg': 'Data collection returned null'};
+    }
+    return result;
+  }
+
+  
+  /// 停止行为采集
+  void stop() {
+    if (_behaviorCollector == null) {
+      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+    }
+    _behaviorCollector!.stop();
+  }
+
+  /// 检查是否有行为采集插件
+  bool hasBehaviorCollector() {
+    return _behaviorCollector != null;
   }
 
 }
