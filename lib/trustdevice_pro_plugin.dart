@@ -34,11 +34,11 @@ class TrustdeviceProPlugin {
   }
 
   ///Initialize the configuration and return to blackBox
-  Future<void> initWithOptions(Map<String, dynamic> configMap) {
+  Future<void> initWithOptions(Map<String, dynamic> configMap) async{
 
     try {
       if (_behaviorCollector != null) {
-        _behaviorCollector!.initWithOptions(configMap);
+        await _behaviorCollector!.initWithOptions(configMap);
       }
       TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
       _isInitialized = true;

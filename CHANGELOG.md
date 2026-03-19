@@ -1,3 +1,7 @@
+## 1.5.1
+
+*  Modify behavior init method
+
 ## 1.5.0
 
 *  Add behavior collect support
