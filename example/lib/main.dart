@@ -50,7 +50,8 @@ class _MyAppState extends State<MyHomePage> {
     // })
     // 注册行为采集组件
     final behaviorCollector = TDBehavior();
-    _trustdeviceProPlugin = TrustdeviceProPlugin(behaviorCollector);
+    // _trustdeviceProPlugin = TrustdeviceProPlugin(behaviorCollector);
+    _trustdeviceProPlugin = TrustdeviceProPlugin();
     _initWithOptions();
   }
 
@@ -149,6 +150,26 @@ class _MyAppState extends State<MyHomePage> {
                   },
                   child: Text(
                     "Get blackBox Async",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const BlackBoxTestPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Go BlackBox Test Page",
                     style: TextStyle(color: Colors.white),
                   )),
             ),
@@ -336,4 +357,61 @@ class _MyAppState extends State<MyHomePage> {
 
   }
 
+}
+
+class BlackBoxTestPage extends StatefulWidget {
+  const BlackBoxTestPage({super.key});
+
+  @override
+  State<BlackBoxTestPage> createState() => _BlackBoxTestPageState();
+}
+
+class _BlackBoxTestPageState extends State<BlackBoxTestPage> {
+  String _result = '';
+
+  Future<void> _testGetBlackBox() async {
+    try {
+      final blackBox = await TrustdeviceProPlugin().getBlackBox();
+      print('1111: $blackBox');
+      setState(() {
+        _result = blackBox;
+      });
+    } catch (e) {
+      setState(() {
+        _result = e.toString();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('BlackBox Test Page'),
+      ),
+      body: ListView(
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: _testGetBlackBox,
+              child: Text(
+                "Get blackBox",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
+            child: Text("result : $_result"),
+          ),
+        ],
+      ),
+    );
+  }
 }

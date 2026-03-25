@@ -15,17 +15,24 @@ enum TDLivenessShowStyle {
 
 class TrustdeviceProPlugin {
 
-  final dynamic _behaviorCollector;
-  bool _isInitialized = false;
+  dynamic _behaviorCollector;
+  static bool _isInitialized = false;
+  static final TrustdeviceProPlugin _instance = TrustdeviceProPlugin._internal();
 
   /// 构造方法 - 传入行为采集插件实例
   /// 如果不需要行为采集，可以不传
-  TrustdeviceProPlugin([dynamic behaviorCollector])
-      : _behaviorCollector = behaviorCollector;
+  factory TrustdeviceProPlugin([dynamic behaviorCollector]) {
+    if (behaviorCollector != null) {
+      _instance._behaviorCollector = behaviorCollector;
+    }
+    return _instance;
+  }
+
+  TrustdeviceProPlugin._internal();
   
   /// 获取单例实例的静态方法（保持向后兼容）
   static TrustdeviceProPlugin get instance {
-    return TrustdeviceProPlugin();
+    return _instance;
   }
 
   ///Obtain the sdk version number
@@ -40,10 +47,10 @@ class TrustdeviceProPlugin {
       if (_behaviorCollector != null) {
         await _behaviorCollector!.initWithOptions(configMap);
       }
-      TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
+      await TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
       _isInitialized = true;
 
-      return Future.value();
+      return;
     } catch(e){
       rethrow;
     }

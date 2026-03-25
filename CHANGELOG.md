@@ -1,3 +1,7 @@
+## 1.5.2
+
+*  Modify factory method
+
 ## 1.5.1
 
 *  Modify behavior init method

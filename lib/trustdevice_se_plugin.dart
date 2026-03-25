@@ -8,16 +8,23 @@ import 'trustdevice_se_plugin_platform_interface.dart';
 
 class TrustdeviceSePlugin {
 
-  final dynamic _behaviorCollector;
+  dynamic _behaviorCollector;
+  static final TrustdeviceSePlugin _instance = TrustdeviceSePlugin._internal();
 
   /// 构造方法 - 传入行为采集插件实例
   /// 如果不需要行为采集，可以不传
-  TrustdeviceSePlugin([dynamic behaviorCollector])
-      : _behaviorCollector = behaviorCollector;
+  factory TrustdeviceSePlugin([dynamic behaviorCollector]) {
+    if (behaviorCollector != null) {
+      _instance._behaviorCollector = behaviorCollector;
+    }
+    return _instance;
+  }
+
+  TrustdeviceSePlugin._internal();
   
   /// 获取单例实例的静态方法（保持向后兼容）
   static TrustdeviceSePlugin get instance {
-    return TrustdeviceSePlugin();
+    return _instance;
   }
 
   ///Initialize the configuration and return to blackBox
@@ -26,8 +33,8 @@ class TrustdeviceSePlugin {
       if (_behaviorCollector != null) {
         await _behaviorCollector!.initWithOptions(configMap);
       }
-      TrustdeviceSePluginPlatform.instance.initWithOptions(configMap);
-      return Future.value();
+      await TrustdeviceSePluginPlatform.instance.initWithOptions(configMap);
+      return;
     } catch(e){
       rethrow;
     }
