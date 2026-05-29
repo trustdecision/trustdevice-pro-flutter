@@ -456,10 +456,11 @@ packages:
   trustdevice_pro_plugin:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
-    version: "1.5.2"
+      name: trustdevice_pro_plugin
+      sha256: b62e1613fd7c9b81d59b48c5d435497768305cd8a3450ebb4d02b4293566a5d2
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.5.3"
   typed_data:
     dependency: transitive
     description:

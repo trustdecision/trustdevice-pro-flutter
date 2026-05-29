@@ -59,17 +59,17 @@ class TrustdeviceProPlugin {
 
   ///Get blackBox
   Future<String> getBlackBox() {
-    if (!_isInitialized) {
-      throw StateError('Please call initWithOptions before getBlackBox');
-    }
+    // if (!_isInitialized) {
+    //   // throw StateError('Please call initWithOptions before getBlackBox');
+    // }
     return TrustdeviceProPluginPlatform.instance.getBlackBox();
   }
 
   ///Get blackBox Async
   Future<String> getBlackBoxAsync() {
-    if (!_isInitialized) {
-      throw StateError('Please call initWithOptions before getBlackBoxAsync');
-    }
+    // if (!_isInitialized) {
+    //   // throw StateError('Please call initWithOptions before getBlackBoxAsync');
+    // }
     return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 

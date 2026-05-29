@@ -52,7 +52,7 @@ class _MyAppState extends State<MyHomePage> {
     final behaviorCollector = TDBehavior();
     // _trustdeviceProPlugin = TrustdeviceProPlugin(behaviorCollector);
     _trustdeviceProPlugin = TrustdeviceProPlugin();
-    _initWithOptions();
+    // _initWithOptions();
   }
 
   @override
@@ -291,7 +291,7 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-       "partner": "xxx", // 需要替换成你自己的
+      "partner": "xxx", // 需要替换成你自己的
       "appKey": "xxx", // 需要替换成你自己的
       "appName": "xxx", // 需要替换成你自己的
       "country": "cn", // 参考集成文档修改
@@ -372,7 +372,6 @@ class _BlackBoxTestPageState extends State<BlackBoxTestPage> {
   Future<void> _testGetBlackBox() async {
     try {
       final blackBox = await TrustdeviceProPlugin().getBlackBox();
-      print('1111: $blackBox');
       setState(() {
         _result = blackBox;
       });

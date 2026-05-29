@@ -1,3 +1,7 @@
+## 1.5.3
+
+*  fix throw error issue
+
 ## 1.5.2
 
 *  Modify factory method
