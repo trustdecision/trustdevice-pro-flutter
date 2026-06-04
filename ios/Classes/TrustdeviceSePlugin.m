@@ -84,6 +84,12 @@ static FlutterMethodChannel* _channel = nil;
                 options[@"noDeviceName"] = @"noDeviceName";
             }
         }
+
+        // 处理 dataCenter 参数：若存在且非空，则赋值给 country
+        id dataCenterObj = options[@"dataCenter"];
+        if (dataCenterObj && [dataCenterObj isKindOfClass:[NSString class]] && [dataCenterObj length] > 0) {
+            options[@"country"] = dataCenterObj;
+        }
         
         manager->initWithOptions([options copy]);
     } else if ([@"getDeviceInfo" isEqualToString:call.method]) {
@@ -106,6 +112,12 @@ static FlutterMethodChannel* _channel = nil;
                     resultDict[@"message"] = @(response.apiStatus.message);
                     resultDict[@"sealedResult"] = @(response.sealedResult);
                     resultDict[@"deviceRiskScore"] = @(response.deviceRiskScore);
+
+                    NSDictionary *apiStatusDict = @{
+                        @"code": @(code),
+                        @"message": @(response.apiStatus.message) ?: @""
+                    };
+                    resultDict[@"apiStatus"] = apiStatusDict;
                     
                     // 返回成功结果
                     result(resultDict);

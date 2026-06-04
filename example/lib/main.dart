@@ -1,11 +1,6 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
-import 'package:tdbehavior_flutter/tdbehavior_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:trustdevice_pro_plugin/trustdevice_se_plugin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,369 +11,101 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TDBehaviorWidget(
-      child: MaterialApp(
-        title: 'trustdevice_pro_plugin',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePage(title: 'trustdevice_pro_plugin'),
-      ),
+    return MaterialApp(
+      title: 'TrustDevice Standard Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyAppState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyAppState extends State<MyHomePage> {
-  // final _trustdeviceProPlugin = TrustdeviceProPlugin();
-  var _mResultString = "";
-  dynamic _trustdeviceProPlugin;
+class _MyHomePageState extends State<MyHomePage> {
+  final _trustdeviceSePlugin = TrustdeviceSePlugin();
+  String _log = '';
 
-  @override
-  void initState() {
-    super.initState();
-    // _requestPermission().then((value) => {
-    //
-    // })
-    // 注册行为采集组件
-    final behaviorCollector = TDBehavior();
-    // _trustdeviceProPlugin = TrustdeviceProPlugin(behaviorCollector);
-    _trustdeviceProPlugin = TrustdeviceProPlugin();
-    // _initWithOptions();
+  void _appendLog(String message) {
+    setState(() {
+      _log += '$message\n';
+    });
+    debugPrint(message);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: ListView(
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _getSDKVersion().then((sdkVersion) => {
-                          Fluttertoast.showToast(
-                              msg: "The sdk version is ${sdkVersion}",
-                              textColor: Colors.white)
-                        });
-                  },
-                  child: Text(
-                    "Get sdk version",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _initWithOptions();
-                  },
-                  child: Text(
-                    "initialization",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    var future = _getBlackBox();
-                    future.then((blackBox) => {
-                          setState(() {
-                            if (blackBox != null) {
-                              _mResultString = blackBox;
-                              print(
-                                  "getBlackBox blackBox: ${_mResultString}");
-                            }
-                          })
-                        });
-                  },
-                  child: Text(
-                    "Get blackBox",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    var future = _getBlackBoxAsync();
-                    future.then((blackBox) => {
-                          setState(() {
-                            if (blackBox != null) {
-                              _mResultString = blackBox;
-                              print(
-                                  "getBlackBox blackBox: ${_mResultString}");
-                            }
-                          })
-                        });
-                  },
-                  child: Text(
-                    "Get blackBox Async",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const BlackBoxTestPage(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "Go BlackBox Test Page",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _showLiveness(TDLivenessCallback(onSuccess: (Map<dynamic, dynamic> successResultMap) {
-                        setState(() {
-                             String sequence_id = successResultMap["sequence_id"];
-                             String liveness_id = successResultMap["liveness_id"];
-                             String image = successResultMap["image"];
-                             _mResultString = "Liveness验证成功!seqId: $sequence_id,livenessId:$liveness_id,bestImageString:$image";
-                             print(_mResultString);
-                        });
-                    }, onFailed: (Map<dynamic, dynamic> failResultMap) {
-                       setState(() {
-                             String sequence_id = failResultMap["sequence_id"];
-                             int code = failResultMap["code"];
-                             String message = failResultMap["message"];
-                             _mResultString = "Liveness验证失败!,seqId: $sequence_id, 错误码: $code 错误内容: $message";
-                             print(_mResultString);
-                       });
-                    }));
-                  },
-                  child: Text(
-                    "showLiveness",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _startBehavior();
-                  },
-                  child: Text(
-                    "startBehavior",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _collectBehavior().then((data) {
-                      setState(() {
-                        _mResultString = data.toString();
-                      });
-                    });
-                  },
-                  child: Text(
-                    "collectBehavior",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () {
-                    _stopBehavior();
-                  },
-                  child: Text(
-                    "stopBehavior",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
-              child: Text("result : ${_mResultString}"),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  /**
-   * request requestPermission
-   */
-  Future<void> _requestPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-      Permission.phone,
-    ].request();
-  }
-
-  /**
-   * Obtain the sdk version number
-   */
-  Future<String> _getSDKVersion() async {
-    var sdkVersion = await _trustdeviceProPlugin.getSDKVersion();
-    return Future.value(sdkVersion);
-  }
-
-  /**
-   *Initialize the configuration
-   */
+  /// 初始化 SDK
   Future<void> _initWithOptions() async {
-    var options = {
-      "partner": "xxx", // 需要替换成你自己的
-      "appKey": "xxx", // 需要替换成你自己的
-      "appName": "xxx", // 需要替换成你自己的
-      "country": "cn", // 参考集成文档修改
-      "debug": kDebugMode,
-    };
-    _trustdeviceProPlugin.initWithOptions(options);
-    // TDBehavior.initWithOptions(options);
-    
-  }
-
-  /**
-   * Get blackox
-   */
-  Future<String> _getBlackBox() async {
-    var blackBox = await _trustdeviceProPlugin.getBlackBox();
-    return Future.value(blackBox);
-  }
-
-  /**
-   * Get blackox Async
-   */
-  Future<String> _getBlackBoxAsync() async {
-    var blackBox = await _trustdeviceProPlugin.getBlackBoxAsync();
-    return Future.value(blackBox);
-  }
-  
-  /**
-   * showLiveness
-   */
-  Future<void> _showLiveness(TDLivenessCallback callback) async {
-
-    String license = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJ0bmVyX2tleSI6IitjdjAzanFWclhuU2hkcU5FaXBZSGg4K25qVE41S0NtMzlFLy9PLythMVB5cDB1S3pkUk03c3hHTzB1cEMvbjAiLCJwYXJ0bmVyX2NvZGUiOiJkZW1vIiwiZXhwIjoxNzYwNjA3Njg3fQ.P1Gh6S-Gj0b_FS3cvG6dRVZXIZ3I2-XzC8ffGkqShco";
-
-    await _trustdeviceProPlugin.showLiveness(license,callback);
-  }
-
-  void _startBehavior() {
-    _trustdeviceProPlugin.start();
-    // TDBehavior.start();
-  }
-
-  Future<Map<String, dynamic>> _collectBehavior() async {
-    // return _trustdeviceProPlugin.collect();
-
-    // final result = await TDBehavior.collect();
-    final result = await _trustdeviceProPlugin.collect();
-    print('result:$result');
-    final int code = result['code'];
-    final String msg = result['msg'];
-    final String payload = result['payload'];
-
-    if (code == 0) {
-        print('Get behavior collect result successfully, payload: $payload');
-    } else {
-        print('Get behavior collect result failed, code: $code, msg: $msg');
-    }
-    return result;
-  }
-
-  void _stopBehavior() {
-    _trustdeviceProPlugin.stop();
-    // TDBehavior.stop();
-
-  }
-
-}
-
-class BlackBoxTestPage extends StatefulWidget {
-  const BlackBoxTestPage({super.key});
-
-  @override
-  State<BlackBoxTestPage> createState() => _BlackBoxTestPageState();
-}
-
-class _BlackBoxTestPageState extends State<BlackBoxTestPage> {
-  String _result = '';
-
-  Future<void> _testGetBlackBox() async {
+    _appendLog('▶️ initWithOptions called');
     try {
-      final blackBox = await TrustdeviceProPlugin().getBlackBox();
-      setState(() {
-        _result = blackBox;
-      });
+      final options = {
+        "partner": "XXX",        // 请替换为实际值
+        "appKey": "XXX", // 请替换为实际值
+        "dataCenter": 'cn', // cn / sg / us / fra / idna
+        "channel": "your_channel",// 可选，请联系运营获取
+      };
+
+      await _trustdeviceSePlugin.initWithOptions(options);
+      _appendLog('✅ SDK initialized successfully');
+    } on PlatformException catch (e) {
+      _appendLog('❌ Init failed: code=${e.code}, message=${e.message}');
     } catch (e) {
-      setState(() {
-        _result = e.toString();
-      });
+      _appendLog('❌ Init error: $e');
+    }
+  }
+
+  /// 获取 SDK 版本号
+  Future<void> _getSDKVersion() async {
+    _appendLog('▶️ getSDKVersion called');
+    try {
+      final version = await _trustdeviceSePlugin.getSDKVersion();
+      _appendLog('✅ SDK version: $version');
+    } on PlatformException catch (e) {
+      _appendLog('❌ Get version failed: code=${e.code}, message=${e.message}');
+    } catch (e) {
+      _appendLog('❌ Get version error: $e');
+    }
+  }
+
+  /// 获取设备信息
+  Future<void> _getDeviceInfo() async {
+    _appendLog('▶️ getDeviceInfo called');
+    try {
+      final resultData = await _trustdeviceSePlugin.getDeviceInfo();
+
+      // 解析通用字段
+      final fpVersion = resultData['fpVersion'] as String? ?? '';
+      final blackBox = resultData['blackBox'] as String? ?? '';
+      final anonymousId = resultData['anonymousId'] as String? ?? '';
+      final deviceRiskScore = resultData['deviceRiskScore'] as int? ?? 0;
+      final sealedResult = resultData['sealedResult'] as String? ?? '';
+      final apiStatus = resultData['apiStatus'] as Map<String, dynamic>? ?? {};
+
+
+      final statusCode = apiStatus['code'] as int? ?? -1;
+      final statusMessage = apiStatus['message'] as String? ?? '';
+
+      
+      if (statusCode == 0) {
+        _appendLog('✅ Device info retrieved successfully');
+        _appendLog('   anonymousId: $anonymousId');
+        _appendLog('   blackBox: $blackBox');
+        _appendLog('   fpVersion: $fpVersion');
+        _appendLog('   deviceRiskScore: $deviceRiskScore');
+        if (sealedResult.isNotEmpty) {
+          _appendLog('   sealedResult: $sealedResult');
+        }
+      } else {
+        _appendLog('⚠️ API returned error: code=$statusCode, message=$statusMessage');
+      }
+    } on PlatformException catch (e) {
+     
+      _appendLog('❌ getDeviceInfo failed: code=${e.code}, message=${e.message}');
+    } catch (e) {
+      _appendLog('❌ getDeviceInfo error: $e');
     }
   }
 
@@ -386,28 +113,41 @@ class _BlackBoxTestPageState extends State<BlackBoxTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BlackBox Test Page'),
+        title: const Text('TrustDevice Standard Demo'),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(18, 30, 18, 0),
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _initWithOptions,
+            child: const Text('initWithOptions'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: _getSDKVersion,
+            child: const Text('getSDKVersion'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: _getDeviceInfo,
+            child: const Text('getDeviceInfo'),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
               ),
-              onPressed: _testGetBlackBox,
-              child: Text(
-                "Get blackBox",
-                style: TextStyle(color: Colors.white),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  _log,
+                  style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                ),
               ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(18, 20, 18, 0),
-            child: Text("result : $_result"),
           ),
         ],
       ),

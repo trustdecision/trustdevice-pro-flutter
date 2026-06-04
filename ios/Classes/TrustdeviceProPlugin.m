@@ -2,11 +2,13 @@
 #import "TrustdeviceSePlugin.h" // 导入子类头文件
 #import <TDMobRisk/TDMobRisk.h>
 
-@interface TrustdeviceProPlugin()
+@interface TrustdeviceProPlugin () <FlutterPlugin, FlutterStreamHandler>
+@property (nonatomic, strong) FlutterEventSink eventSink;
 
 @end
 
 static FlutterMethodChannel* _channel = nil;
+
 
 @implementation TrustdeviceProPlugin
 
@@ -14,12 +16,35 @@ static FlutterMethodChannel* _channel = nil;
     FlutterMethodChannel* channel = [FlutterMethodChannel
                                      methodChannelWithName:@"trustdevice_pro_plugin"
                                      binaryMessenger:[registrar messenger]];
+
+    FlutterEventChannel* eventChannel = [FlutterEventChannel 
+                                         eventChannelWithName:@"trustdevice_pro_plugin/error"
+                                         binaryMessenger:[registrar messenger]];
+
     TrustdeviceProPlugin* instance = [[TrustdeviceProPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
+    [eventChannel setStreamHandler:instance];
     _channel = channel;
 
     // 2. 注册子功能
     [TrustdeviceSePlugin registerWithRegistrar:registrar];
+}
+
+- (FlutterError*)onListenWithArguments:(id)arguments eventSink:(FlutterEventSink)events {
+    self.eventSink = events;
+    // 设置错误监听
+    TDMobRiskManager_t *riskManager = [TDMobRiskManager sharedManager];
+    riskManager->setOnErrorCodeListener(^(int errorCode, const char* errorMsg) {
+        if (self.eventSink) {
+            NSString *msg = [[NSString alloc] initWithCString:errorMsg ?: "" encoding:NSUTF8StringEncoding];
+            NSDictionary *dict = @{
+                @"errorCode": @(errorCode),
+                @"errorMsg": msg ?: @""
+            };
+            self.eventSink(dict);
+        }
+    });
+    return nil;
 }
 
 - (UIWindow *)getKeyWindow
@@ -87,6 +112,12 @@ static FlutterMethodChannel* _channel = nil;
             if([deviceNameObj boolValue] == NO){
                 options[@"noDeviceName"] = @"noDeviceName";
             }
+        }
+
+        // 处理 dataCenter 参数：若存在且非空，则赋值给 country
+        id dataCenterObj = options[@"dataCenter"];
+        if (dataCenterObj && [dataCenterObj isKindOfClass:[NSString class]] && [dataCenterObj length] > 0) {
+            options[@"country"] = dataCenterObj;
         }
         
         manager->initWithOptions([options copy]);

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
 export 'trustdevice_se_plugin.dart'; // 在pro_plugin中暴露se_plugin
@@ -10,6 +12,12 @@ enum TDLivenessShowStyle {
     Push,
 
     Present,
+}
+
+class TDErrorEvent {
+  final int errorCode;
+  final String errorMsg;
+  TDErrorEvent({required this.errorCode, required this.errorMsg});
 }
 
 
@@ -33,6 +41,20 @@ class TrustdeviceProPlugin {
   /// 获取单例实例的静态方法（保持向后兼容）
   static TrustdeviceProPlugin get instance {
     return _instance;
+  }
+
+  // 新增：事件通道
+  static const EventChannel _errorEventChannel = EventChannel('trustdevice_pro_plugin/error');
+
+  // 新增：静态 getter，返回错误事件流
+  static Stream<TDErrorEvent> get onError {
+    return _errorEventChannel.receiveBroadcastStream().map((dynamic event) {
+      final map = Map<String, dynamic>.from(event);
+      return TDErrorEvent(
+        errorCode: map['errorCode'],
+        errorMsg: map['errorMsg'],
+      );
+    });
   }
 
   ///Obtain the sdk version number
@@ -138,6 +160,7 @@ class TDRisk {
   static const KEY_APPKEY = "appKey";
   static const KEY_APPNAME = "appName";
   static const KEY_COUNTRY = "country";
+  static const KEY_DATACENTER = "dataCenter";
   static const KEY_DEBUG = "debug";
   static const KEY_TIME_LIMIT = "timeLimit";
   static const KEY_LOCATION = "location";

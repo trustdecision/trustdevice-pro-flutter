@@ -16,6 +16,7 @@ public class TDFultterRiskUtils {
     static final String KEY_APPNAME = "appName";
     static final String KEY_CHANNEL = "channel";
     static final String KEY_COUNTRY = "country";
+    static final String KEY_DATACENTER = "dataCenter";
     static final String KEY_URL = "url";
     static final String KEY_PROFILE_URL = "profileUrl";
     static final String KEY_DEBUG = "debug";
@@ -81,6 +82,12 @@ public class TDFultterRiskUtils {
             String country = (String) configMap.get(KEY_COUNTRY);
             if (!TextUtils.isEmpty(country)) {
                 builder.country(country.toUpperCase());
+            }
+        }
+        if (configMap.containsKey(KEY_DATACENTER)) {
+            String dataCenter = (String) configMap.get(KEY_DATACENTER);
+            if (!TextUtils.isEmpty(dataCenter)) {
+                builder.country(dataCenter.toUpperCase());
             }
         }
         if (configMap.containsKey(KEY_URL)) {
@@ -234,6 +241,12 @@ public class TDFultterRiskUtils {
             String country = (String) configMap.get(KEY_COUNTRY);
             if (!TextUtils.isEmpty(country)) {
                 builder.country(country.toUpperCase());
+            }
+        }
+        if (configMap.containsKey(KEY_DATACENTER)) {
+            String dataCenter = (String) configMap.get(KEY_DATACENTER);
+            if (!TextUtils.isEmpty(dataCenter)) {
+                builder.country(dataCenter.toUpperCase());
             }
         }
         if (configMap.containsKey(KEY_URL)) {

@@ -60,12 +60,15 @@ public class TrustdeviceSePlugin implements FlutterPlugin, MethodCallHandler, Ac
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    HashMap<String, Object> configMap = call.arguments();
+                    try {
+                        HashMap<String, Object> configMap = call.arguments();
 
-                    // SDK初始化配置，标准版
-                    TDDeviceManager.Builder builder = TDFultterRiskUtils.mapToBuilderSe(configMap);
-                    TDDeviceManager.initWithOptions(mApplicationContext, builder);
-
+                        // SDK初始化配置，标准版
+                        TDDeviceManager.Builder builder = TDFultterRiskUtils.mapToBuilderSe(configMap);
+                        TDDeviceManager.initWithOptions(mApplicationContext, builder);
+                    } catch (Exception e) {
+                        mMainHandler.post(() -> result.error("INIT_ERROR", e.getMessage(), null));
+                    }
                 }
             });
 
@@ -73,6 +76,7 @@ public class TrustdeviceSePlugin implements FlutterPlugin, MethodCallHandler, Ac
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    try {
                     TDDeviceManager.getDeviceInfo(new TDDeviceInfoCallback() {
                         @Override
                         public void onResult(String fpVersion,
@@ -109,6 +113,9 @@ public class TrustdeviceSePlugin implements FlutterPlugin, MethodCallHandler, Ac
                             });
                         }
                     });
+                    } catch (Exception e) {
+                        mMainHandler.post(() -> result.error("GET_DEVICEINFO_ERROR", e.getMessage(), null));
+                    }
                 }
             });
         } else if (call.method.equals("sign")) {

@@ -23,16 +23,18 @@ import com.trustdecision.mobrisk.TDRiskCaptchaCallback;
 import com.trustdecision.mobrisk.TDRiskLivenessCallback;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.plugin.common.EventChannel;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import com.trustdecision.mobrisk.TDErrorCodeCallback;
 
 /**
  * TrustdeviceProPlugin
  */
-public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware,EventChannel.StreamHandler {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -43,6 +45,9 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
     private HandlerThread mHandlerThread;
     private Context mApplicationContext;
     private Activity mActivity;
+
+    private EventChannel eventChannel;
+    private EventChannel.EventSink eventSink;
 
     private TrustdeviceSePlugin sePlugin;
 
@@ -55,6 +60,9 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
         sePlugin = new TrustdeviceSePlugin();
         sePlugin.onAttachedToEngine(flutterPluginBinding);
 
+        eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "trustdevice_pro_plugin/error");
+        eventChannel.setStreamHandler(this);
+
         mApplicationContext = flutterPluginBinding.getApplicationContext();
         mHandlerThread = new HandlerThread("TDFlutterPlugin_android");
         mHandlerThread.start();
@@ -63,15 +71,42 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
     }
 
     @Override
+    public void onListen(Object arguments, EventChannel.EventSink events) {
+        this.eventSink = events;
+        // 注册原生 SDK 的错误监听
+        TDRisk.setOnErrorCodeListener(new TDErrorCodeCallback() {
+            @Override
+            public void onResult(int errorCode, String errorMsg) {
+                if (eventSink != null) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("errorCode", errorCode);
+                    map.put("errorMsg", errorMsg);
+                    eventSink.success(map);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onCancel(Object arguments) {
+        eventSink = null;
+        // 可选：如果 SDK 支持，注销错误监听
+    }
+
+    @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         if (call.method.equals("initWithOptions")) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    HashMap<String, Object> configMap = call.arguments();
-                    // SDK初始化配置
-                    TDRisk.Builder builder = TDFultterRiskUtils.mapToBuilder(configMap);
-                    TDRisk.initWithOptions(mApplicationContext, builder);
+                    try {
+                        HashMap<String, Object> configMap = call.arguments();
+                        // SDK初始化配置
+                        TDRisk.Builder builder = TDFultterRiskUtils.mapToBuilder(configMap);
+                        TDRisk.initWithOptions(mApplicationContext, builder);
+                    } catch (Exception e) {
+                        mMainHandler.post(() -> result.error("INIT_ERROR", e.getMessage(), null));
+                    }
                 }
             });
 
@@ -79,30 +114,38 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    String blackBox = TDRisk.getBlackBox();
-                    mMainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            result.success(blackBox);
-                        }
-                    });
+                    try {
+                        String blackBox = TDRisk.getBlackBox();
+                        mMainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                result.success(blackBox);
+                            }
+                        });
+                    } catch (Exception e) {
+                        mMainHandler.post(() -> result.error("GET_BLACKBOX_ERROR", e.getMessage(), null));
+                    }
                 }
             });
         } else if (call.method.equals("getBlackBoxAsync")) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    TDRisk.getBlackBox(new TDRiskCallback() {
-                        @Override
-                        public void onEvent(String blackBox) {
-                            mMainHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    result.success(blackBox);
-                                }
-                            });
-                        }
-                    });
+                    try {
+                        TDRisk.getBlackBox(new TDRiskCallback() {
+                            @Override
+                            public void onEvent(String blackBox) {
+                                mMainHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        result.success(blackBox);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (Exception e) {
+                        mMainHandler.post(() -> result.error("GET_BLACKBOX_ASYNC_ERROR", e.getMessage(), null));
+                    }
                 }
             });
         }  else if (call.method.equals("sign")) {

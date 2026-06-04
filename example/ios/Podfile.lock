@@ -18,7 +18,7 @@ PODS:
   - TrustDecisionPro/FMDeviceManagerFramework (5.2.1)
   - TrustDecisionPro/TDCorePlugin (5.2.1)
   - TrustDecisionPro/TDMobRisk (5.2.1)
-  - trustdevice_pro_plugin (1.4.9):
+  - trustdevice_pro_plugin (1.5.4):
     - Flutter
     - TrustDecisionPro
 
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
   shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
   TrustDecisionPro: 96f73b1ea80dd9a1978b1e7383d803fdc1f8e1fe
-  trustdevice_pro_plugin: c07905a700fe3b3a02888d9660689fa113d9523a
+  trustdevice_pro_plugin: 027c68d83237cfeb3290f5b2d8c4c6315e245c97
 
 PODFILE CHECKSUM: e30f02f9d1c72c47bb6344a0a748c9d268180865
 
