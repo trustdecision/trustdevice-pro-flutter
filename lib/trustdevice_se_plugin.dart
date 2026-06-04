@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'trustdevice_se_plugin_platform_interface.dart';
 

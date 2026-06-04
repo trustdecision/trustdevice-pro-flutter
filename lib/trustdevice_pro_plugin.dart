@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
@@ -24,7 +23,7 @@ class TDErrorEvent {
 class TrustdeviceProPlugin {
 
   dynamic _behaviorCollector;
-  static bool _isInitialized = false;
+  
   static final TrustdeviceProPlugin _instance = TrustdeviceProPlugin._internal();
 
   /// 构造方法 - 传入行为采集插件实例
@@ -70,7 +69,6 @@ class TrustdeviceProPlugin {
         await _behaviorCollector!.initWithOptions(configMap);
       }
       await TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
-      _isInitialized = true;
 
       return;
     } catch(e){
@@ -81,17 +79,13 @@ class TrustdeviceProPlugin {
 
   ///Get blackBox
   Future<String> getBlackBox() {
-    // if (!_isInitialized) {
-    //   // throw StateError('Please call initWithOptions before getBlackBox');
-    // }
+    
     return TrustdeviceProPluginPlatform.instance.getBlackBox();
   }
 
   ///Get blackBox Async
   Future<String> getBlackBoxAsync() {
-    // if (!_isInitialized) {
-    //   // throw StateError('Please call initWithOptions before getBlackBoxAsync');
-    // }
+    
     return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 
