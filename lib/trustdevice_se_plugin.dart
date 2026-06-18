@@ -30,6 +30,11 @@ class TrustdeviceSePlugin {
   Future<void> initWithOptions(Map<String, dynamic> configMap) async {
     try {
       if (_behaviorCollector != null) {
+        final dataCenter = configMap['dataCenter'];
+        if (dataCenter != null) {
+          configMap['country'] = dataCenter;
+        }
+        await _behaviorCollector!.initWithOptions(configMap);
         await _behaviorCollector!.initWithOptions(configMap);
       }
       await TrustdeviceSePluginPlatform.instance.initWithOptions(configMap);

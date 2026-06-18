@@ -66,6 +66,10 @@ class TrustdeviceProPlugin {
 
     try {
       if (_behaviorCollector != null) {
+        final dataCenter = configMap['dataCenter'];
+        if (dataCenter != null) {
+          configMap['country'] = dataCenter;
+        }
         await _behaviorCollector!.initWithOptions(configMap);
       }
       await TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);

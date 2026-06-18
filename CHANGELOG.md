@@ -1,3 +1,7 @@
+## 1.5.5 (2026-06-18)
+
+* Added configuration item dataCenter for Behavior
+* Fixed known issues
 
 ## 1.5.4 (2026-06-04)
 
