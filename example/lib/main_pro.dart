@@ -291,8 +291,8 @@ class _MyAppState extends State<MyHomePage> {
    */
   Future<void> _initWithOptions() async {
     var options = {
-      "partner": "LPZ13", // 需要替换成你自己的
-      "appKey": "4c3eec24a308c52fe7889fae9d2cc693", // 需要替换成你自己的
+      "partner": "xxx", // 需要替换成你自己的
+      "appKey": "xxx", // 需要替换成你自己的
       "appName": "xxx", // 需要替换成你自己的
       "country": "cn", // 参考集成文档修改
       "debug": kDebugMode,

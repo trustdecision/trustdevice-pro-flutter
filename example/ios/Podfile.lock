@@ -2,65 +2,27 @@ PODS:
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
-  - package_info_plus (0.4.5):
-    - Flutter
   - permission_handler_apple (9.3.0):
     - Flutter
-  - sensors_plus (0.0.1):
-    - Flutter
-  - shared_preferences_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
-  - TrustDecisionPro (5.2.1):
-    - TrustDecisionPro/FMDeviceManagerFramework (= 5.2.1)
-    - TrustDecisionPro/TDCorePlugin (= 5.2.1)
-    - TrustDecisionPro/TDMobRisk (= 5.2.1)
-  - TrustDecisionPro/FMDeviceManagerFramework (5.2.1)
-  - TrustDecisionPro/TDCorePlugin (5.2.1)
-  - TrustDecisionPro/TDMobRisk (5.2.1)
-  - trustdevice_pro_plugin (1.5.4):
-    - Flutter
-    - TrustDecisionPro
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
-  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-  - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - trustdevice_pro_plugin (from `.symlinks/plugins/trustdevice_pro_plugin/ios`)
-
-SPEC REPOS:
-  trunk:
-    - TrustDecisionPro
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
-  package_info_plus:
-    :path: ".symlinks/plugins/package_info_plus/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
-  sensors_plus:
-    :path: ".symlinks/plugins/sensors_plus/ios"
-  shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-  trustdevice_pro_plugin:
-    :path: ".symlinks/plugins/trustdevice_pro_plugin/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   fluttertoast: 21eecd6935e7064cc1fcb733a4c5a428f3f24f0f
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
-  shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
-  TrustDecisionPro: 96f73b1ea80dd9a1978b1e7383d803fdc1f8e1fe
-  trustdevice_pro_plugin: 027c68d83237cfeb3290f5b2d8c4c6315e245c97
 
-PODFILE CHECKSUM: e30f02f9d1c72c47bb6344a0a748c9d268180865
+PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
 
 COCOAPODS: 1.16.2

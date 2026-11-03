@@ -7,7 +7,6 @@ import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin_platform_interface
 class MockTrustdeviceProPluginPlatform
     with MockPlatformInterfaceMixin
     implements TrustdeviceProPluginPlatform {
-  @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
@@ -35,28 +34,39 @@ class MockTrustdeviceProPluginPlatform
   }
 
   @override
+  Future<Map<String, dynamic>> getDeviceInfo() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getDeviceInfoAsync() {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
     // TODO: implement showCaptcha
     throw UnimplementedError();
   }
-  
-   Future<dynamic> getRootViewController() {
+
+  Future<dynamic> getRootViewController() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
-  Future<void> showLiveness(String license,TDLivenessCallback callback) {
+  Future<void> showLiveness(String license, TDLivenessCallback callback) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
-  
+
   @override
   Future<Map<String, dynamic>> sign(String url) {
     // TODO: implement sign
     throw UnimplementedError();
   }
-
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   final TrustdeviceProPluginPlatform initialPlatform =
       TrustdeviceProPluginPlatform.instance;
 

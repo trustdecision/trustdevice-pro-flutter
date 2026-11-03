@@ -1,0 +1,24 @@
+# Generated files and local development state.
+/.dart_tool/
+/build/
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.metadata
+
+# The example uses this local alias only while developing in this repository.
+# The published example resolves the plugin from the package registry instead.
+/example/local_plugins/
+/example/pubspec_overrides.yaml
+/example/android/build/
+/example/
+
+# Editor and build artifacts.
+*.log
+*.class
+*.pyc
+*.swp
+.DS_Store
+.build/
+.swiftpm/
+**/doc/api/
+**/ios/Flutter/.last_build_id

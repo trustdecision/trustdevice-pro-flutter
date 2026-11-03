@@ -18,6 +18,9 @@ import java.util.Iterator;
 
 import com.trustdecision.mobrisk.TDRisk;
 import com.trustdecision.mobrisk.TDRiskCallback;
+import com.trustdecision.mobrisk.TDDeviceAPIStatus;
+import com.trustdecision.mobrisk.TDDeviceInfo;
+import com.trustdecision.mobrisk.TDDeviceInfoCallbackAdapter;
 import com.trustdecision.mobrisk.TDAPISignResult;
 import com.trustdecision.mobrisk.TDRiskCaptchaCallback;
 import com.trustdecision.mobrisk.TDRiskLivenessCallback;
@@ -148,7 +151,33 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
                     }
                 }
             });
-        }  else if (call.method.equals("sign")) {
+        } else if (call.method.equals("getDeviceInfo")) {
+            mHandler.post(() -> {
+                try {
+                    TDDeviceInfo deviceInfo = TDRisk.getDeviceInfo();
+                    postDeviceInfoResult(result, deviceInfo);
+                } catch (Exception e) {
+                    mMainHandler.post(() -> result.error("GET_DEVICE_INFO_ERROR", e.getMessage(), null));
+                }
+            });
+        } else if (call.method.equals("getDeviceInfoAsync")) {
+            mHandler.post(() -> {
+                try {
+                    TDRisk.getDeviceInfo(new TDDeviceInfoCallbackAdapter() {
+                        @Override
+                        public void onResult(TDDeviceInfo deviceInfo) {
+                            try {
+                                postDeviceInfoResult(result, deviceInfo);
+                            } catch (Exception e) {
+                                mMainHandler.post(() -> result.error("GET_DEVICE_INFO_ASYNC_ERROR", e.getMessage(), null));
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    mMainHandler.post(() -> result.error("GET_DEVICE_INFO_ASYNC_ERROR", e.getMessage(), null));
+                }
+            });
+        } else if (call.method.equals("sign")) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -260,6 +289,29 @@ public class TrustdeviceProPlugin implements FlutterPlugin, MethodCallHandler, A
         } else {
             result.notImplemented();
         }
+    }
+
+    private void postDeviceInfoResult(@NonNull Result result, TDDeviceInfo deviceInfo) {
+        if (deviceInfo == null) {
+            mMainHandler.post(() -> result.error("GET_DEVICE_INFO_ERROR", "SDK returned null device info", null));
+            return;
+        }
+
+        TDDeviceAPIStatus apiStatus = deviceInfo.getApiStatus();
+        Map<String, Object> statusData = new HashMap<>();
+        if (apiStatus != null) {
+            statusData.put("code", apiStatus.getCode());
+            statusData.put("message", apiStatus.getMessage());
+        }
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("blackBox", deviceInfo.getBlackBox());
+        resultData.put("fpVersion", deviceInfo.getFpVersion());
+        resultData.put("anonymousId", deviceInfo.getAnonymousId());
+        resultData.put("deviceRiskScore", deviceInfo.getDeviceRiskScore());
+        resultData.put("sealedResult", deviceInfo.getSealedResult());
+        resultData.put("apiStatus", statusData);
+        mMainHandler.post(() -> result.success(resultData));
     }
 
     @Override

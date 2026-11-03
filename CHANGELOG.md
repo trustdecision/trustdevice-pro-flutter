@@ -1,7 +1,6 @@
-## 1.5.5 (2026-06-18)
+## 2.0.0 (2026-11-03)
 
-* Added configuration item dataCenter for Behavior
-* Fixed known issues
+* iOS: Migrate Pods to SPM
 
 ## 1.5.4 (2026-06-04)
 

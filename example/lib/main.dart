@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:trustdevice_pro_plugin/trustdevice_se_plugin.dart';
+import 'package:trustdevice_pro_plugin/trustdevice_pro_plugin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TrustDevice Standard Demo',
+      title: 'TrustDevice Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );
@@ -27,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _trustdeviceSePlugin = TrustdeviceSePlugin();
+  final _trustdeviceProPlugin = TrustdeviceProPlugin();
   String _log = '';
 
   void _appendLog(String message) {
@@ -41,14 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _initWithOptions() async {
     _appendLog('▶️ initWithOptions called');
     try {
-      final options = {
-        "partner": "XXX",        // 请替换为实际值
-        "appKey": "XXX", // 请替换为实际值
+      final options = <String, dynamic>{
+        "partner": "xxx", // 请替换为实际值
+        "appKey": "xxx", // 请替换为实际值
         "dataCenter": 'cn', // cn / sg / us / fra / idna
-        "channel": "your_channel",// 可选，请联系运营获取
+        "channel": "your_channel", // 可选，请联系运营获取
       };
 
-      await _trustdeviceSePlugin.initWithOptions(options);
+      if (Platform.isAndroid) {
+        options["appKey"] = '5978b5f9fd6a8bf5de02f0054d0dccec';
+      }
+
+      await _trustdeviceProPlugin.initWithOptions(options);
       _appendLog('✅ SDK initialized successfully');
     } on PlatformException catch (e) {
       _appendLog('❌ Init failed: code=${e.code}, message=${e.message}');
@@ -61,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _getSDKVersion() async {
     _appendLog('▶️ getSDKVersion called');
     try {
-      final version = await _trustdeviceSePlugin.getSDKVersion();
+      final version = await _trustdeviceProPlugin.getSDKVersion();
       _appendLog('✅ SDK version: $version');
     } on PlatformException catch (e) {
       _appendLog('❌ Get version failed: code=${e.code}, message=${e.message}');
@@ -70,11 +76,52 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  /// 获取设备信息
+  /// 通过原生异步接口获取设备信息
+  Future<void> _getDeviceInfoAsync() async {
+    await _fetchDeviceInfo(
+        'getDeviceInfoAsync', _trustdeviceProPlugin.getDeviceInfoAsync);
+  }
+
+  /// 通过原生同步接口获取设备信息（插件在工作线程执行）
   Future<void> _getDeviceInfo() async {
-    _appendLog('▶️ getDeviceInfo called');
+    await _fetchDeviceInfo(
+        'getDeviceInfo', _trustdeviceProPlugin.getDeviceInfo);
+  }
+
+  /// 测试旧版异步 blackBox 接口
+  Future<void> _getBlackBoxAsync() async {
+    await _fetchBlackBox(
+        'getBlackBoxAsync', _trustdeviceProPlugin.getBlackBoxAsync);
+  }
+
+  /// 测试旧版同步 blackBox 接口
+  Future<void> _getBlackBox() async {
+    await _fetchBlackBox('getBlackBox', _trustdeviceProPlugin.getBlackBox);
+  }
+
+  Future<void> _fetchBlackBox(
+    String methodName,
+    Future<String> Function() fetch,
+  ) async {
+    _appendLog('▶️ $methodName called');
     try {
-      final resultData = await _trustdeviceSePlugin.getDeviceInfo();
+      final blackBox = await fetch();
+      _appendLog('   blackBox length: ${blackBox.length}');
+      _appendLog('   blackBox: $blackBox');
+    } on PlatformException catch (e) {
+      _appendLog('❌ $methodName failed: code=${e.code}, message=${e.message}');
+    } catch (e) {
+      _appendLog('❌ $methodName error: $e');
+    }
+  }
+
+  Future<void> _fetchDeviceInfo(
+    String methodName,
+    Future<Map<String, dynamic>> Function() fetch,
+  ) async {
+    _appendLog('▶️ $methodName called');
+    try {
+      final resultData = await fetch();
 
       // 解析通用字段
       final fpVersion = resultData['fpVersion'] as String? ?? '';
@@ -82,30 +129,24 @@ class _MyHomePageState extends State<MyHomePage> {
       final anonymousId = resultData['anonymousId'] as String? ?? '';
       final deviceRiskScore = resultData['deviceRiskScore'] as int? ?? 0;
       final sealedResult = resultData['sealedResult'] as String? ?? '';
-      final apiStatus = resultData['apiStatus'] as Map<String, dynamic>? ?? {};
-
+      final apiStatus =
+          Map<String, dynamic>.from(resultData['apiStatus'] as Map? ?? {});
 
       final statusCode = apiStatus['code'] as int? ?? -1;
       final statusMessage = apiStatus['message'] as String? ?? '';
 
-      
-      if (statusCode == 0) {
-        _appendLog('✅ Device info retrieved successfully');
-        _appendLog('   anonymousId: $anonymousId');
-        _appendLog('   blackBox: $blackBox');
-        _appendLog('   fpVersion: $fpVersion');
-        _appendLog('   deviceRiskScore: $deviceRiskScore');
-        if (sealedResult.isNotEmpty) {
-          _appendLog('   sealedResult: $sealedResult');
-        }
-      } else {
-        _appendLog('⚠️ API returned error: code=$statusCode, message=$statusMessage');
+      _appendLog('   code: $statusCode, message: $statusMessage');
+      _appendLog('   blackBox: $blackBox');
+      _appendLog('   fpVersion: $fpVersion');
+      _appendLog('   anonymousId: $anonymousId');
+      _appendLog('   deviceRiskScore: $deviceRiskScore');
+      if (sealedResult.isNotEmpty) {
+        _appendLog('   sealedResult: $sealedResult');
       }
     } on PlatformException catch (e) {
-     
-      _appendLog('❌ getDeviceInfo failed: code=${e.code}, message=${e.message}');
+      _appendLog('❌ $methodName failed: code=${e.code}, message=${e.message}');
     } catch (e) {
-      _appendLog('❌ getDeviceInfo error: $e');
+      _appendLog('❌ $methodName error: $e');
     }
   }
 
@@ -113,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TrustDevice Standard Demo'),
+        title: const Text('TrustDevice Demo'),
       ),
       body: Column(
         children: [
@@ -129,8 +170,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 10),
           ElevatedButton(
+            onPressed: _getDeviceInfoAsync,
+            child: const Text('getDeviceInfoAsync'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
             onPressed: _getDeviceInfo,
             child: const Text('getDeviceInfo'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: _getBlackBoxAsync,
+            child: const Text('getBlackBoxAsync (legacy)'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: _getBlackBox,
+            child: const Text('getBlackBox (legacy)'),
           ),
           const SizedBox(height: 20),
           Expanded(

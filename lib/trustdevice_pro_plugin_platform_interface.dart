@@ -37,6 +37,14 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
     throw UnimplementedError('getBlackBoxAsync() has not been implemented.');
   }
 
+  Future<Map<String, dynamic>> getDeviceInfo() {
+    throw UnimplementedError('getDeviceInfo() has not been implemented.');
+  }
+
+  Future<Map<String, dynamic>> getDeviceInfoAsync() {
+    throw UnimplementedError('getDeviceInfoAsync() has not been implemented.');
+  }
+
   Future<Map<String, dynamic>> sign(String url) {
     throw UnimplementedError('sign() has not been implemented.');
   }
@@ -45,11 +53,11 @@ abstract class TrustdeviceProPluginPlatform extends PlatformInterface {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
-   Future<dynamic> getRootViewController() {
+  Future<dynamic> getRootViewController() {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 
-  Future<void> showLiveness(String license,TDLivenessCallback callback) {
+  Future<void> showLiveness(String license, TDLivenessCallback callback) {
     throw UnimplementedError('getResult() has not been implemented.');
   }
 

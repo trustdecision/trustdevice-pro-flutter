@@ -12,6 +12,31 @@ static FlutterMethodChannel* _channel = nil;
 
 @implementation TrustdeviceProPlugin
 
++ (NSString *)stringFromDeviceInfoValue:(const char *)value {
+    return [NSString stringWithUTF8String:value ?: ""] ?: @"";
+}
+
++ (NSDictionary<NSString *, id> *)deviceInfoFromResponse:(TDDeviceResponse)response {
+    // The SDK response contains C strings that must be copied before changing threads.
+    NSString *blackBox = [self stringFromDeviceInfoValue:response.blackBox];
+    NSString *fpVersion = [self stringFromDeviceInfoValue:response.fpVersion];
+    NSString *anonymousId = [self stringFromDeviceInfoValue:response.anonymousId];
+    NSString *sealedResult = [self stringFromDeviceInfoValue:response.sealedResult];
+    NSString *message = [self stringFromDeviceInfoValue:response.apiStatus.message];
+
+    return @{
+        @"blackBox": blackBox,
+        @"fpVersion": fpVersion,
+        @"anonymousId": anonymousId,
+        @"deviceRiskScore": @(response.deviceRiskScore),
+        @"sealedResult": sealedResult,
+        @"apiStatus": @{
+            @"code": @(response.apiStatus.code),
+            @"message": message,
+        },
+    };
+}
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
                                      methodChannelWithName:@"trustdevice_pro_plugin"
@@ -130,6 +155,23 @@ static FlutterMethodChannel* _channel = nil;
         manager->getBlackBoxAsync(^(NSString* blackBox){
             dispatch_async(dispatch_get_main_queue(), ^{
                 result(blackBox);
+            });
+        });
+    } else if ([@"getDeviceInfo" isEqualToString:call.method]) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+            TDDeviceResponse response = manager->getDeviceInfoSync();
+            NSDictionary<NSString *, id> *deviceInfo = [TrustdeviceProPlugin deviceInfoFromResponse:response];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                result(deviceInfo);
+            });
+        });
+    } else if ([@"getDeviceInfoAsync" isEqualToString:call.method]) {
+        TDMobRiskManager_t *manager = [TDMobRiskManager sharedManager];
+        manager->getDeviceInfo(^(TDDeviceResponse response) {
+            NSDictionary<NSString *, id> *deviceInfo = [TrustdeviceProPlugin deviceInfoFromResponse:response];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                result(deviceInfo);
             });
         });
     } else if ([@"sign" isEqualToString:call.method]) {

@@ -15,7 +15,6 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
 
   TDLivenessCallback? livenessCallback = null;
 
-
   MethodChannelTrustdeviceProPlugin() {
     methodChannel.setMethodCallHandler(_methodCallHandler);
   }
@@ -40,6 +39,25 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
   }
 
   @override
+  Future<Map<String, dynamic>> getDeviceInfo() =>
+      _getDeviceInfo('getDeviceInfo');
+
+  @override
+  Future<Map<String, dynamic>> getDeviceInfoAsync() =>
+      _getDeviceInfo('getDeviceInfoAsync');
+
+  Future<Map<String, dynamic>> _getDeviceInfo(String method) async {
+    final response = await methodChannel.invokeMethod<dynamic>(method);
+    if (response is! Map) {
+      throw PlatformException(
+        code: 'INVALID_DEVICE_INFO',
+        message: 'Native SDK returned invalid device info',
+      );
+    }
+    return (jsonDecode(jsonEncode(response)) as Map<String, dynamic>);
+  }
+
+  @override
   Future<Map<String, dynamic>> sign(url) async {
     final dynamic response = await methodChannel.invokeMethod('sign', url);
 
@@ -53,19 +71,17 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
     await methodChannel.invokeMethod("showCaptcha");
   }
 
-
   Future<dynamic> getRootViewController() async {
     final result = await methodChannel.invokeMethod("getRootViewController");
     return result;
   }
 
-  Future<void> showLiveness(String license,TDLivenessCallback callback) async {
+  Future<void> showLiveness(String license, TDLivenessCallback callback) async {
     livenessCallback = callback;
-    await methodChannel.invokeMethod("showLiveness",{
-      'license' : license,
+    await methodChannel.invokeMethod("showLiveness", {
+      'license': license,
     });
   }
-
 
   Future<void> _methodCallHandler(MethodCall call) async {
     //print("call.method :${call.method} call.arguments:${call.arguments}");
@@ -87,7 +103,8 @@ class MethodChannelTrustdeviceProPlugin extends TrustdeviceProPluginPlatform {
         }
         break;
       case 'showLiveness':
-        Map<dynamic, dynamic> resultMap = call.arguments as Map<dynamic, dynamic>;
+        Map<dynamic, dynamic> resultMap =
+            call.arguments as Map<dynamic, dynamic>;
         var function = resultMap["function"];
 
         if (function == null || livenessCallback == null) return;

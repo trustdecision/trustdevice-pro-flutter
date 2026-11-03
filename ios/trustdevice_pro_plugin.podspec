@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'trustdevice_pro_plugin'
-  s.version          = '1.5.4'
+  s.version          = '2.0.0'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.
@@ -13,8 +13,8 @@ A new Flutter project.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'trustdevice_pro_plugin/Sources/trustdevice_pro_plugin/**/*.{h,m}'
+  s.public_header_files = 'trustdevice_pro_plugin/Sources/trustdevice_pro_plugin/include/**/*.h'
   #s.vendored_frameworks = 'Frameworks/TDMobRisk.framework', 'Frameworks/TDCorePlugin.framework'
   s.static_framework = true
 

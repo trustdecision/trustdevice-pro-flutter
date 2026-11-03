@@ -1,16 +1,13 @@
-
 import 'package:flutter/services.dart';
 
 import 'trustdevice_pro_plugin_platform_interface.dart';
 
 export 'trustdevice_se_plugin.dart'; // 在pro_plugin中暴露se_plugin
 
-
 enum TDLivenessShowStyle {
+  Push,
 
-    Push,
-
-    Present,
+  Present,
 }
 
 class TDErrorEvent {
@@ -19,12 +16,11 @@ class TDErrorEvent {
   TDErrorEvent({required this.errorCode, required this.errorMsg});
 }
 
-
 class TrustdeviceProPlugin {
-
   dynamic _behaviorCollector;
-  
-  static final TrustdeviceProPlugin _instance = TrustdeviceProPlugin._internal();
+
+  static final TrustdeviceProPlugin _instance =
+      TrustdeviceProPlugin._internal();
 
   /// 构造方法 - 传入行为采集插件实例
   /// 如果不需要行为采集，可以不传
@@ -36,14 +32,15 @@ class TrustdeviceProPlugin {
   }
 
   TrustdeviceProPlugin._internal();
-  
+
   /// 获取单例实例的静态方法（保持向后兼容）
   static TrustdeviceProPlugin get instance {
     return _instance;
   }
 
   // 新增：事件通道
-  static const EventChannel _errorEventChannel = EventChannel('trustdevice_pro_plugin/error');
+  static const EventChannel _errorEventChannel =
+      EventChannel('trustdevice_pro_plugin/error');
 
   // 新增：静态 getter，返回错误事件流
   static Stream<TDErrorEvent> get onError {
@@ -62,8 +59,7 @@ class TrustdeviceProPlugin {
   }
 
   ///Initialize the configuration and return to blackBox
-  Future<void> initWithOptions(Map<String, dynamic> configMap) async{
-
+  Future<void> initWithOptions(Map<String, dynamic> configMap) async {
     try {
       if (_behaviorCollector != null) {
         final dataCenter = configMap['dataCenter'];
@@ -75,28 +71,37 @@ class TrustdeviceProPlugin {
       await TrustdeviceProPluginPlatform.instance.initWithOptions(configMap);
 
       return;
-    } catch(e){
+    } catch (e) {
       rethrow;
     }
-    
   }
 
   ///Get blackBox
   Future<String> getBlackBox() {
-    
     return TrustdeviceProPluginPlatform.instance.getBlackBox();
   }
 
   ///Get blackBox Async
   Future<String> getBlackBoxAsync() {
-    
     return TrustdeviceProPluginPlatform.instance.getBlackBoxAsync();
   }
 
+  /// Call the native synchronous SDK API on a worker thread (Android and iOS).
+  /// The returned map includes blackBox and apiStatus (code and message).
+  Future<Map<String, dynamic>> getDeviceInfo() {
+    return TrustdeviceProPluginPlatform.instance.getDeviceInfo();
+  }
+
+  /// Call the native asynchronous SDK API (Android and iOS).
+  /// The returned map includes blackBox and apiStatus (code and message).
+  Future<Map<String, dynamic>> getDeviceInfoAsync() {
+    return TrustdeviceProPluginPlatform.instance.getDeviceInfoAsync();
+  }
+
   // 签名
-  Future<Map<String, dynamic>>  sign(String url) {
+  Future<Map<String, dynamic>> sign(String url) {
     return TrustdeviceProPluginPlatform.instance.sign(url);
-  } 
+  }
 
   ///showCaptcha
   Future<void> showCaptcha(TDRiskCaptchaCallback callback) {
@@ -104,21 +109,25 @@ class TrustdeviceProPlugin {
   }
 
   ///showLiveness
-  Future<void> showLiveness(String license,TDLivenessCallback callback) {
-    return TrustdeviceProPluginPlatform.instance.showLiveness(license,callback);
+  Future<void> showLiveness(String license, TDLivenessCallback callback) {
+    return TrustdeviceProPluginPlatform.instance
+        .showLiveness(license, callback);
   }
 
   /// 开始行为采集
   void start() {
     if (_behaviorCollector == null) {
-      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+      throw StateError(
+          'Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
     }
     _behaviorCollector!.start();
   }
-    /// 收集行为数据
+
+  /// 收集行为数据
   Future<Map<String, dynamic>> collect({String? blackbox}) async {
     if (_behaviorCollector == null) {
-      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+      throw StateError(
+          'Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
     }
     // String? finalBlackbox = blackbox;
     // if (finalBlackbox == null) {
@@ -136,11 +145,11 @@ class TrustdeviceProPlugin {
     return result;
   }
 
-  
   /// 停止行为采集
   void stop() {
     if (_behaviorCollector == null) {
-      throw StateError('Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
+      throw StateError(
+          'Behavior collector is not provided. Pass a BehaviorCollector to the constructor.');
     }
     _behaviorCollector!.stop();
   }
@@ -149,7 +158,6 @@ class TrustdeviceProPlugin {
   bool hasBehaviorCollector() {
     return _behaviorCollector != null;
   }
-
 }
 
 class TDRisk {
@@ -189,8 +197,6 @@ class TDRiskCaptchaCallback {
     required this.onFailed,
   });
 }
-
-
 
 class TDLivenessCallback {
   final void Function(Map<dynamic, dynamic> successResultMap) onSuccess;
