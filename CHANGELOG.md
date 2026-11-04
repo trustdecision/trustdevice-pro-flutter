@@ -1,6 +1,14 @@
+## 2.0.1 (2026-11-04)
+
+* Android: Modify compileSdkVersion
+
 ## 2.0.0 (2026-11-03)
 
 * iOS: Migrate Pods to SPM
+
+## 1.5.5 (2026-06-18)
+
+* Added configuration item dataCenter for TDBehavior
 
 ## 1.5.4 (2026-06-04)
 

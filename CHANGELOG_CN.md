@@ -1,6 +1,14 @@
+**版本**  V2.0.1 （2026-11-04）
+
+* Android： 修改compileSdkVersion
+
 **版本**  V2.0.0 （2026-11-03）
 
 * iOS 平台：Pods 迁移至 SPM
+
+**版本**  V1.5.5 （2026-06-18）
+
+* 增加配置项dataCenter for TDBehavior
 
 **版本**  V1.5.4 （2026-06-04）
 
